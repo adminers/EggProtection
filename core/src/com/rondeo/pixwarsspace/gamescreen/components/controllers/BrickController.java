@@ -20,6 +20,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
+import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
@@ -91,6 +92,11 @@ public class BrickController extends Actor implements Entity, Disposable {
         }*/
 
         Constants.POINT_BRICK_SHIPS.put(name, new MapPointBlock(pointShip, brickShip));
+
+
+        SlugShip slugShip = createSlugShip(centerPointAxis.getX(), centerPointAxis.getY());
+        slugShip.setName(name);
+
     }
 
     private PointShip createPointShip(float x, float y) {
@@ -101,6 +107,17 @@ public class BrickController extends Actor implements Entity, Disposable {
         pointShip.setZIndex(2);
         getStage().addActor(pointShip);
         return pointShip;
+    }
+
+    private SlugShip createSlugShip(float x, float y) {
+
+        AtlasRegion pointShipRegion = slugTextureAtlas.findRegion( "SlimeOrange" );
+        SlugShip slugShip = new SlugShip(world);
+        slugShip.setRegions(null,null,null,null, slugTextureAtlas.findRegions("SlimeOrange"), null);
+        slugShip.init(pointShipRegion, x, y);
+        slugShip.setZIndex(2);
+        getStage().addActor(slugShip);
+        return slugShip;
     }
     
     SequenceAction deploySequence = new SequenceAction();
@@ -141,6 +158,8 @@ public class BrickController extends Actor implements Entity, Disposable {
 //    }
 
     TextureAtlas pointTextureAtlas = new TextureAtlas( Gdx.files.internal( "lib/t_map/play/point.atlas" ) );
+
+    TextureAtlas slugTextureAtlas = new TextureAtlas( Gdx.files.internal( "lib/t_map/t1/SlugCannon.atlas" ) );
 
     @Override
     public void act( float delta ) {
