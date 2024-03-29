@@ -12,6 +12,7 @@ import com.dongbat.jbump.*;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.*;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.ArtilleryShip;
+import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
 import com.rondeo.pixwarsspace.utils.Constants;
 import com.rondeo.pixwarsspace.utils.CoordinateUtil;
 
@@ -161,13 +162,19 @@ public class PlayShip extends Player {
         world.move( item, getX(), getY(), collisionFilter );
         resolve();
 //        ++faShe;
-        if( System.currentTimeMillis() > time + 1000 && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
+        if( System.currentTimeMillis() > time + 3000 && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
             time = System.currentTimeMillis();
             Enemy enemyShip  = LevelManager.findClosestEnemy(getX(), getY());
             if (null != enemyShip) {
 
-                Constants.POINT_BRICK_SHIPS.get("2").getBrickShip().runJump();
-                Constants.POINT_BRICK_SHIPS.get("2").getPointShip().runJump();
+//                Constants.POINT_BRICK_SHIPS.get("2").getBrickShip().runJump();
+//                Constants.POINT_BRICK_SHIPS.get("2").getPointShip().runJump();
+
+                // TODO:shen 测试先往左跳
+                SulgPoint sulgPoint = Constants.SLUGSHIP.get("7");
+                Axis axis = sulgPoint.getAxis();
+                sulgPoint.getSlugShip().init(axis.getX(), axis.getY());
+
                 System.out.println("////////////////////" + enemyShip.getX() + "-" + enemyShip.getY());
 
                 // 获取敌人的位置

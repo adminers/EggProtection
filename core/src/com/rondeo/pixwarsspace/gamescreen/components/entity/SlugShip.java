@@ -5,12 +5,20 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Bezier;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.dongbat.jbump.*;
 import com.qiaweidata.starriverdefense.test.func.EasingFunctions;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
+import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.controllers.BossController.Laser;
+import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
+import com.rondeo.pixwarsspace.utils.Constants;
+
+import static com.rondeo.pixwarsspace.utils.Constants.COMMON_SHIP_HEIGHT;
 
 public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
 
@@ -42,9 +50,6 @@ public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
     boolean isDead = true;
 
     private float elapsedTime = 0;
-    private float initialY = 200;
-    float newY = initialY;
-    private float targetY = initialY - 30;
     private float fallDuration = 1.0f;
     private float shakeDuration = 0.5f;
     private float returnDuration = 1.0f;
@@ -52,9 +57,13 @@ public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
     private boolean isShaking = false;
     private boolean isReturning = false;
     private boolean isToTarget = false;
-    private float initialUpY = targetY;
-    private float targetUpY = initialY;
-    private float initY;
+    private boolean isDraw = false;
+
+    private Bezier<Vector2> bezierCurve;
+
+    private float t = 0;
+
+    private Vector2 position;
 
     CollisionFilter collisionFilter = new CollisionFilter(  ) {
         @SuppressWarnings( "rawtypes" )
@@ -91,7 +100,10 @@ public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
         thrusterAnimation.setPlayMode( PlayMode.LOOP );
     }
 
-    public SlugShip(World<Entity> world) {
+    public SlugShip(World<Entity> world, AtlasRegion shipRegion) {
+
+        this.isDraw = false;
+        this.baseRegion = shipRegion;
         this.world = world;
 
 //        setBounds( stageX, stageY, width, height );
@@ -102,54 +114,47 @@ public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
         setOrigin( getWidth()/2f, getHeight()/2f );
     }
 
-    public void init( AtlasRegion shipRegion, float positionX, float positionY ) {
+    public void init( float positionX, float positionY ) {
 
-        this.baseRegion = shipRegion;
+
         life = 4;
         this.positionX = positionX;
-        this.positionY = positionY;
-        float y2 = 200 + positionY;
-        world.update( item, 0 + positionX, y2, width, height );
-        System.out.println("==计算点位==" + getX() + "=Y=" + getY());
+        this.positionY = positionY = positionY + COMMON_SHIP_HEIGHT;
+        world.update( item, 0 + positionX, positionY, width, height );
         resolve();
         isDead = false;
 
-        targetY = y2 - 20;
-        initialY = y2;
-        initialUpY = targetY;
-        targetUpY = initialY;
-        newY = initialY;
+//        Axis axis = Constants.SLUGSHIP.get(getName()).getAxis();
+        CenterPoint centerPoint = Constants.CENTER_POINTS.get(getName());
+        Axis leftAxis = centerPoint.getAttr().getLeftBottom();
+
+
+        float targetX = leftAxis.getX();
+        float targetY = leftAxis.getY() + COMMON_SHIP_HEIGHT;
+
+
+
+        Vector2 startPos = new Vector2(positionX, positionY);
+        float controlTargetX = positionX - 10;
+        float controlTargetY = positionY + 10;
+
+        Vector2 controlPoint = new Vector2(controlTargetX, controlTargetY);
+        Vector2 endPoint = new Vector2(targetX, targetY);
+
+        position = new Vector2(startPos);
+        Vector2 direction = new Vector2(endPoint).sub(startPos).nor();
+        Vector2 velocity = direction.scl(5);
+        bezierCurve = new Bezier<>(startPos, controlPoint, endPoint);
+        t = 0;
+
         isToTarget = false;
         elapsedTime = 0;
-        initY = y2;
+        isDraw = true;
     }
 
     private boolean runJump = false;
 
-    /**
-     * 块,上下缓动
-     */
-    public void reJump() {
-
-        if (!runJump) {
-            return;
-        }
-        targetY = initY - 20;
-        initialY = initY;
-        initialUpY = targetY;
-        targetUpY = initialY;
-        newY = initialY;
-        isToTarget = false;
-        elapsedTime = 0;
-    }
-
-
     public void runJump() {
-        targetY = initY - 20;
-        initialY = initY;
-        initialUpY = targetY;
-        targetUpY = initialY;
-        newY = initialY;
         isToTarget = false;
         elapsedTime = 0;
     }
@@ -160,6 +165,9 @@ public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
     @Override
     public void act( float delta ) {
 
+        if (!isDraw) {
+            return;
+        }
         deltaTime += delta;
         if (true) {
             return;
@@ -167,35 +175,33 @@ public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
 
     }
 
+    public void update() {
+
+        if (null == bezierCurve) {
+            return;
+        }
+        Vector2 point = bezierCurve.valueAt(new Vector2(), t);
+        position.set(point);
+
+        t += 0.05f;
+        if (t > 1) {
+            t = 1;
+        }
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha ) {
 
+        if (!isDraw) {
+            return;
+        }
         if (System.currentTimeMillis() > time + 3000) {
             time = System.currentTimeMillis();
-            reJump();
         }
         elapsedTime += Gdx.graphics.getDeltaTime();
-        if (isToTarget) {
-            if (newY != targetUpY) {
-//                newY = LinearInterpolator.linearInterpolation(elapsedTime, initialUpY, targetUpY - initialUpY, fallDuration);
-                newY = EasingFunctions.easeOutCubic(elapsedTime, initialUpY, targetUpY - initialUpY, fallDuration);
-//                newY = CustomBounceInterpolator.easeOutBounce(elapsedTime, initialUpY, targetUpY - initialUpY, returnDuration);
-            }
-            if (newY > targetUpY) {
-                newY = targetUpY;
-            }
-        } else {
-            if (newY > targetY + .51) {
-                newY = EasingFunctions.easeOutExpo(elapsedTime, initialY, targetY - initialY, returnDuration);
-//                newY = LinearInterpolator.linearInterpolation(elapsedTime, initialY, targetY - initialY, fallDuration);
-            } else {
-                System.out.println("我也该上去了");
-                isToTarget = true;
-                elapsedTime = 0f;
-            }
-        }
 
-        batch.draw( thrusterAnimation.getKeyFrame( deltaTime ), getX(), newY, getWidth(), getHeight() );
+        update();
+        batch.draw( thrusterAnimation.getKeyFrame( deltaTime ), position.x, position.y, getWidth(), getHeight() );
 
         // Base ship
 //        batch.draw( baseRegion, getX(), newY, getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation() );
@@ -217,10 +223,5 @@ public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
 
     public void forceFree() {
 //        Controllers.getInstance().getBrickController().forceFree( this );
-    }
-
-    public SlugShip setRunJump(boolean runJump) {
-        this.runJump = runJump;
-        return this;
     }
 }

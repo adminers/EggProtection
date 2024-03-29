@@ -24,6 +24,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
+import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
 import com.rondeo.pixwarsspace.utils.Constants;
 
 import java.util.Random;
@@ -74,8 +75,8 @@ public class BrickController extends Actor implements Entity, Disposable {
         brickShip.setZIndex(1);
         System.out.println("创建地图: " + c + ";" + buttonImage.getImage());
 
-
-        CenterPoint centerPoint = Constants.CENTER_POINTS.get(LevelManager.getCurrentLevel()).get(c);
+        CenterPoint centerPoint = Constants.createAttrPoint(level);
+        Constants.CENTER_POINTS.put(name, centerPoint);
         Axis centerPointAxis = centerPoint.getAxis();
         PointShip pointShip = createPointShip(centerPointAxis.getX(), centerPointAxis.getY());
         pointShip.setName(name);
@@ -97,6 +98,7 @@ public class BrickController extends Actor implements Entity, Disposable {
         if (c == 7) {
             SlugShip slugShip = createSlugShip(centerPointAxis.getX(), centerPointAxis.getY());
             slugShip.setName(name);
+            Constants.SLUGSHIP.put(name, new SulgPoint(centerPointAxis, slugShip));
         }
 
     }
@@ -114,9 +116,9 @@ public class BrickController extends Actor implements Entity, Disposable {
     private SlugShip createSlugShip(float x, float y) {
 
         AtlasRegion pointShipRegion = slugTextureAtlas.findRegion( "SlimeOrange" );
-        SlugShip slugShip = new SlugShip(world);
+        SlugShip slugShip = new SlugShip(world, pointShipRegion);
         slugShip.setRegions(null,null,null,null, slugTextureAtlas.findRegions("SlimeOrange"), null);
-        slugShip.init(pointShipRegion, x, y);
+//        slugShip.init( x, y);
         slugShip.setZIndex(2);
         getStage().addActor(slugShip);
         return slugShip;
