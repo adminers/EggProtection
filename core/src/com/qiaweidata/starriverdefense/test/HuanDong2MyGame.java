@@ -12,6 +12,17 @@ import com.qiaweidata.starriverdefense.test.func.CustomBounceInterpolator;
 import com.qiaweidata.starriverdefense.test.func.EasingFunctions;
 import com.qiaweidata.starriverdefense.test.func.LinearInterpolator;
 
+
+/**
+ * 缓动,可以用的,正在使用中
+ *
+ * @Title:
+ * @Description:
+ * @Company: www.fineplug.top
+ * @author: shenshilong[shilong_shen@163.com]
+ * @date:
+ * @version: v1.0
+ */
 public class HuanDong2MyGame extends Game {
 
     long time = System.currentTimeMillis() + 9000;

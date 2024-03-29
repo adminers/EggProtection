@@ -25,7 +25,9 @@ public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
     public static final int maxLife = 7;
 
     public int life = maxLife;
-    int width = 20, height = 16;
+
+    // 446  291
+    int width = 25, height = 19;
 
     float moveX, moveY;
     long time;

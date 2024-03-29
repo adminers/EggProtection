@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * 正在使用的,首个调整明白的二次贝塞尔曲线(中间点越高,越锋利)
+ * 调试：上下左右跳动(什么都没有改动,就改改数值运行肉眼瞅瞅)
  *
  * @Title:
  * @Description:
@@ -19,7 +19,7 @@ import com.badlogic.gdx.math.Vector2;
  * @date:
  * @version: v1.0
  */
-public class ThireBezierBulletGame extends ApplicationAdapter {
+public class ThireBezierJumpGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture bulletTexture;
     private Bezier<Vector2> bezierCurve;
@@ -32,16 +32,16 @@ public class ThireBezierBulletGame extends ApplicationAdapter {
         batch = new SpriteBatch();
         bulletTexture = new Texture("lib/ui/Jump.png");
 
-        Vector2 startPos = new Vector2(100, 100);
-        Vector2 controlPoint = new Vector2(200, 1000);
-        Vector2 endPoint = new Vector2(300, 500);
+        Vector2 startPos = new Vector2(0, 0);
+        Vector2 controlPoint = new Vector2(15, 200);
+        Vector2 endPoint = new Vector2(50, 0);
 
         bezierCurve = new Bezier<>(startPos, controlPoint, endPoint);
         bullet = new ThireBullet(startPos, controlPoint, endPoint);
 
-        flameEffect = new ParticleEffect();
+        /*flameEffect = new ParticleEffect();
         flameEffect.load(Gdx.files.internal("lib/effect/flame.p"), Gdx.files.internal("lib/effect"));
-        flameEffect.start();
+        flameEffect.start();*/
     }
 
     @Override
@@ -54,9 +54,9 @@ public class ThireBezierBulletGame extends ApplicationAdapter {
         batch.begin();
 
         // Render flame effect
-        flameEffect.setPosition(bullet.getPosition().x, bullet.getPosition().y);
+        /*flameEffect.setPosition(bullet.getPosition().x, bullet.getPosition().y);
         flameEffect.update(Gdx.graphics.getDeltaTime());
-        flameEffect.draw(batch);
+        flameEffect.draw(batch);*/
 
         bullet.render(batch);
         batch.end();

@@ -94,8 +94,10 @@ public class BrickController extends Actor implements Entity, Disposable {
         Constants.POINT_BRICK_SHIPS.put(name, new MapPointBlock(pointShip, brickShip));
 
 
-        SlugShip slugShip = createSlugShip(centerPointAxis.getX(), centerPointAxis.getY());
-        slugShip.setName(name);
+        if (c == 7) {
+            SlugShip slugShip = createSlugShip(centerPointAxis.getX(), centerPointAxis.getY());
+            slugShip.setName(name);
+        }
 
     }
 
