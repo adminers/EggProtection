@@ -1,8 +1,10 @@
 package com.rondeo.pixwarsspace.gamescreen.components.controllers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,6 +23,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
+import com.rondeo.pixwarsspace.gamescreen.components.play.YunShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
@@ -99,6 +102,35 @@ public class BrickController extends Actor implements Entity, Disposable {
             SlugShip slugShip = createSlugShip(centerPointAxis.getX(), centerPointAxis.getY());
             slugShip.setName(name);
             Constants.SLUGSHIP.put(name, new SulgPoint(centerPointAxis, slugShip));
+
+            TextureAtlas yunTextureAtlas = new TextureAtlas(Gdx.files.internal("lib/t_map/yun/yun.atlas"));
+
+
+            Array<TextureRegion> frames = new Array<TextureRegion>();
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0001.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0002.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0003.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0004.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0005.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0006.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0007.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0008.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0009.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0010.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0011.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0012.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0013.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0014.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0015.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0016.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0017.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0018.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0019.png"))));
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0020.png"))));
+            YunShip yunShip = new YunShip(world, frames);
+            yunShip.init(null, 100, 300);
+            yunShip.setName("云(" + c + ")");
+            getStage().addActor(yunShip);
         }
 
     }
