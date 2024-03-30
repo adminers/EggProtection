@@ -1,14 +1,14 @@
 {
   "slug": {
     "textureRegion": "lib/t_map/yun/yun.atlas",
-    "fall": "xialuodongh",
+    "fall": "base",
     "targetPoint": {
       "x": 10.0,
-      "y": 121.3
+      "y": 0.3
     },
     "generatePoint": {
-      "x": 0.0,
-      "y": 0.3
+      "x": 100.0,
+      "y": 100.3
     },
     "life": 5,
     "name": "slug"

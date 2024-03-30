@@ -17,6 +17,7 @@ public class Controllers implements Disposable {
     private SnakeEnemyController snakeEnemyController;
     private PlayController playController;
     private BrickController brickController;
+    private MonsterFactoryController monsterFactoryController;
     private CameraController cameraController;
     private PowerUpController powerUpController;
     private BossController bossController;
@@ -44,6 +45,7 @@ public class Controllers implements Disposable {
         snakeEnemyController = new SnakeEnemyController( world, assets.findRegions( "explosion" ), 3, textureAtlas.findRegion( "idle" ), textureAtlas.findRegion( "idle" ), textureAtlas.findRegion( "idle" ) );
         playController = new PlayController( world, null, 3, null, null, null );
         brickController = new BrickController( world, null, 3, textureAtlas.findRegion( "idle" ), textureAtlas.findRegion( "idle" ), textureAtlas.findRegion( "idle" ) );
+        monsterFactoryController = new MonsterFactoryController( world );
         powerUpController = new PowerUpController( world, assets.findRegions( "powerups" ).toArray() );
         bossController = new BossController( world, 
             assets.findRegions( "tentacles" ), 
@@ -71,6 +73,7 @@ public class Controllers implements Disposable {
         snakeEnemyController.dispose();
         playController.dispose();
         brickController.dispose();
+        monsterFactoryController.dispose();
         bulletController.dispose();
         bossController.dispose();
     }
@@ -153,4 +156,7 @@ public class Controllers implements Disposable {
         return bossController;
     }
 
+    public MonsterFactoryController getMonsterFactoryController() {
+        return this.monsterFactoryController;
+    }
 }

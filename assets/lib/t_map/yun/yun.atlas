@@ -144,3 +144,10 @@ fudong
   orig: 576, 207
   offset: 0, 0
   index: -1
+base
+  rotate: false
+  xy: 580, 420
+  size: 576, 207
+  orig: 576, 207
+  offset: 0, 0
+  index: -1
