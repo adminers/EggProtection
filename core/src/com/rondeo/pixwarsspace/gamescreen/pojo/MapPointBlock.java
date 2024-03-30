@@ -6,7 +6,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
 /**
  * @Title: MapPointBlock
  * @Description: MapPointBlock
- * @Company: www.wrenchdata.com
+ * @Company: www.qiaweidata.com
  * @author: shenshilong
  * @date: 2024-03-28
  * @version: V1.0

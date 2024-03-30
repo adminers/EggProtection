@@ -6,7 +6,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
 /**
  * @Title: SulgPoint
  * @Description: SulgPoint
- * @Company: www.wrenchdata.com
+ * @Company: www.qiaweidata.com
  * @author: shenshilong
  * @date: 2024-03-29
  * @version: V1.0

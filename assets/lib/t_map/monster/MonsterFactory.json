@@ -1,25 +1,19 @@
 {
   "slug": {
-    "textureRegion": "lib/t_map/yun/yun.atlas",
-    "fall": "base",
-    "targetPoint": {
-      "x": 10.0,
-      "y": 0.3
-    },
+    "textureRegion": "lib/t_map/monster/base/baseball.atlas",
+    "fall": "idle",
     "generatePoint": {
-      "x": 100.0,
-      "y": 100.3
+      "x": 50,
+      "y": 330
     },
     "life": 5,
-    "name": "slug"
+    "name": "slug",
+    "width": 25,
+    "height": 20
   },
   "Mosquito": {
     "textureRegion": "lib/t_map/yun/yun.atlas",
     "fall": "xialuodongh",
-    "targetPoint": {
-      "x": 10.0,
-      "y": 121.3
-    },
     "generatePoint": {
       "x": 0.0,
       "y": 0.3

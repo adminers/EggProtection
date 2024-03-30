@@ -125,7 +125,6 @@ public class BrickShip extends Entity.Wrapper implements Entity, Disposable {
         this.positionY = positionY;
         float y2 = 200 + positionY;
         world.update( item, 0 + positionX, y2, width, height );
-        System.out.println("==砖块==" + getX() + "=Y=" + getY());
         resolve();
         isDead = false;
 
@@ -206,7 +205,6 @@ public class BrickShip extends Entity.Wrapper implements Entity, Disposable {
                 newY = EasingFunctions.easeOutExpo(elapsedTime, initialY, targetY - initialY, returnDuration);
 //                newY = LinearInterpolator.linearInterpolation(elapsedTime, initialY, targetY - initialY, fallDuration);
             } else {
-                System.out.println("该上去了");
                 isToTarget = true;
                 elapsedTime = 0f;
             }

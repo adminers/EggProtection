@@ -171,9 +171,9 @@ public class PlayShip extends Player {
 //                Constants.POINT_BRICK_SHIPS.get("2").getPointShip().runJump();
 
                 // TODO:shen 测试先往左跳
-                SulgPoint sulgPoint = Constants.SLUGSHIP.get("7");
+                /*SulgPoint sulgPoint = Constants.SLUGSHIP.get("2:0");
                 Axis axis = sulgPoint.getAxis();
-                sulgPoint.getSlugShip().init(axis.getX(), axis.getY());
+                sulgPoint.getSlugShip().init(axis.getX(), axis.getY());*/
 
                 System.out.println("////////////////////" + enemyShip.getX() + "-" + enemyShip.getY());
 

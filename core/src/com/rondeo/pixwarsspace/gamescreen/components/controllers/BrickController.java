@@ -73,10 +73,10 @@ public class BrickController extends Actor implements Entity, Disposable {
         stage.addActor(brickShip);
         AtlasRegion shipRegion = textureAtlas.findRegion( buttonImage.getImage() );
         brickShip.init(shipRegion, level.getX(), level.getY());
-        String name = String.valueOf(c);
-        brickShip.setName(name);
+        String name = buttonImage.getName();
+        brickShip.setName(buttonImage.getName());
         brickShip.setZIndex(1);
-        System.out.println("创建地图: " + c + ";" + buttonImage.getImage());
+        System.out.println("创建地图: " + buttonImage.getName() + ";" + buttonImage.getImage());
 
         CenterPoint centerPoint = Constants.createAttrPoint(level);
         Constants.CENTER_POINTS.put(name, centerPoint);

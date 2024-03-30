@@ -19,6 +19,7 @@ import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
 import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
+import com.rondeo.pixwarsspace.monster.DistributionMap;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
 
 import java.io.BufferedReader;
@@ -67,6 +68,11 @@ public class Constants {
     public static List<List<ButtonImage>> PLATES;
 
     /**
+     * 怪物生成点
+     */
+    public static List<List<DistributionMap>> DISTRIBUTION_MAP;
+
+    /**
      * 落脚点(中心点)
      */
     public static Map<String, CenterPoint> CENTER_POINTS = new HashMap<>();
@@ -104,6 +110,8 @@ public class Constants {
         CARDS = new Gson().fromJson(gdxFileString("lib/card/CardLeave"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
         PLATES = new Gson().fromJson(gdxFileString("lib/t_map/Plate"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
 
+        DISTRIBUTION_MAP = new Gson().fromJson(gdxFileString("lib/t_map/monster/DistributionMap.json"), new TypeToken<List<List<DistributionMap>>>() {}.getType());
+
         MONSTER_ATTR = new Gson().fromJson(gdxFileString("lib/t_map/monster/MonsterFactory.json"), new TypeToken<Map<String, MonsterAttr>>() {}.getType());
     }
 
@@ -133,7 +141,7 @@ public class Constants {
         return sb.toString();
     }
 
-    public static void centerPoint() {
+    /*public static void centerPoint() {
 
         float E = 16;
         float D = 24;
@@ -157,7 +165,7 @@ public class Constants {
                 centerPoint.add(centerPointPojo);
             }
         }
-    }
+    }*/
 
     /**
      * 根据当前点,计算出周边坐标

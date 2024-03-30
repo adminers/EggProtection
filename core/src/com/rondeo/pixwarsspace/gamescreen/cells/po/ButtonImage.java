@@ -10,6 +10,8 @@ public class ButtonImage implements Serializable {
 
     private String image;
 
+    private String name;
+
     public String getImage() {
         return image;
     }
@@ -26,5 +28,23 @@ public class ButtonImage implements Serializable {
     public ButtonImage setAxis(Axis axis) {
         this.axis = axis;
         return this;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public ButtonImage setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ButtonImage{" +
+                "axis=" + axis +
+                ", image='" + image + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

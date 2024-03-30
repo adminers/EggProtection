@@ -3,7 +3,7 @@ package com.qiaweidata.starriverdefense.test.po;
 /**
  * @Title: CenterPoint
  * @Description: CenterPoint
- * @Company: www.wrenchdata.com
+ * @Company: www.qiaweidata.com
  * @author: shenshilong
  * @date: 2024-03-28
  * @version: V1.0

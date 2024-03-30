@@ -12,9 +12,14 @@ import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
  */
 public class MonsterAttr {
 
+    private int width;
+
+    private int height;
+
     private String textureRegion;
     private String fall;
-    private Axis targetPoint;
+    private String targetName;
+
     private Axis generatePoint;
     private int life;
     private String name;
@@ -34,15 +39,6 @@ public class MonsterAttr {
 
     public MonsterAttr setFall(String fall) {
         this.fall = fall;
-        return this;
-    }
-
-    public Axis getTargetPoint() {
-        return this.targetPoint;
-    }
-
-    public MonsterAttr setTargetPoint(Axis targetPoint) {
-        this.targetPoint = targetPoint;
         return this;
     }
 
@@ -73,12 +69,41 @@ public class MonsterAttr {
         return this;
     }
 
+    public String getTargetName() {
+        return this.targetName;
+    }
+
+    public MonsterAttr setTargetName(String targetName) {
+        this.targetName = targetName;
+        return this;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public MonsterAttr setWidth(int width) {
+        this.width = width;
+        return this;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
+
+    public MonsterAttr setHeight(int height) {
+        this.height = height;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "MonsterAttr{" +
-                "textureRegion='" + textureRegion + '\'' +
+                "width=" + width +
+                ", height=" + height +
+                ", textureRegion='" + textureRegion + '\'' +
                 ", fall='" + fall + '\'' +
-                ", targetPoint=" + targetPoint +
+                ", targetName='" + targetName + '\'' +
                 ", generatePoint=" + generatePoint +
                 ", life=" + life +
                 ", name='" + name + '\'' +

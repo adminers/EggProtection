@@ -1,5 +1,6 @@
 package com.rondeo.pixwarsspace.gamescreen.components.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -11,9 +12,13 @@ import com.badlogic.gdx.utils.Disposable;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.World;
+import com.qiaweidata.starriverdefense.test.func.EasingFunctions;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
+import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
+import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
+import com.rondeo.pixwarsspace.utils.Constants;
 
 import static com.rondeo.pixwarsspace.utils.Constants.COMMON_SHIP_HEIGHT;
 
@@ -58,6 +63,8 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
      */
     private String state;
 
+    private String targetName;
+
     public MonsterShip(World<Entity> world) {
 
         this.world = world;
@@ -76,12 +83,13 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
 
     public void init(MonsterAttr monsterAttr) {
 
-        Axis targetPoint = monsterAttr.getGeneratePoint();
+        // 生成点
+        Axis generatePoint = monsterAttr.getGeneratePoint();
         this.monsterAttr = monsterAttr;
         this.life = monsterAttr.getLife();
-        this.positionX = targetPoint.getX();
-        this.positionY = targetPoint.getY() + COMMON_SHIP_HEIGHT;
-        this.world.update(this.item, 0 + positionX, positionY, width, height);
+        this.positionX = generatePoint.getX();
+        this.positionY = generatePoint.getY() ;
+        this.world.update(this.item, 0 + positionX, positionY, monsterAttr.getWidth(), monsterAttr.getHeight());
         resolve();
         /*CenterPoint centerPoint = Constants.CENTER_POINTS.get(getName());
         Axis leftAxis = centerPoint.getAttr().getLeftBottom();
@@ -108,9 +116,12 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
     private void fall() {
 
         this.state = "fall";
-        Axis targetPoint = monsterAttr.getTargetPoint();
-        float targetX = targetPoint.getX();
-        float targetY = targetPoint.getY() + COMMON_SHIP_HEIGHT;
+        CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
+        Axis blockAxis = centerPoint.getAxis();
+
+        // 目测下落至点位时有点偏移,微调
+        float targetX = blockAxis.getX() - 8;
+        float targetY = blockAxis.getY() + COMMON_SHIP_HEIGHT;
         Vector2 startPos = new Vector2(positionX, positionY);
         float controlTargetX = positionX - 10;
         float controlTargetY = positionY + 10;
@@ -132,23 +143,66 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
 
     public void update() {
 
-        if (null == bezierCurve) {
+        if (null == bezierCurve || t == 1.0f) {
             return;
         }
         Vector2 point = bezierCurve.valueAt(new Vector2(), t);
         position.set(point);
-
-        t += 0.05f;
+        t += 0.01f;
         if (t > 1) {
             t = 1;
 
             if ("fall".equals(this.state)) {
-                System.out.println("执行完下落");
+                CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
+
+                // 初始化下落的值
+                initY = centerPoint.getAxis().getY() + COMMON_SHIP_HEIGHT;
 
                 // 执行块下落
-
+                MapPointBlock mapPointBlock = Constants.POINT_BRICK_SHIPS.get(targetName);
+                System.out.println("---------------下落块：" + targetName);
+                mapPointBlock.getPointShip().runJump();
+                mapPointBlock.getBrickShip().runJump();
+                this.runJump();
             }
         }
+    }
+
+    float newY;
+    private boolean isToTarget = false;
+    private float initialUpY;
+    private float targetUpY;
+    private float elapsedTime = 0;
+    private float initialY;
+
+    private float initY;
+
+    private float fallDuration = 1.0f;
+
+    private float returnDuration = 1.0f;
+
+    private float targetY;
+
+    private boolean isSlow;
+
+    private float slowAction() {
+
+        if (isToTarget) {
+            if (newY != targetUpY) {
+                newY = EasingFunctions.easeOutCubic(elapsedTime, initialUpY, targetUpY - initialUpY, fallDuration);
+            }
+            if (newY > targetUpY) {
+                newY = targetUpY;
+            }
+        } else {
+            if (newY > targetY + .51) {
+                newY = EasingFunctions.easeOutExpo(elapsedTime, initialY, targetY - initialY, returnDuration);
+            } else {
+                isToTarget = true;
+                elapsedTime = 0f;
+            }
+        }
+        return newY;
     }
 
     @Override
@@ -157,13 +211,32 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
         if (notRender) {
             return;
         }
-        update();
-        batch.draw(thrusterAnimation.getKeyFrame(deltaTime), position.x, position.y, getWidth(), getHeight());
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        if (isSlow) {
+            slowAction();
+            batch.draw(thrusterAnimation.getKeyFrame(deltaTime), position.x, newY, getWidth(), getHeight());
+        } else {
+            update();
+            batch.draw(thrusterAnimation.getKeyFrame(deltaTime), position.x, position.y, getWidth(), getHeight());
+//        System.out.println("getX=" + getX() + ",getY=" + getY() + "|position.x=" + position.x + ",position.y=" + position.y);
+        }
     }
 
     public void resolve() {
         rect = world.getRect(item);
         setBounds(rect.x, rect.y, rect.w, rect.h);
+    }
+
+    public void runJump() {
+
+        targetY = initY - 20;
+        initialY = initY;
+        initialUpY = targetY;
+        targetUpY = initialY;
+        newY = initialY;
+        isToTarget = false;
+        elapsedTime = 0;
+        isSlow = true;
     }
 
 
@@ -173,5 +246,10 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
     @Override
     public void dispose() {
 
+    }
+
+    public MonsterShip setTargetName(String targetName) {
+        this.targetName = targetName;
+        return this;
     }
 }

@@ -49,7 +49,8 @@ public class TestCon {
 
         String str = "'{'\n" +
                 "            \"axis\" : '{'\"x\": {0},\"y\": {1}'}',\n" +
-                "            \"image\" : \"block_1\"\n" +
+                "            \"image\" : \"block_1\",\n" +
+                "            \"name\" : \"{2}\"\n" +
                 "        '}',";
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < row; i++) {
@@ -60,11 +61,11 @@ public class TestCon {
 
             for (int j = i; j > 0; j--) {
                 float v = tempX - w * (j);
-                String format = MessageFormat.format(str, v, tempY);
+                String format = MessageFormat.format(str, v, tempY, i + ":" + j);
                 sb.append(format);
             }
             for (int j = 0; j < colNum; j++) {
-                String format = MessageFormat.format(str, tempX + (j * w), tempY);
+                String format = MessageFormat.format(str, tempX + (j * w), tempY, i + ":" + j);
                 sb.append(format);
             }
             sb.append("\n");

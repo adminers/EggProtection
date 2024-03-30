@@ -179,9 +179,7 @@ public class PointShip extends Entity.Wrapper implements Entity, Disposable {
         elapsedTime += Gdx.graphics.getDeltaTime();
         if (isToTarget) {
             if (newY != targetUpY) {
-//                newY = LinearInterpolator.linearInterpolation(elapsedTime, initialUpY, targetUpY - initialUpY, fallDuration);
                 newY = EasingFunctions.easeOutCubic(elapsedTime, initialUpY, targetUpY - initialUpY, fallDuration);
-//                newY = CustomBounceInterpolator.easeOutBounce(elapsedTime, initialUpY, targetUpY - initialUpY, returnDuration);
             }
             if (newY > targetUpY) {
                 newY = targetUpY;
@@ -189,9 +187,7 @@ public class PointShip extends Entity.Wrapper implements Entity, Disposable {
         } else {
             if (newY > targetY + .51) {
                 newY = EasingFunctions.easeOutExpo(elapsedTime, initialY, targetY - initialY, returnDuration);
-//                newY = LinearInterpolator.linearInterpolation(elapsedTime, initialY, targetY - initialY, fallDuration);
             } else {
-                System.out.println("我也该上去了");
                 isToTarget = true;
                 elapsedTime = 0f;
             }

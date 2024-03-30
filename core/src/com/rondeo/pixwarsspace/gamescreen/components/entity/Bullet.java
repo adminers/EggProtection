@@ -203,7 +203,6 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
         update();
         super.act(delta);
         resolve();
-//        result = world.move( item, getX() + (dirX), getY() + (dirY), collisionFilter );
         result = world.move( item, position.x, position.y, collisionFilter );
         if (isAngled) {
 //            result = world.move( item, getX() + dirX, getY() + 300*delta + dirY, collisionFilter );

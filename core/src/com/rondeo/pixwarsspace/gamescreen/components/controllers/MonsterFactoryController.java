@@ -17,10 +17,13 @@ import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.MonsterShip;
+import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
+import com.rondeo.pixwarsspace.monster.DistributionMap;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
 import com.rondeo.pixwarsspace.utils.Constants;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MonsterFactoryController extends Actor implements Entity, Disposable {
@@ -52,20 +55,24 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         this.world = world;
     }
 
-    public void deploy(Stage stage, int c) {
+    public void deploy(Stage stage, int index, DistributionMap distributionMap) {
 
+        String dName = distributionMap.getName();
         MonsterAttr monsterAttr = Constants.MONSTER_ATTR.get("slug");
-        Axis level = monsterAttr.getTargetPoint();
 
         // Deploy first
         MonsterShip monsterShip = monsterShipPool.obtain();
+
+        // 设置目标点
+        monsterShip.setTargetName(distributionMap.getTargetName());
+        monsterShip.init(monsterAttr);
         stage.addActor(monsterShip);
 
         TextureAtlas monsterTextureAtlas = new TextureAtlas(Gdx.files.internal(monsterAttr.getTextureRegion()));
         Array<AtlasRegion> commonRegion = monsterTextureAtlas.findRegions(monsterAttr.getFall());
         monsterShip.setRegions(commonRegion);
-        monsterShip.init(monsterAttr);
-        String name = String.valueOf(c);
+
+        String name = index +"_" + dName;
         monsterShip.setName(name);
 //        monsterShip.setZIndex(3);
         this.visibleMonster.put(name, monsterShip);
@@ -74,15 +81,20 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
     public SequenceAction deployShips() {
 
         deploySequence = new SequenceAction();
-        deploySequence.addAction(Actions.delay(0.0f));
-        deploySequence.addAction(new Action() {
+        List<DistributionMap> distributionMaps = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentLevel());
+        for (int i = 0; i < distributionMaps.size(); i++) {
+            DistributionMap distributionMap = distributionMaps.get(i);
+            deploySequence.addAction(Actions.delay(i * 1.0f));
+            int finalI = i;
+            deploySequence.addAction(new Action() {
 
-            @Override
-            public boolean act(float delta) {
-                deploy(getStage(), 1);
-                return true;
-            }
-        });
+                @Override
+                public boolean act(float delta) {
+                    deploy(getStage(), finalI, distributionMap);
+                    return true;
+                }
+            });
+        }
 
         // 添加一个 RunnableAction 作为最后一个动作，用于执行其他代码
         RunnableAction finishAction = Actions.run(() -> {
@@ -103,6 +115,8 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
                 addAction(deployShips());
                 time = System.currentTimeMillis();
             }
+        } else {
+//            System.out.println(1);
         }
     }
 

@@ -1,0 +1,90 @@
+
+baseball.png
+size: 1721,1077
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+idle
+  rotate: false
+  xy: 2, 725
+  size: 425, 350
+  orig: 720, 480
+  offset: 218, 30
+  index: -1
+idle
+  rotate: false
+  xy: 429, 725
+  size: 425, 350
+  orig: 720, 480
+  offset: 217, 30
+  index: -1
+idle
+  rotate: false
+  xy: 856, 724
+  size: 426, 351
+  orig: 720, 480
+  offset: 215, 30
+  index: -1
+idle
+  rotate: false
+  xy: 1284, 722
+  size: 427, 353
+  orig: 720, 480
+  offset: 213, 30
+  index: -1
+idle
+  rotate: false
+  xy: 430, 367
+  size: 428, 355
+  orig: 720, 480
+  offset: 211, 30
+  index: -1
+idle
+  rotate: false
+  xy: 1288, 363
+  size: 428, 357
+  orig: 720, 480
+  offset: 210, 30
+  index: -1
+idle
+  rotate: false
+  xy: 431, 4
+  size: 428, 359
+  orig: 720, 480
+  offset: 208, 30
+  index: -1
+idle
+  rotate: false
+  xy: 861, 2
+  size: 428, 359
+  orig: 720, 480
+  offset: 210, 30
+  index: -1
+idle
+  rotate: false
+  xy: 1291, 2
+  size: 428, 359
+  orig: 720, 480
+  offset: 211, 30
+  index: -1
+idle
+  rotate: false
+  xy: 2, 8
+  size: 427, 357
+  orig: 720, 480
+  offset: 213, 30
+  index: -1
+idle
+  rotate: false
+  xy: 860, 365
+  size: 426, 355
+  orig: 720, 480
+  offset: 215, 30
+  index: -1
+idle
+  rotate: false
+  xy: 2, 370
+  size: 426, 353
+  orig: 720, 480
+  offset: 216, 30
+  index: -1

@@ -4,6 +4,8 @@ package com.rondeo.pixwarsspace.gamescreen.pojo;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 
 /**
+ * 块上面的点
+ *
  * @Title: CenterPoint
  * @Description: CenterPoint
  * @Company: www.qiaweidata.com
@@ -18,6 +20,9 @@ public class CenterPoint {
      */
     private Axis blockAxis;
 
+    /**
+     * 块的站点
+     */
     private Axis axis;
 
     private EnemyJumpCoordinate attr;

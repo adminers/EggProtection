@@ -2,113 +2,149 @@
     [
 {
             "axis" : {"x": 10,"y": 70},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "0:0"
         },{
             "axis" : {"x": 42,"y": 70},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "0:1"
         },{
             "axis" : {"x": 74,"y": 70},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "0:2"
         },{
             "axis" : {"x": 106,"y": 70},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "0:3"
         },{
             "axis" : {"x": 138,"y": 70},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "0:4"
         },
 {
             "axis" : {"x": -6,"y": 46},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "1:1"
         },{
             "axis" : {"x": 26,"y": 46},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "1:0"
         },{
             "axis" : {"x": 58,"y": 46},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "1:1"
         },{
             "axis" : {"x": 90,"y": 46},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "1:2"
         },{
             "axis" : {"x": 122,"y": 46},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "1:3"
         },{
             "axis" : {"x": 154,"y": 46},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "1:4"
         },
 {
             "axis" : {"x": -22,"y": 22},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "2:2"
         },{
             "axis" : {"x": 10,"y": 22},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "2:1"
         },{
             "axis" : {"x": 42,"y": 22},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "2:0"
         },{
             "axis" : {"x": 74,"y": 22},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "2:1"
         },{
             "axis" : {"x": 106,"y": 22},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "2:2"
         },{
             "axis" : {"x": 138,"y": 22},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "2:3"
         },{
             "axis" : {"x": 170,"y": 22},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "2:4"
         },
 {
             "axis" : {"x": -38,"y": -2},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "3:3"
         },{
             "axis" : {"x": -6,"y": -2},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "3:2"
         },{
             "axis" : {"x": 26,"y": -2},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "3:1"
         },{
             "axis" : {"x": 58,"y": -2},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "3:0"
         },{
             "axis" : {"x": 90,"y": -2},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "3:1"
         },{
             "axis" : {"x": 122,"y": -2},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "3:2"
         },{
             "axis" : {"x": 154,"y": -2},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "3:3"
         },{
             "axis" : {"x": 186,"y": -2},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "3:4"
         },
 {
             "axis" : {"x": -54,"y": -26},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "4:4"
         },{
             "axis" : {"x": -22,"y": -26},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "4:3"
         },{
             "axis" : {"x": 10,"y": -26},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "4:2"
         },{
             "axis" : {"x": 42,"y": -26},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "4:1"
         },{
             "axis" : {"x": 74,"y": -26},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "4:0"
         },{
             "axis" : {"x": 106,"y": -26},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "4:1"
         },{
             "axis" : {"x": 138,"y": -26},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "4:2"
         },{
             "axis" : {"x": 170,"y": -26},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "4:3"
         },{
             "axis" : {"x": 202,"y": -26},
-            "image" : "block_1"
+            "image" : "block_1",
+            "name" : "4:4"
         }
+
 ]
 ]
