@@ -106,7 +106,7 @@ public class BrickController extends Actor implements Entity, Disposable {
             TextureAtlas yunTextureAtlas = new TextureAtlas(Gdx.files.internal("lib/t_map/yun/yun.atlas"));
 
 
-            Array<TextureRegion> frames = new Array<TextureRegion>();
+            /*Array<TextureRegion> frames = new Array<TextureRegion>();
             frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0001.png"))));
             frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0002.png"))));
             frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0003.png"))));
@@ -126,9 +126,10 @@ public class BrickController extends Actor implements Entity, Disposable {
             frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0017.png"))));
             frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0018.png"))));
             frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0019.png"))));
-            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0020.png"))));
-            YunShip yunShip = new YunShip(world, frames);
-            yunShip.init(null, 100, 300);
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0020.png"))));*/
+//            YunShip yunShip = new YunShip(world, frames);
+            YunShip yunShip = new YunShip(world, yunTextureAtlas.findRegions("fudong"), null);
+            yunShip.init(null, 50, 330);
             yunShip.setName("云(" + c + ")");
             getStage().addActor(yunShip);
         }

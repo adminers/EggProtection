@@ -1,0 +1,30 @@
+{
+  "slug": {
+    "textureRegion": "lib/t_map/yun/yun.atlas",
+    "fall": "xialuodongh",
+    "targetPoint": {
+      "x": 10.0,
+      "y": 121.3
+    },
+    "generatePoint": {
+      "x": 0.0,
+      "y": 0.3
+    },
+    "life": 5,
+    "name": "slug"
+  },
+  "Mosquito": {
+    "textureRegion": "lib/t_map/yun/yun.atlas",
+    "fall": "xialuodongh",
+    "targetPoint": {
+      "x": 10.0,
+      "y": 121.3
+    },
+    "generatePoint": {
+      "x": 0.0,
+      "y": 0.3
+    },
+    "life": 5,
+    "name": "Mosquito"
+  }
+}

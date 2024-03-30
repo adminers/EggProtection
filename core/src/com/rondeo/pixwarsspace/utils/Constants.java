@@ -19,6 +19,7 @@ import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
 import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
+import com.rondeo.pixwarsspace.monster.MonsterAttr;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -75,6 +76,11 @@ public class Constants {
     public static Map<String, SulgPoint> SLUGSHIP = new HashMap<>();
 
     /**
+     * 怪物预建对象
+     */
+    public static Map<String, MonsterAttr> MONSTER_ATTR = new HashMap<>();
+
+    /**
      * 文件中的地图,普遍要加上这个值,才在屏幕显示居中
      */
     public static float COMMON_SHIP_HEIGHT = 200;
@@ -97,6 +103,8 @@ public class Constants {
 
         CARDS = new Gson().fromJson(gdxFileString("lib/card/CardLeave"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
         PLATES = new Gson().fromJson(gdxFileString("lib/t_map/Plate"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
+
+        MONSTER_ATTR = new Gson().fromJson(gdxFileString("lib/t_map/monster/MonsterFactory.json"), new TypeToken<Map<String, MonsterAttr>>() {}.getType());
     }
 
     private Constants() {

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class ButtonImage implements Serializable {
 
+    private static final long serialVersionUID = 7856330031657036276L;
+
     private Axis axis;
 
     private String image;

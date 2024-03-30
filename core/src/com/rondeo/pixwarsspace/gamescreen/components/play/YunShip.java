@@ -56,6 +56,8 @@ public class YunShip extends Player {
     Animation<TextureRegion> explosionAnimation1;
     Animation<TextureRegion> explosionAnimation2;
 
+
+
     int width = 100, height = 35;
     float screenWidth, screenHeight;
     long time;
@@ -63,12 +65,14 @@ public class YunShip extends Player {
     public boolean invulnerable = true;
     long isHit;
 
-    public YunShip(World<Entity> world, Array<TextureRegion> explosionRegions ) {
+    public YunShip(World<Entity> world, Array<AtlasRegion> baseRegion, Array<TextureRegion> explosionRegions ) {
         this.world = world;
         item = new Item<Entity>( this );
         world.add( item, 0, 0, 0, 0 );
-        explosionAnimation1 = new Animation<>( 5f, explosionRegions );
+        explosionAnimation1 = new Animation<>( 5f, baseRegion );
         explosionAnimation1.setPlayMode( PlayMode.LOOP );
+
+
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0021.png"))));
@@ -92,8 +96,10 @@ public class YunShip extends Player {
         frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0039.png"))));
         frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0040.png"))));
 
-        explosionAnimation2 = new Animation<>( 5f, frames );
+        explosionAnimation2 = new Animation<>( 1f, frames );
         explosionAnimation2.setPlayMode( PlayMode.LOOP );
+
+
 
         explosionAnimation = explosionAnimation1;
         shapeRenderer = new ShapeRenderer();
@@ -144,9 +150,11 @@ public class YunShip extends Player {
 //        }
         world.move( item, getX(), getY(), collisionFilter );
         resolve();
-        if( System.currentTimeMillis() > time + 4000 && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
+        if( System.currentTimeMillis() > time + 8000 && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
             time = System.currentTimeMillis();
-            explosionAnimation = explosionAnimation2;
+//            explosionAnimation = explosionAnimation1;
+        } else if (System.currentTimeMillis() > time + 4000) {
+//            explosionAnimation = explosionAnimation2;
         }
 
     }
