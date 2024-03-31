@@ -58,7 +58,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
     public void deploy(Stage stage, int index, DistributionMap distributionMap) {
 
         String dName = distributionMap.getName();
-        MonsterAttr monsterAttr = Constants.MONSTER_ATTR.get("slug");
+        MonsterAttr monsterAttr = Constants.MONSTER_ATTR.get(dName);
 
         // Deploy first
         MonsterShip monsterShip = monsterShipPool.obtain();

@@ -9,16 +9,20 @@
     "life": 5,
     "name": "slug",
     "width": 25,
-    "height": 20
+    "height": 20,
+    "restTime": 3000
   },
   "Mosquito": {
-    "textureRegion": "lib/t_map/yun/yun.atlas",
-    "fall": "xialuodongh",
+    "textureRegion": "lib/t_map/t1/SlugCannon.atlas",
+    "fall": "SlimeOrange",
     "generatePoint": {
-      "x": 0.0,
-      "y": 0.3
+      "x": 100,
+      "y": 330
     },
     "life": 5,
-    "name": "Mosquito"
+    "name": "SlugCannon",
+    "width": 25,
+    "height": 20,
+    "restTime": 3000
   }
 }

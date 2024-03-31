@@ -24,6 +24,11 @@ public class MonsterAttr {
     private int life;
     private String name;
 
+    /**
+     * 静止时间,然后寻路跳跃
+     */
+    private int restTime;
+
     public String getTextureRegion() {
         return this.textureRegion;
     }
@@ -96,6 +101,15 @@ public class MonsterAttr {
         return this;
     }
 
+    public int getRestTime() {
+        return restTime;
+    }
+
+    public MonsterAttr setRestTime(int restTime) {
+        this.restTime = restTime;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "MonsterAttr{" +
@@ -107,6 +121,7 @@ public class MonsterAttr {
                 ", generatePoint=" + generatePoint +
                 ", life=" + life +
                 ", name='" + name + '\'' +
+                ", restTime=" + restTime +
                 '}';
     }
 }
