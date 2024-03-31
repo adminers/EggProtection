@@ -162,7 +162,7 @@ public class PlayShip extends Player {
         world.move( item, getX(), getY(), collisionFilter );
         resolve();
 //        ++faShe;
-        if( System.currentTimeMillis() > time + 3000 && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
+        if( System.currentTimeMillis() > time + 800 && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
             time = System.currentTimeMillis();
             Enemy enemyShip  = LevelManager.findClosestEnemy(getX(), getY());
             if (null != enemyShip) {

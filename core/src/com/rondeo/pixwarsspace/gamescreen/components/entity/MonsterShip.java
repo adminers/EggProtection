@@ -127,9 +127,11 @@ public class MonsterShip extends Enemy {
         t = 0;*/
 
         this.position = new Vector2(this.positionX, this.positionY);
-        fall();
         notRender = false;
         isDead = false;
+        isSlow = false;
+        fall();
+
     }
 
     /**
@@ -166,8 +168,6 @@ public class MonsterShip extends Enemy {
         world.move( item, getX(), getY(), collisionFilter );
 //        System.out.println("getX=" + getX() + ",getY()=" + getY() + ",position.x=" + position.x + ", position.y=" + position.y);
         resolve();
-
-
         if( life <= 0 ) {
             if( !SoundController.getInstance().explosion.isPlaying() ) {
                 SoundController.getInstance().explosion.play();
@@ -204,6 +204,7 @@ public class MonsterShip extends Enemy {
                 mapPointBlock.getPointShip().runJump();
                 mapPointBlock.getBrickShip().runJump();
                 this.runJump();
+                this.state = "endFall";
             }
         }
     }
@@ -320,6 +321,10 @@ public class MonsterShip extends Enemy {
 
     public void forceFree() {
         Controllers.getInstance().getMonsterFactoryController().forceFree( this );
+
+        this.position = null;
+        notRender = true;
+        bezierCurve = null;
     }
 
     @Override

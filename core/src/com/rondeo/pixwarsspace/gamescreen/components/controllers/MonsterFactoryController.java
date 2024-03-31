@@ -85,7 +85,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         List<DistributionMap> distributionMaps = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentLevel());
         for (int i = 0; i < distributionMaps.size(); i++) {
             DistributionMap distributionMap = distributionMaps.get(i);
-            deploySequence.addAction(Actions.delay(i * 1.0f));
+            deploySequence.addAction(Actions.delay(1.0f));
             int finalI = i;
             deploySequence.addAction(new Action() {
 
