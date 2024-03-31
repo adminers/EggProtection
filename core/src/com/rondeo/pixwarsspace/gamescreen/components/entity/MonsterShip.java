@@ -1,6 +1,7 @@
 package com.rondeo.pixwarsspace.gamescreen.components.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -8,17 +9,20 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Disposable;
-import com.dongbat.jbump.Item;
-import com.dongbat.jbump.Rect;
-import com.dongbat.jbump.World;
+import com.dongbat.jbump.*;
 import com.qiaweidata.starriverdefense.test.func.EasingFunctions;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
+import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
+import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
 import com.rondeo.pixwarsspace.utils.Constants;
+import com.rondeo.pixwarsspace.utils.Rumble;
+import com.rondeo.pixwarsspace.utils.SoundController;
+
+import java.util.Random;
 
 import static com.rondeo.pixwarsspace.utils.Constants.COMMON_SHIP_HEIGHT;
 
@@ -30,7 +34,7 @@ import static com.rondeo.pixwarsspace.utils.Constants.COMMON_SHIP_HEIGHT;
  * @date: 2024-03-30
  * @version: V1.0
  */
-public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
+public class MonsterShip extends Enemy {
 
     public int life;
     World<Entity> world;
@@ -64,6 +68,23 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
     private String state;
 
     private String targetName;
+
+    long isHit;
+
+    Color color = new Color();
+
+    private boolean isDead;
+
+    Random random = new Random();
+
+    CollisionFilter collisionFilter = new CollisionFilter() {
+        //Bullet bullet;
+        @SuppressWarnings( "rawtypes" )
+        @Override
+        public Response filter(Item item, Item other ) {
+            return null;
+        }
+    };
 
     public MonsterShip(World<Entity> world) {
 
@@ -108,6 +129,7 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
         this.position = new Vector2(this.positionX, this.positionY);
         fall();
         notRender = false;
+        isDead = false;
     }
 
     /**
@@ -135,10 +157,28 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
     @Override
     public void act(float delta) {
 
+        super.act(delta);
         if (notRender) {
             return;
         }
         deltaTime += delta;
+
+        world.move( item, getX(), getY(), collisionFilter );
+//        System.out.println("getX=" + getX() + ",getY()=" + getY() + ",position.x=" + position.x + ", position.y=" + position.y);
+        resolve();
+
+
+        if( life <= 0 ) {
+            if( !SoundController.getInstance().explosion.isPlaying() ) {
+                SoundController.getInstance().explosion.play();
+            }
+            Rumble.rumble( 4f, .4f );
+            clearActions();
+            isDead = true;
+            deltaTime = 0;
+//            Controllers.getInstance().powerUpController().pop( getStage(), ((random.nextInt(8) + 1)*0.1f) * getStage().getWidth(),  getStage().getHeight() + PowerUp.height/2f );
+            return;
+        }
     }
 
     public void update() {
@@ -183,6 +223,9 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
 
     private float targetY;
 
+    /**
+     * 砖块上下缓动
+     */
     private boolean isSlow;
 
     private float slowAction() {
@@ -214,11 +257,33 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
         elapsedTime += Gdx.graphics.getDeltaTime();
         if (isSlow) {
             slowAction();
+            hit(batch);
             batch.draw(thrusterAnimation.getKeyFrame(deltaTime), position.x, newY, getWidth(), getHeight());
+            setX(position.x);
+            setY(newY);
         } else {
             update();
+            hit(batch);
             batch.draw(thrusterAnimation.getKeyFrame(deltaTime), position.x, position.y, getWidth(), getHeight());
+            setX(position.x);
+            setY(position.y);
 //        System.out.println("getX=" + getX() + ",getY=" + getY() + "|position.x=" + position.x + ",position.y=" + position.y);
+        }
+
+        if( isDead ) {
+            batch.draw( thrusterAnimation.getKeyFrame(deltaTime), getX() - getWidth()/2f, getY() - getHeight()/2f, getWidth()*2f, getHeight()*2f );
+            forceFree();
+        }
+
+    }
+
+    private void hit(Batch batch) {
+
+        if( isHit > System.currentTimeMillis() ) {
+            color.set( batch.getColor() );
+            batch.setColor( 1, 0, 0, .5f );
+            batch.draw( thrusterAnimation.getKeyFrame(deltaTime), getX(), getY(), getWidth() * 2, getHeight() * 2);
+            batch.setColor( color );
         }
     }
 
@@ -251,5 +316,18 @@ public class MonsterShip extends Entity.Wrapper implements Entity, Disposable {
     public MonsterShip setTargetName(String targetName) {
         this.targetName = targetName;
         return this;
+    }
+
+    public void forceFree() {
+        Controllers.getInstance().getMonsterFactoryController().forceFree( this );
+    }
+
+    @Override
+    public void reset() {
+        clearActions();
+        isDead = true;
+        world.update( item, -100, -100 );
+        resolve();
+        remove();
     }
 }

@@ -65,6 +65,8 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
                 return Response.cross;
             if( other.userData instanceof SnakeEnemyShip )
                 return Response.cross ;
+            if( other.userData instanceof MonsterShip )
+                return Response.cross ;
             return null;
         }
 
@@ -180,7 +182,7 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
         Vector2 point = bezierCurve.valueAt(new Vector2(), t);
         position.set(point);
 
-        t += 0.005f;
+        t += 0.05f;
         if (t > 1) {
             t = 1;
         }
@@ -204,6 +206,7 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
         super.act(delta);
         resolve();
         result = world.move( item, position.x, position.y, collisionFilter );
+
         if (isAngled) {
 //            result = world.move( item, getX() + dirX, getY() + 300*delta + dirY, collisionFilter );
 //            System.out.println("getX()=" + getX() + "getY()=" +getY() + "dirX=" + dirX + "dirY=" + dirY +"---getRotation()=" + getRotation() +"--传过来的" + angle);
@@ -246,6 +249,13 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
             if( collision.other.userData instanceof SnakeEnemyShip ) {
                 ((SnakeEnemyShip)collision.other.userData).isHit = System.currentTimeMillis() + 100;
                 ((SnakeEnemyShip)collision.other.userData).life --;
+                forceFree();
+                return;
+            }
+
+            if( collision.other.userData instanceof MonsterShip ) {
+                ((MonsterShip)collision.other.userData).isHit = System.currentTimeMillis() + 100;
+                ((MonsterShip)collision.other.userData).life --;
                 forceFree();
                 return;
             }

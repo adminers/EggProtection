@@ -76,6 +76,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         monsterShip.setName(name);
 //        monsterShip.setZIndex(3);
         this.visibleMonster.put(name, monsterShip);
+        Constants.ACTIVE_ENEMIES.add( monsterShip );
     }
 
     public SequenceAction deployShips() {
@@ -121,9 +122,11 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
     }
 
     public void forceFree(MonsterShip item) {
-        visibleMonster.remove(item.getName());
+
         monsterShipPool.free(item);
+        visibleMonster.remove(item.getName());
         item.dispose();
+        Constants.ACTIVE_ENEMIES.removeValue( item, false);
     }
 
 

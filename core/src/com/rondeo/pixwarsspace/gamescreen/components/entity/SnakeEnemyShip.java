@@ -6,16 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.Pool.Poolable;
-import com.dongbat.jbump.CollisionFilter;
-import com.dongbat.jbump.Item;
-import com.dongbat.jbump.Rect;
-import com.dongbat.jbump.Response;
-import com.dongbat.jbump.World;
+import com.dongbat.jbump.*;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
@@ -40,12 +32,12 @@ public class SnakeEnemyShip extends Enemy {
                 bullet = (Bullet) other.userData;
                 bullet.forceFree();
                 life --;
-            } else */ if( other.userData instanceof ArtilleryShip ) {
+            } else */ /*if( other.userData instanceof ArtilleryShip ) {
                 ArtilleryShip ship = (ArtilleryShip) other.userData;
                 if( System.currentTimeMillis() > ship.effect )
                     ship.life --;
                 life = 0;
-            }
+            }*/
             return null;
         };
     };
