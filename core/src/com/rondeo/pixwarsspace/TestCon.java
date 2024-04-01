@@ -50,9 +50,12 @@ public class TestCon {
         String str = "'{'\n" +
                 "            \"axis\" : '{'\"x\": {0},\"y\": {1}'}',\n" +
                 "            \"image\" : \"block_1\",\n" +
-                "            \"name\" : \"{2}\"\n" +
+                "            \"name\" : \"{2}\",\n" +
+                "            \"row\" : \"{3}\",\n" +
+                "            \"col\" : \"{4}\"\n" +
                 "        '}',";
         StringBuffer sb = new StringBuffer();
+
         for (int i = 0; i < row; i++) {
             int tempX = firstX + firstXDifference * i;
             int tempY = firstY - heightDifference * i;
@@ -61,11 +64,11 @@ public class TestCon {
 
             for (int j = i; j > 0; j--) {
                 float v = tempX - w * (j);
-                String format = MessageFormat.format(str, v, tempY, i + ":" + j);
+                String format = MessageFormat.format(str, v, tempY, i + ":-" + j, i, "-" + j);
                 sb.append(format);
             }
             for (int j = 0; j < colNum; j++) {
-                String format = MessageFormat.format(str, tempX + (j * w), tempY, i + ":" + j);
+                String format = MessageFormat.format(str, tempX + (j * w), tempY, i + ":" + j, i, j);
                 sb.append(format);
             }
             sb.append("\n");
