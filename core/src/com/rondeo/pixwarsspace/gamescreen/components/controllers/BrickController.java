@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.VirtualRange;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
@@ -30,6 +31,8 @@ import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
 import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
 import com.rondeo.pixwarsspace.utils.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BrickController extends Actor implements Entity, Disposable {
@@ -79,8 +82,14 @@ public class BrickController extends Actor implements Entity, Disposable {
         System.out.println("创建地图: " + buttonImage.getName() + ";" + buttonImage.getImage());
 
         CenterPoint centerPoint = Constants.createAttrPoint(level);
-        if (Constants.CENTER_POINTS.containsKey(name)) {
-            System.out.println("重名的:" + name);
+        Constants.CENTER_POINT_VIRTUAL.put(name, new VirtualRange(level.getX() - 10, level.getX() + 10));
+        if (Constants.VIRTUALRANGES.containsKey(buttonImage.getRow())) {
+            List<VirtualRange> virtualRanges = Constants.VIRTUALRANGES.get(buttonImage.getRow());
+            virtualRanges.add(new VirtualRange(level.getX() - 10, level.getX() + 10));
+        } else {
+            List<VirtualRange> virtualRanges = new ArrayList<>();
+            virtualRanges.add(new VirtualRange(level.getX() - 10, level.getX() + 10));
+            Constants.VIRTUALRANGES.put(buttonImage.getRow(), virtualRanges);
         }
         Constants.CENTER_POINTS.put(name, centerPoint);
         Constants.ALL_CENTER_POINT.add(centerPoint);

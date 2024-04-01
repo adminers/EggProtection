@@ -12,6 +12,9 @@ public class DistributionMap {
 
     private String name;
 
+    /**
+     * 初始的话,就是下面的目标点
+     */
     private String targetName;
 
     public String getName() {

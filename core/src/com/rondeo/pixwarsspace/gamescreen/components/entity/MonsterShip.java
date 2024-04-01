@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.dongbat.jbump.*;
 import com.qiaweidata.starriverdefense.test.func.EasingFunctions;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.VirtualRange;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
@@ -22,6 +23,7 @@ import com.rondeo.pixwarsspace.utils.Constants;
 import com.rondeo.pixwarsspace.utils.Rumble;
 import com.rondeo.pixwarsspace.utils.SoundController;
 
+import java.util.List;
 import java.util.Random;
 
 import static com.rondeo.pixwarsspace.utils.Constants.COMMON_SHIP_HEIGHT;
@@ -346,8 +348,8 @@ public class MonsterShip extends Enemy {
 
     public void cJump() {
 
-        CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
-        Axis leftAxis = centerPoint.getAttr().getLeftBottom();
+        VirtualRange virtualRange = Constants.CENTER_POINT_VIRTUAL.get(targetName);
+        Axis leftAxis = searchJumpAxis(targetName);
 
         float targetX = leftAxis.getX();
         float targetY = leftAxis.getY() + COMMON_SHIP_HEIGHT;
@@ -366,6 +368,33 @@ public class MonsterShip extends Enemy {
         t = 0;
         isToTarget = false;
         elapsedTime = 0;
+    }
+
+    /**
+     * 寻找可以跳的节点
+     *
+     * @param targetName
+     * @return
+     */
+    private Axis searchJumpAxis(String targetName) {
+
+        String[] ranges = targetName.split(":");
+        int key = 1 + Integer.parseInt(ranges[0]);
+        List<VirtualRange> virtualRanges = Constants.VIRTUALRANGES.get(String.valueOf(key));
+        CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
+        Axis leftAxis = centerPoint.getAttr().getLeftBottom();
+
+        boolean isVirtual = true;
+        for (VirtualRange range : virtualRanges) {
+            if (range.getLeftX() < leftAxis.getX() && leftAxis.getX() < range.getRightX()) {
+                isVirtual = false;
+                break;
+            }
+        }
+        if (isVirtual) {
+            System.out.println("此点为虚拟点,不存在");
+        }
+        return leftAxis;
     }
 
 

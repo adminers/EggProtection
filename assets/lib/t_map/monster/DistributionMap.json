@@ -2,27 +2,7 @@
   [
     {
       "name": "slug",
-      "targetName": "4:2"
-    },
-    {
-      "name": "slug",
-      "targetName": "0:2"
-    },
-    {
-      "name": "Mosquito",
-      "targetName": "0:3"
-    },
-    {
-      "name": "Mosquito",
-      "targetName": "0:4"
-    },
-    {
-      "name": "slug",
-      "targetName": "1:2"
-    },
-    {
-      "name": "Mosquito",
-      "targetName": "1:4"
+      "targetName": "0:0"
     }
   ]
 ]

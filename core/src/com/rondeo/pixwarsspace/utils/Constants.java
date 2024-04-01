@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.VirtualRange;
 import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Player;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
@@ -86,7 +87,7 @@ public class Constants {
     /**
      * 怪物预建对象
      */
-    public static Map<String, MonsterAttr> MONSTER_ATTR = new HashMap<>();
+    public static Map<String, MonsterAttr> MONSTER_ATTR;
 
     /**
      * 文件中的地图,普遍要加上这个值,才在屏幕显示居中
@@ -97,6 +98,13 @@ public class Constants {
      * 所有中心点
      */
     public static final Set<CenterPoint> ALL_CENTER_POINT = new HashSet<>();
+
+    /**
+     * 地图每点的左右值,判断是否为虚拟节点
+     */
+    public static Map<String, VirtualRange> CENTER_POINT_VIRTUAL = new HashMap<>();
+
+    public static Map<String, List<VirtualRange>> VIRTUALRANGES = new HashMap<>();
 
     static {
 
@@ -110,7 +118,6 @@ public class Constants {
 //        LEVEL1_ENEMYS.add(new Axis(32.06f, 110));
 //        LEVEL1_ENEMYS.add(new Axis(42.06f, 50));
 //        LEVEL1_ENEMYS.add(new Axis(152.06f, 0));
-        System.out.println(LEVEL1_ENEMYS);
 
         MAP_1 = new Gson().fromJson(gdxFileString("lib/t_map/level1"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
 
