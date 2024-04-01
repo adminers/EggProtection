@@ -27,8 +27,10 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Title: Constants
@@ -90,6 +92,11 @@ public class Constants {
      * 文件中的地图,普遍要加上这个值,才在屏幕显示居中
      */
     public static float COMMON_SHIP_HEIGHT = 200;
+
+    /**
+     * 所有中心点
+     */
+    public static final Set<CenterPoint> ALL_CENTER_POINT = new HashSet<>();
 
     static {
 
@@ -181,6 +188,8 @@ public class Constants {
         EnemyJumpCoordinate attr = new EnemyJumpCoordinate();
         float x = axis.getX() + E + trimX;
         float y = axis.getY() + D;
+//        float x = axis.getX() + trimX;
+//        float y = axis.getY();
         attr.setLeft(new Axis(x - E * 2, y));
         attr.setLeftTop(new Axis(x - E, y + D));
         attr.setLeftBottom(new Axis(x - E, y - D));

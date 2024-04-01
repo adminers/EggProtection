@@ -13,7 +13,6 @@ import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response;
 import com.dongbat.jbump.World;
 import com.qiaweidata.starriverdefense.test.func.EasingFunctions;
-import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.controllers.BossController.Laser;
 
@@ -147,7 +146,7 @@ public class PointShip extends Entity.Wrapper implements Entity, Disposable {
     }
 
 
-    public void runJump() {
+    public void runSlow() {
         targetY = initY - 20;
         initialY = initY;
         initialUpY = targetY;

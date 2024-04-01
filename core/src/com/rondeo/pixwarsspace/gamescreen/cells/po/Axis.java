@@ -40,4 +40,12 @@ public class Axis implements Serializable {
         this.y = y;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Axis{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

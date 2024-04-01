@@ -79,7 +79,11 @@ public class BrickController extends Actor implements Entity, Disposable {
         System.out.println("创建地图: " + buttonImage.getName() + ";" + buttonImage.getImage());
 
         CenterPoint centerPoint = Constants.createAttrPoint(level);
+        if (Constants.CENTER_POINTS.containsKey(name)) {
+            System.out.println("重名的:" + name);
+        }
         Constants.CENTER_POINTS.put(name, centerPoint);
+        Constants.ALL_CENTER_POINT.add(centerPoint);
         Axis centerPointAxis = centerPoint.getAxis();
         PointShip pointShip = createPointShip(centerPointAxis.getX(), centerPointAxis.getY());
         pointShip.setName(name);
@@ -98,7 +102,7 @@ public class BrickController extends Actor implements Entity, Disposable {
         Constants.POINT_BRICK_SHIPS.put(name, new MapPointBlock(pointShip, brickShip));
 
 
-        if (c == 7) {
+        if ("1:2".equals(name)) {
             SlugShip slugShip = createSlugShip(centerPointAxis.getX(), centerPointAxis.getY());
             slugShip.setName(name);
             Constants.SLUGSHIP.put(name, new SulgPoint(centerPointAxis, slugShip));

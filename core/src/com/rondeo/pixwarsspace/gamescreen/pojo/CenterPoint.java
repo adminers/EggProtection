@@ -21,7 +21,7 @@ public class CenterPoint {
     private Axis blockAxis;
 
     /**
-     * 块的站点
+     * 块的中心站点
      */
     private Axis axis;
 

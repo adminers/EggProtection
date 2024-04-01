@@ -1,13 +1,10 @@
 package com.rondeo.pixwarsspace.gamescreen.components.entity;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.dongbat.jbump.CollisionFilter;
@@ -17,15 +14,8 @@ import com.dongbat.jbump.Response;
 import com.dongbat.jbump.World;
 import com.qiaweidata.starriverdefense.test.func.EasingFunctions;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
-import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.controllers.BossController.Laser;
-import com.rondeo.pixwarsspace.utils.Constants;
-import com.rondeo.pixwarsspace.utils.CoordinateUtil;
-import com.rondeo.pixwarsspace.utils.Rumble;
-import com.rondeo.pixwarsspace.utils.SoundController;
-
-import java.util.Random;
 
 public class BrickShip extends Entity.Wrapper implements Entity, Disposable {
 
@@ -149,7 +139,7 @@ public class BrickShip extends Entity.Wrapper implements Entity, Disposable {
 
     }
 
-    public void runJump() {
+    public void runSlow() {
 
         targetY = initY - 20;
         initialY = initY;

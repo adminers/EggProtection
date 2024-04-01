@@ -127,7 +127,7 @@ public class SlugShip extends Entity.Wrapper implements Entity, Disposable {
 //        Axis axis = Constants.SLUGSHIP.get(getName()).getAxis();
         CenterPoint centerPoint = Constants.CENTER_POINTS.get(getName());
         Axis leftAxis = centerPoint.getAttr().getLeftBottom();
-
+        System.out.println("中心：" + centerPoint.getAxis() + ";左侧位：" + leftAxis);
 
         float targetX = leftAxis.getX();
         float targetY = leftAxis.getY() + COMMON_SHIP_HEIGHT;

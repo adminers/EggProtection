@@ -130,8 +130,9 @@ public class MonsterShip extends Enemy {
         notRender = false;
         isDead = false;
         isSlow = false;
+        jump = false;
         fall();
-
+        t = 0;
     }
 
     /**
@@ -191,7 +192,7 @@ public class MonsterShip extends Enemy {
         t += 0.01f;
         if (t > 1) {
             t = 1;
-
+            bezierCurve = null;
             if ("fall".equals(this.state)) {
                 CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
 
@@ -200,10 +201,9 @@ public class MonsterShip extends Enemy {
 
                 // 执行块下落
                 MapPointBlock mapPointBlock = Constants.POINT_BRICK_SHIPS.get(targetName);
-                System.out.println("---------------下落块：" + targetName);
-                mapPointBlock.getPointShip().runJump();
-                mapPointBlock.getBrickShip().runJump();
-                this.runJump();
+                mapPointBlock.getPointShip().runSlow();
+                mapPointBlock.getBrickShip().runSlow();
+                this.runSlow();
                 this.state = "endFall";
             }
         }
@@ -229,14 +229,21 @@ public class MonsterShip extends Enemy {
      */
     private boolean isSlow;
 
+    private boolean jump;
+
     private float slowAction() {
 
+        // 已经要执行跳跃了,则不执行 天降神兵
+        if (jump) {
+            return newY;
+        }
         if (isToTarget) {
             if (newY != targetUpY) {
                 newY = EasingFunctions.easeOutCubic(elapsedTime, initialUpY, targetUpY - initialUpY, fallDuration);
             }
-            if (newY > targetUpY) {
+            if (newY >= targetUpY) {
                 newY = targetUpY;
+                jump = true;
             }
         } else {
             if (newY > targetY + .51) {
@@ -255,6 +262,26 @@ public class MonsterShip extends Enemy {
         if (notRender) {
             return;
         }
+        if( isDead ) {
+            batch.draw( thrusterAnimation.getKeyFrame(deltaTime), getX() - getWidth()/2f, getY() - getHeight()/2f, getWidth()*2f, getHeight()*2f );
+            forceFree();
+            return;
+        }
+        if (jump) {
+            updateJump();
+            batch.draw(thrusterAnimation.getKeyFrame(deltaTime), position.x, position.y, getWidth(), getHeight());
+            setX(position.x);
+            setY(position.y);
+
+            if (System.currentTimeMillis() > time + 3000) {
+                time = System.currentTimeMillis();
+                if ("endFall".equals(state)) {
+                    System.out.println("可以跳了");
+                    cJump();
+                }
+            }
+            return;
+        }
         elapsedTime += Gdx.graphics.getDeltaTime();
         if (isSlow) {
             slowAction();
@@ -262,19 +289,15 @@ public class MonsterShip extends Enemy {
             batch.draw(thrusterAnimation.getKeyFrame(deltaTime), position.x, newY, getWidth(), getHeight());
             setX(position.x);
             setY(newY);
+            position.set(position.x, newY);
         } else {
             update();
             hit(batch);
             batch.draw(thrusterAnimation.getKeyFrame(deltaTime), position.x, position.y, getWidth(), getHeight());
             setX(position.x);
             setY(position.y);
-//        System.out.println("getX=" + getX() + ",getY=" + getY() + "|position.x=" + position.x + ",position.y=" + position.y);
         }
 
-        if( isDead ) {
-            batch.draw( thrusterAnimation.getKeyFrame(deltaTime), getX() - getWidth()/2f, getY() - getHeight()/2f, getWidth()*2f, getHeight()*2f );
-            forceFree();
-        }
 
     }
 
@@ -293,8 +316,9 @@ public class MonsterShip extends Enemy {
         setBounds(rect.x, rect.y, rect.w, rect.h);
     }
 
-    public void runJump() {
+    public void runSlow() {
 
+        t = 0;
         targetY = initY - 20;
         initialY = initY;
         initialUpY = targetY;
@@ -303,6 +327,45 @@ public class MonsterShip extends Enemy {
         isToTarget = false;
         elapsedTime = 0;
         isSlow = true;
+    }
+
+
+    public void updateJump() {
+
+        if (null == bezierCurve) {
+            return;
+        }
+        Vector2 point = bezierCurve.valueAt(new Vector2(), t);
+        position.set(point);
+
+        t += 0.05f;
+        if (t > 1) {
+            t = 1;
+        }
+    }
+
+    public void cJump() {
+
+        CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
+        Axis leftAxis = centerPoint.getAttr().getLeftBottom();
+
+        float targetX = leftAxis.getX();
+        float targetY = leftAxis.getY() + COMMON_SHIP_HEIGHT;
+
+        float startX = getX();
+        float startY = getY();
+        Vector2 startPos = new Vector2(startX, startY);
+        float controlTargetX = startX - 10;
+        float controlTargetY = startY + 10;
+
+        Vector2 controlPoint = new Vector2(controlTargetX, controlTargetY);
+        Vector2 endPoint = new Vector2(targetX, targetY);
+
+        position = new Vector2(startPos);
+        bezierCurve = new Bezier<>(startPos, controlPoint, endPoint);
+        t = 0;
+        isToTarget = false;
+        elapsedTime = 0;
     }
 
 
