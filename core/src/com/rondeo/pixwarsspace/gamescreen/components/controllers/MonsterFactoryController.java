@@ -51,6 +51,11 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
      */
     private boolean isGenerate;
 
+    /**
+     * 本关是否创建完成
+     */
+    private boolean isLevelComplete;
+
     public MonsterFactoryController(World<Entity> world) {
         this.world = world;
     }
@@ -101,6 +106,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         RunnableAction finishAction = Actions.run(() -> {
             // 在这里执行其他代码，表示前面的所有延迟动作都已完成
             System.out.println("工厂创建");
+            isLevelComplete = true;
         });
         deploySequence.addAction(finishAction);
         return deploySequence;
@@ -135,4 +141,12 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         visibleMonster.clear();
     }
 
+    public boolean isLevelComplete() {
+        return isLevelComplete;
+    }
+
+    public MonsterFactoryController setLevelComplete(boolean levelComplete) {
+        isLevelComplete = levelComplete;
+        return this;
+    }
 }

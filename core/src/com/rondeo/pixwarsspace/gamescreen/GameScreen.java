@@ -24,11 +24,13 @@ import com.rondeo.pixwarsspace.gamescreen.cells.CellTable;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
 import com.rondeo.pixwarsspace.gamescreen.components.*;
+import com.rondeo.pixwarsspace.gamescreen.components.controllers.MonsterFactoryController;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.Ship;
 import com.rondeo.pixwarsspace.gamescreen.plate.PlateBlockButton;
 import com.rondeo.pixwarsspace.gamescreen.ui.HealthBar;
+import com.rondeo.pixwarsspace.gamescreen.ui.UIManager;
 import com.rondeo.pixwarsspace.t1.GridBoard;
 import com.rondeo.pixwarsspace.t1.Tank;
 import com.rondeo.pixwarsspace.utils.Background;
@@ -52,6 +54,11 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
 
     private HudManager hudManager;
 
+    private UIManager uiManager;
+
+    private boolean levelComplete = true;
+
+    private MonsterFactoryController monsterFactoryController;
 
     public GameScreen( Main main ) {
         //this.main = main;
@@ -108,6 +115,9 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
         // --创建卡牌按钮-----------------------------------------------------------------------------
         List<PlateBlockButton> plates = LevelManager.createPlate();
         // -----------------------------------------------------------------------------------------
+        // --创建弹框-----------------------------------------------------------------------------
+        uiManager = new UIManager(stage, new Skin( Gdx.files.internal( "ui/default.json" ) ));
+        // -----------------------------------------------------------------------------------------
 
 
         CellTable cellTable = null;
@@ -128,8 +138,10 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
         stage.addActor( Controllers.getInstance().snakeEnemyController() );
         stage.addActor( Controllers.getInstance().getPlayController() );
         stage.addActor( Controllers.getInstance().getBrickController() );
-        stage.addActor( Controllers.getInstance().getMonsterFactoryController() );
-        stage.addActor( Controllers.getInstance().bossController() );
+        monsterFactoryController = Controllers.getInstance().getMonsterFactoryController();
+        stage.addActor(monsterFactoryController);
+        stage.addActor( Controllers.getInstance().bossController());
+
         Controllers.getInstance().bossController().setup();
         
         hudManager = new HudManager( main, assets, world, cellTable);
@@ -185,6 +197,13 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
 
         if( Gdx.input.isKeyPressed( Keys.L ) ) {
             System.out.println( world.countItems() + "<>" + world.countCells() + " = " + Gdx.graphics.getFramesPerSecond() );
+        }
+
+        // 在这里更新游戏逻辑，检查关卡完成条件是否满足
+        if (monsterFactoryController.isLevelComplete()) {
+            uiManager.showComplexDialog();
+            levelComplete = false; // 确保只显示一次
+            monsterFactoryController.setLevelComplete(false);
         }
     }
 
