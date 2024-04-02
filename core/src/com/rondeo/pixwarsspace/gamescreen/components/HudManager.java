@@ -417,6 +417,7 @@ public class HudManager implements Disposable {
         hud.draw();
 
         lifeLabel.setText( "SHIP INT: " + lifeToBars( life ) );
+        toolLabel.setText("LEVEL " + ccc);
         if (ccc >= 100) {
             ccc = 0;
         }
