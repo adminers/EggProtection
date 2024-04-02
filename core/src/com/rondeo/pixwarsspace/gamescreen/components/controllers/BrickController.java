@@ -78,21 +78,20 @@ public class BrickController extends Actor implements Entity, Disposable {
         brickShip.init(shipRegion, level.getX(), level.getY());
         String name = buttonImage.getName();
         brickShip.setName(buttonImage.getName());
-        brickShip.setZIndex(1);
+//        brickShip.setZIndex(1);
         System.out.println("创建地图: " + buttonImage.getName() + ";" + buttonImage.getImage());
 
         CenterPoint centerPoint = Constants.createAttrPoint(level);
-        Constants.CENTER_POINT_VIRTUAL.put(name, new VirtualRange(level.getX() - 10, level.getX() + 10));
-        if (Constants.VIRTUALRANGES.containsKey(buttonImage.getRow())) {
-            List<VirtualRange> virtualRanges = Constants.VIRTUALRANGES.get(buttonImage.getRow());
-            virtualRanges.add(new VirtualRange(level.getX() - 10, level.getX() + 10));
-        } else {
-            List<VirtualRange> virtualRanges = new ArrayList<>();
-            virtualRanges.add(new VirtualRange(level.getX() - 10, level.getX() + 10));
-            Constants.VIRTUALRANGES.put(buttonImage.getRow(), virtualRanges);
-        }
         Constants.CENTER_POINTS.put(name, centerPoint);
         Constants.ALL_CENTER_POINT.add(centerPoint);
+        if (Constants.ROW_CENTERPOINT.containsKey(buttonImage.getRow())) {
+            Constants.ROW_CENTERPOINT.get(buttonImage.getRow()).add(centerPoint);
+        } else {
+            List<CenterPoint> centerPoints = new ArrayList<>();
+            centerPoints.add(centerPoint);
+            Constants.ROW_CENTERPOINT.put(buttonImage.getRow(), centerPoints);
+        }
+
         Axis centerPointAxis = centerPoint.getAxis();
         PointShip pointShip = createPointShip(centerPointAxis.getX(), centerPointAxis.getY());
         pointShip.setName(name);

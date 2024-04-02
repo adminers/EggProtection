@@ -60,16 +60,20 @@ public class TestCon {
             int tempX = firstX + firstXDifference * i;
             int tempY = firstY - heightDifference * i;
 
-            // 前面追加
+            // 修复BUG,寻找跳跃点的时候,下标是从0开始的,故把负的去掉
+//            int tempCol = 0;
 
+            // 前面追加
             for (int j = i; j > 0; j--) {
                 float v = tempX - w * (j);
                 String format = MessageFormat.format(str, v, tempY, i + ":-" + j, i, "-" + j);
                 sb.append(format);
+//                tempCol++;
             }
             for (int j = 0; j < colNum; j++) {
                 String format = MessageFormat.format(str, tempX + (j * w), tempY, i + ":" + j, i, j);
                 sb.append(format);
+//                tempCol++;
             }
             sb.append("\n");
         }

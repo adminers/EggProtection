@@ -99,12 +99,7 @@ public class Constants {
      */
     public static final Set<CenterPoint> ALL_CENTER_POINT = new HashSet<>();
 
-    /**
-     * 地图每点的左右值,判断是否为虚拟节点
-     */
-    public static Map<String, VirtualRange> CENTER_POINT_VIRTUAL = new HashMap<>();
-
-    public static Map<String, List<VirtualRange>> VIRTUALRANGES = new HashMap<>();
+    public static Map<String, List<CenterPoint>> ROW_CENTERPOINT = new HashMap<>();
 
     static {
 

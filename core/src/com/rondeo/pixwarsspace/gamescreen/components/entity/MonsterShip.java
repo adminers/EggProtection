@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.Array;
 import com.dongbat.jbump.*;
 import com.qiaweidata.starriverdefense.test.func.EasingFunctions;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
-import com.rondeo.pixwarsspace.gamescreen.cells.po.VirtualRange;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
@@ -195,19 +194,25 @@ public class MonsterShip extends Enemy {
         if (t > 1) {
             t = 1;
             bezierCurve = null;
-            if ("fall".equals(this.state)) {
-                CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
+            execFall();
+        }
+    }
 
-                // 初始化下落的值
-                initY = centerPoint.getAxis().getY() + COMMON_SHIP_HEIGHT;
+    private void execFall() {
 
-                // 执行块下落
-                MapPointBlock mapPointBlock = Constants.POINT_BRICK_SHIPS.get(targetName);
-                mapPointBlock.getPointShip().runSlow();
-                mapPointBlock.getBrickShip().runSlow();
-                this.runSlow();
-                this.state = "endFall";
-            }
+        if ("fall".equals(this.state)) {
+            this.jump = false;
+            CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
+
+            // 初始化下落的值
+            initY = centerPoint.getAxis().getY() + COMMON_SHIP_HEIGHT;
+
+            // 执行块下落
+            MapPointBlock mapPointBlock = Constants.POINT_BRICK_SHIPS.get(targetName);
+            mapPointBlock.getPointShip().runSlow();
+            mapPointBlock.getBrickShip().runSlow();
+            this.runSlow();
+            this.state = "endFall";
         }
     }
 
@@ -239,6 +244,7 @@ public class MonsterShip extends Enemy {
         if (jump) {
             return newY;
         }
+        elapsedTime += Gdx.graphics.getDeltaTime();
         if (isToTarget) {
             if (newY != targetUpY) {
                 newY = EasingFunctions.easeOutCubic(elapsedTime, initialUpY, targetUpY - initialUpY, fallDuration);
@@ -246,6 +252,10 @@ public class MonsterShip extends Enemy {
             if (newY >= targetUpY) {
                 newY = targetUpY;
                 jump = true;
+
+                // 缓动至为false
+                isSlow = false;
+                bezierCurve = null;
             }
         } else {
             if (newY > targetY + .51) {
@@ -284,7 +294,7 @@ public class MonsterShip extends Enemy {
             }
             return;
         }
-        elapsedTime += Gdx.graphics.getDeltaTime();
+
         if (isSlow) {
             slowAction();
             hit(batch);
@@ -343,13 +353,28 @@ public class MonsterShip extends Enemy {
         t += 0.05f;
         if (t > 1) {
             t = 1;
+
+            // 跳跃之后,执行下落缓动
+            this.state = "fall";
+            System.out.println("跳跃完之后《position.x=" + position.x + ";getX()=" + getX());
+            execFall();
         }
     }
 
     public void cJump() {
 
-        VirtualRange virtualRange = Constants.CENTER_POINT_VIRTUAL.get(targetName);
-        Axis leftAxis = searchJumpAxis(targetName);
+        String[] ranges = this.targetName.split(":");
+        int keyX = 1 + Integer.parseInt(ranges[0]);
+        int keyY = Integer.parseInt(ranges[1]);
+        String row = String.valueOf(keyX);
+
+        // 左后一行,不能再往下跳了
+        if (!Constants.ROW_CENTERPOINT.containsKey(row)) {
+            this.jump = false;
+            t = 1.0f;
+            return;
+        }
+        Axis leftAxis = searchJumpAxis(row, keyY);
 
         float targetX = leftAxis.getX();
         float targetY = leftAxis.getY() + COMMON_SHIP_HEIGHT;
@@ -371,30 +396,29 @@ public class MonsterShip extends Enemy {
     }
 
     /**
+     * (算了,再重新想个算法)
      * 寻找可以跳的节点
+     * 首选是往左下
      *
-     * @param targetName
+     * @param keyX
+     * @param row
+     * @param keyY
      * @return
      */
-    private Axis searchJumpAxis(String targetName) {
+    private Axis searchJumpAxis(String row, int keyY) {
 
-        String[] ranges = targetName.split(":");
-        int key = 1 + Integer.parseInt(ranges[0]);
-        List<VirtualRange> virtualRanges = Constants.VIRTUALRANGES.get(String.valueOf(key));
-        CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
-        Axis leftAxis = centerPoint.getAttr().getLeftBottom();
-
-        boolean isVirtual = true;
-        for (VirtualRange range : virtualRanges) {
-            if (range.getLeftX() < leftAxis.getX() && leftAxis.getX() < range.getRightX()) {
-                isVirtual = false;
-                break;
-            }
+        Axis nextAxis = null;
+        List<CenterPoint> centerPoints = Constants.ROW_CENTERPOINT.get(row);
+        if (centerPoints.size() > keyY) {
+            CenterPoint centerPoint = centerPoints.get(keyY);
+            nextAxis = centerPoint.getAxis();
+        } else {
+            keyY = centerPoints.size() - 1;
+            CenterPoint centerPoint = centerPoints.get(keyY);
+            nextAxis = centerPoint.getAxis();
         }
-        if (isVirtual) {
-            System.out.println("此点为虚拟点,不存在");
-        }
-        return leftAxis;
+        this.targetName = row + ":" + keyY;
+        return nextAxis;
     }
 
 
