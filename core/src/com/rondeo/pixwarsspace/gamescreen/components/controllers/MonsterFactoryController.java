@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
+import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.MonsterShip;
@@ -106,7 +107,6 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         RunnableAction finishAction = Actions.run(() -> {
             // 在这里执行其他代码，表示前面的所有延迟动作都已完成
             System.out.println("工厂创建");
-            isLevelComplete = true;
         });
         deploySequence.addAction(finishAction);
         return deploySequence;
@@ -116,6 +116,9 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
     public void act(float delta) {
 
         super.act(delta);
+        if (Controllers.getInstance().junction) {
+            return;
+        }
         boolean endLevel = LevelManager.isEndLevel();
         if (visibleMonster.isEmpty()) {
             if (System.currentTimeMillis() > time + 3000) {
@@ -133,6 +136,10 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         visibleMonster.remove(item.getName());
         item.dispose();
         Constants.ACTIVE_ENEMIES.removeValue( item, false);
+        if (Constants.ACTIVE_ENEMIES.isEmpty()) {
+            isLevelComplete = true;
+            Controllers.getInstance().junction = true;
+        }
     }
 
 
@@ -148,5 +155,9 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
     public MonsterFactoryController setLevelComplete(boolean levelComplete) {
         isLevelComplete = levelComplete;
         return this;
+    }
+
+    public Map<String, MonsterShip> getVisibleMonster() {
+        return visibleMonster;
     }
 }

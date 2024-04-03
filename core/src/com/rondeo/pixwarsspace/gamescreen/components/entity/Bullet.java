@@ -257,6 +257,7 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
                 ((MonsterShip)collision.other.userData).isHit = System.currentTimeMillis() + 100;
                 ((MonsterShip)collision.other.userData).life --;
                 forceFree();
+                System.out.println("敌人");
                 return;
             }
         }

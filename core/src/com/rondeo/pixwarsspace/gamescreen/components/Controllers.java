@@ -23,6 +23,9 @@ public class Controllers implements Disposable {
     private BossController bossController;
     public boolean gameOver = false;
     public boolean pause = false;
+
+    // 结算
+    public boolean junction = false;
     public int tutorial = -1;
     public int credits = 0; // Change this later to 0
 

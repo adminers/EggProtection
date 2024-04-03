@@ -210,25 +210,23 @@ public class BrickController extends Actor implements Entity, Disposable {
 
     TextureAtlas slugTextureAtlas = new TextureAtlas( Gdx.files.internal( "lib/t_map/t1/SlugCannon.atlas" ) );
 
+    private boolean createMap = false;
+
     @Override
     public void act( float delta ) {
         super.act(delta);
 
-//        Constants.LEVEL1_ENEMYS.get(LevelManager.getCurrentLevel())
-        boolean endLevel = LevelManager.isEndLevel();
-        if (endLevel) {
-            System.out.println("不用创建");
-        } else {
-            if ( /*activeEnemies.size*/Constants.ACTIVE_ENEMIES.isEmpty() && !Controllers.getInstance().bossController().dead ) {
-                if( System.currentTimeMillis() > time + 5000 ) {
-    //                if( count < 10 ) {
-    //                    count +=2;
-    //                }
-                    addAction( deployShips() );
-                    time = System.currentTimeMillis();
+        if (createMap) {
 
-                }
+        } else {
+            if( System.currentTimeMillis() > time + 3000 ) {
+                createMap = true;
+                addAction( deployShips() );
+                time = System.currentTimeMillis();
             }
+        }
+        if ( Constants.ACTIVE_ENEMIES.isEmpty() && !Controllers.getInstance().bossController().dead ) {
+
         }
     }
 

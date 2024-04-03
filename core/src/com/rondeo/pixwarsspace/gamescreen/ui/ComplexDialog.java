@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 
 public class ComplexDialog extends Dialog {
     public ComplexDialog(String title, Skin skin) {
@@ -30,6 +31,7 @@ public class ComplexDialog extends Dialog {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Controllers.getInstance().junction = false;
                 hide();
             }
         });

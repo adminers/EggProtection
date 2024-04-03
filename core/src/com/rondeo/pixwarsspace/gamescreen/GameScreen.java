@@ -135,7 +135,7 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
         cards.forEach(button -> stage.addActor( button ));
         plates.forEach(button -> stage.addActor( button ));
         stage.addActor( Controllers.getInstance().enemyController() );
-        stage.addActor( Controllers.getInstance().snakeEnemyController() );
+//        stage.addActor( Controllers.getInstance().snakeEnemyController() );
         stage.addActor( Controllers.getInstance().getPlayController() );
         stage.addActor( Controllers.getInstance().getBrickController() );
         monsterFactoryController = Controllers.getInstance().getMonsterFactoryController();
