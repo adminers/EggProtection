@@ -15,6 +15,6 @@ public class DesktopTestLauncher {
         //config.setForegroundFPS(60);
         config.setTitle("PixWars: Space Impact");
         config.setWindowSizeLimits( 400 , 800 , 9999, 9999  );
-        new Lwjgl3Application(new com.qiaweidata.starriverdefense.test.ThireBezierJumpGame(), config);
+        new Lwjgl3Application(new com.qiaweidata.starriverdefense.test.AtlasFileLocad(), config);
     }
 }
