@@ -34,8 +34,11 @@ public class LevelManager {
     }
 
     public static void goToNextLevel() {
-        currentLevel++;
         currentIndexLevel++;
+    }
+
+    public static void goToNextShowLevel() {
+        currentLevel++;
     }
 
     public static boolean isEndLevel() {
@@ -43,8 +46,12 @@ public class LevelManager {
         return currentLevel > maxLevel;
     }
 
-    public static int getCurrentLevel() {
+    public static int getCurrentIndexLevel() {
         return currentIndexLevel;
+    }
+
+    public static int getCurrentLevel() {
+        return currentLevel;
     }
 
     public static List<CardImageButton> createCard() {

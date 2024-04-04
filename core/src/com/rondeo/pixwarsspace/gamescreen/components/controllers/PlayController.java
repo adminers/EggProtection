@@ -141,7 +141,7 @@ public class PlayController extends Actor implements Entity, Disposable {
     public void deploy(int c) {
 
         Stage stage = getStage();
-        ButtonImage buttonImage = Constants.PLATES.get(LevelManager.getCurrentLevel()).get(c);
+        ButtonImage buttonImage = Constants.PLATES.get(LevelManager.getCurrentIndexLevel()).get(c);
         Axis level = buttonImage.getAxis();
         activeEnemiesLength++;
 

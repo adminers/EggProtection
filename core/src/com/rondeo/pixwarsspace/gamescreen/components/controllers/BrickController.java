@@ -1,10 +1,8 @@
 package com.rondeo.pixwarsspace.gamescreen.components.controllers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,7 +15,6 @@ import com.badlogic.gdx.utils.Pool;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
-import com.rondeo.pixwarsspace.gamescreen.cells.po.VirtualRange;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
@@ -26,7 +23,6 @@ import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
 import com.rondeo.pixwarsspace.gamescreen.components.play.YunShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
-import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
 import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
 import com.rondeo.pixwarsspace.utils.Constants;
@@ -68,7 +64,7 @@ public class BrickController extends Actor implements Entity, Disposable {
 
     public void deploy( Stage stage , int c) {
 
-        ButtonImage buttonImage = Constants.MAP_1.get(LevelManager.getCurrentLevel()).get(c);
+        ButtonImage buttonImage = Constants.MAP_1.get(LevelManager.getCurrentIndexLevel()).get(c);
         Axis level = buttonImage.getAxis();
         activeEnemiesLength++;
         // Deploy first
@@ -173,7 +169,7 @@ public class BrickController extends Actor implements Entity, Disposable {
     public SequenceAction deployShips() {
         deploySequence = new SequenceAction();
         choosenRegionIndex = random.nextInt( regionLength );
-        for (int i = 0; i < Constants.MAP_1.get(LevelManager.getCurrentLevel()).size(); i ++  ) {
+        for (int i = 0; i < Constants.MAP_1.get(LevelManager.getCurrentIndexLevel()).size(); i ++  ) {
             int globalCount = i;
             deploySequence.addAction( Actions.delay( 0.0f) );
             deploySequence.addAction(new Action() {

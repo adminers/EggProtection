@@ -22,8 +22,6 @@ import com.rondeo.pixwarsspace.gamescreen.components.entity.SnakeEnemyShip;
 import com.rondeo.pixwarsspace.utils.Constants;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class SnakeEnemyController extends Actor implements Entity, Disposable {
     World<Entity> world;
@@ -142,7 +140,7 @@ public class SnakeEnemyController extends Actor implements Entity, Disposable {
 
     public void deploy( Stage stage , int c) {
 
-        Axis level = Constants.LEVEL1_ENEMYS.get(LevelManager.getCurrentLevel()).get(c);
+        Axis level = Constants.LEVEL1_ENEMYS.get(LevelManager.getCurrentIndexLevel()).get(c);
         activeEnemiesLength++;
         // Deploy first
         enemyShip = enemyPool.obtain();
@@ -167,7 +165,7 @@ public class SnakeEnemyController extends Actor implements Entity, Disposable {
         deploySequence = new SequenceAction();
         choosenRegionIndex = random.nextInt( regionLength );
         choosenPatternIndex = random.nextInt( patterns_1.length );
-        for (int i = 0; i < Constants.LEVEL1_ENEMYS.get(LevelManager.getCurrentLevel()).size(); i ++  ) {
+        for (int i = 0; i < Constants.LEVEL1_ENEMYS.get(LevelManager.getCurrentIndexLevel()).size(); i ++  ) {
             int globalCount = i;
             deploySequence.addAction( Actions.delay( 0.3f + 0.1f * i ) );
             deploySequence.addAction(new Action() {

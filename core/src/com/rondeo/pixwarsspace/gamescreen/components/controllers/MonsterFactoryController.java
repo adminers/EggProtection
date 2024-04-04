@@ -13,12 +13,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.dongbat.jbump.World;
-import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.MonsterShip;
-import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.monster.DistributionMap;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
 import com.rondeo.pixwarsspace.utils.Constants;
@@ -88,7 +86,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
     public SequenceAction deployShips() {
 
         deploySequence = new SequenceAction();
-        List<DistributionMap> distributionMaps = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentLevel());
+        List<DistributionMap> distributionMaps = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel());
         for (int i = 0; i < distributionMaps.size(); i++) {
             DistributionMap distributionMap = distributionMaps.get(i);
             deploySequence.addAction(Actions.delay(1.0f));
@@ -139,6 +137,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         if (Constants.ACTIVE_ENEMIES.isEmpty()) {
             isLevelComplete = true;
             Controllers.getInstance().junction = true;
+            LevelManager.goToNextLevel();
         }
     }
 
