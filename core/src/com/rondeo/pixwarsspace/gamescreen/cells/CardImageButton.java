@@ -6,8 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
+import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
+import com.rondeo.pixwarsspace.gamescreen.components.play.PlayShip;
+import com.rondeo.pixwarsspace.gamescreen.enums.PlateBlockEnum;
+import com.rondeo.pixwarsspace.gamescreen.plate.PlateBlockButton;
 
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 关于libgdx中UI控件的旋转和缩放的备忘
@@ -36,8 +42,14 @@ import java.util.Random;
  */
 public class CardImageButton extends ImageButton {
 
-    public CardImageButton(Drawable imageUp, float x, float y) {
+    private PlateBlockEnum plateBlockEnum;
+
+    private final Random random = new Random();
+
+    public CardImageButton(Drawable imageUp, float x, float y, String name) {
         super(imageUp);
+        this.setName(name);
+        setZIndex(99999999);
         setBounds(x, y, 25, 40);
         this.addListener(new ClickListener() {
             @Override
@@ -51,7 +63,19 @@ public class CardImageButton extends ImageButton {
                 ));
                 Random random = new Random();
                 int randomNumber = random.nextInt(3) + 1;
-                Controllers.getInstance().getPlayController().deploy(3);
+
+
+                switch (getName()) {
+                    case "extend" :
+                        show();
+                        break;
+                    case "attack" :
+                        createAttack();
+                        System.out.println(2);
+                        break;
+                    default:
+                        break;
+                }
 
                 // 点击事件处理
 //                addAction(Actions.rotateBy(10, 1f)); // 旋转45度，持续1秒
@@ -63,5 +87,33 @@ public class CardImageButton extends ImageButton {
 //                ));
             }
         });
+    }
+
+    private void createAttack() {
+
+        Map<Integer, PlayShip> showPlate = LevelManager.getShowPlate();
+        Set<Integer> showPlateKey = LevelManager.getShowPlateKey();
+        for (Integer key : showPlate.keySet()) {
+            if (!showPlateKey.contains(key)) {
+                PlayShip playShip = Controllers.getInstance().getPlayController().deploy(key);
+                showPlate.put(key, playShip);
+                showPlateKey.add(key);
+                break;
+            }
+        }
+    }
+
+    private void show() {
+
+        Map<Integer, PlayShip> showPlate = LevelManager.getShowPlate();
+        List<Integer> result = Stream.generate(() -> random.nextInt(10))
+                .filter(n -> !showPlate.containsKey(n))
+                .limit(20)
+                .collect(Collectors.toList());
+        Collections.shuffle(result);
+        showPlate.put(result.get(0), null);
+        List<PlateBlockButton> plate = LevelManager.getPlateBlockButtons();
+        PlateBlockButton plateBlockButton = plate.get(result.get(0));
+        plateBlockButton.setHide(false);
     }
 }

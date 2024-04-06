@@ -2,19 +2,23 @@
     [
         {
             "axis" : {"x": 35,"y": 10},
-            "image" : "lib/card/card_fantasy_back.png"
+            "image" : "lib/card/card_fantasy_back.png",
+            "name" : "extend"
         },
         {
             "axis" : {"x": 70,"y": 10},
-            "image" : "lib/card/card_scifi_back.png"
+            "image" : "lib/card/card_scifi_back.png",
+            "name" : "attack"
         },
         {
             "axis" : {"x": 105,"y": 10},
-            "image" : "lib/card/card_vampire_back.png"
+            "image" : "lib/card/card_vampire_back.png",
+            "name" : "attack"
         },
         {
             "axis" : {"x": 140,"y": 10},
-            "image" : "lib/card/carta_gioco_med_mostro.png"
+            "image" : "lib/card/carta_gioco_med_mostro.png",
+            "name" : "attack"
         }
     ]
 ]

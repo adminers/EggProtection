@@ -55,6 +55,13 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
      */
     private boolean isLevelComplete;
 
+    /**
+     * 是否被攻击(首次加载血条,直接用怪物数量不行,因为刚加载是延迟加载,一进来,血条=0.过几秒才变满)
+     */
+    private boolean isAttacked;
+
+    private int attackEnemyNum = 0;
+
     public MonsterFactoryController(World<Entity> world) {
         this.world = world;
     }
@@ -119,6 +126,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         }
         boolean endLevel = LevelManager.isEndLevel();
         if (visibleMonster.isEmpty()) {
+            attackEnemyNum = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel()).size();
             if (System.currentTimeMillis() > time + 3000) {
                 addAction(deployShips());
                 time = System.currentTimeMillis();
@@ -130,17 +138,19 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
 
     public void forceFree(MonsterShip item) {
 
+        isAttacked = true;
         monsterShipPool.free(item);
         visibleMonster.remove(item.getName());
         item.dispose();
         Constants.ACTIVE_ENEMIES.removeValue( item, false);
+        attackEnemyNum--;
         if (Constants.ACTIVE_ENEMIES.isEmpty()) {
             isLevelComplete = true;
             Controllers.getInstance().junction = true;
             LevelManager.goToNextLevel();
+            isAttacked = false;
         }
     }
-
 
     @Override
     public void dispose() {
@@ -158,5 +168,23 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
 
     public Map<String, MonsterShip> getVisibleMonster() {
         return visibleMonster;
+    }
+
+    public boolean isAttacked() {
+        return isAttacked;
+    }
+
+    public MonsterFactoryController setAttacked(boolean attacked) {
+        isAttacked = attacked;
+        return this;
+    }
+
+    public int getAttackEnemyNum() {
+        return attackEnemyNum;
+    }
+
+    public MonsterFactoryController setAttackEnemyNum(int attackEnemyNum) {
+        this.attackEnemyNum = attackEnemyNum;
+        return this;
     }
 }

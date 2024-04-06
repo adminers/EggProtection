@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.rondeo.pixwarsspace.gamescreen.cells.CardImageButton;
+import com.rondeo.pixwarsspace.gamescreen.components.play.PlayShip;
 import com.rondeo.pixwarsspace.gamescreen.plate.PlateBlockButton;
 import com.rondeo.pixwarsspace.utils.Constants;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Title: LevelManager
@@ -26,6 +26,18 @@ public class LevelManager {
     private static int currentIndexLevel = 0;
 
     private static final int maxLevel = 2;
+
+    /**
+     * 哪些草坪显示(index坐标),有无玩家
+     */
+    private static Map<Integer, PlayShip> showPlate = new HashMap<>(20);
+
+    private static List<PlateBlockButton> plateBlockButtons = new ArrayList<>();
+
+    /**
+     * 已经生成玩家的坐标,showPlate 这个变量的key
+     */
+    private static Set<Integer> showPlateKey = new HashSet<>(20);
 
     private boolean isLevelComplete() {
 
@@ -61,7 +73,8 @@ public class LevelManager {
             new CardImageButton(
                 new TextureRegionDrawable(new Texture(Gdx.files.internal(card.getImage()))),
                 card.getAxis().getX(),
-                card.getAxis().getY()
+                card.getAxis().getY(),
+                card.getName()
             )
         )));
         return cardImageButtons;
@@ -74,15 +87,15 @@ public class LevelManager {
      */
     public static List<PlateBlockButton> createPlate() {
 
-        List<PlateBlockButton> imageButtons = new ArrayList<>(4);
-        Constants.PLATES.forEach(array -> array.forEach(card -> imageButtons.add(
+        Constants.PLATES.forEach(array -> array.forEach(card -> plateBlockButtons.add(
                 new PlateBlockButton(
                         new TextureRegionDrawable(new Texture(Gdx.files.internal(card.getImage()))),
                         card.getAxis().getX(),
-                        card.getAxis().getY()
+                        card.getAxis().getY(),
+                        true
                 )
         )));
-        return imageButtons;
+        return plateBlockButtons;
     }
 
     public static Enemy findClosestEnemy(float x, float y) {
@@ -105,7 +118,18 @@ public class LevelManager {
         if (null != closestEnemy) {
 //            System.out.println("最近的:" + closestEnemy.getName());
         }
-
         return closestEnemy;
+    }
+
+    public static Map<Integer, PlayShip> getShowPlate() {
+        return showPlate;
+    }
+
+    public static List<PlateBlockButton> getPlateBlockButtons() {
+        return plateBlockButtons;
+    }
+
+    public static Set<Integer> getShowPlateKey() {
+        return showPlateKey;
     }
 }

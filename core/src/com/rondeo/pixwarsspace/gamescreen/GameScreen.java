@@ -115,9 +115,7 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
         // --创建卡牌按钮-----------------------------------------------------------------------------
         List<PlateBlockButton> plates = LevelManager.createPlate();
         // -----------------------------------------------------------------------------------------
-        // --创建弹框-----------------------------------------------------------------------------
-        uiManager = new UIManager(stage, new Skin( Gdx.files.internal( "ui/default.json" ) ));
-        // -----------------------------------------------------------------------------------------
+
 
 
         CellTable cellTable = null;
@@ -145,6 +143,10 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
         Controllers.getInstance().bossController().setup();
         
         hudManager = new HudManager( main, assets, world, cellTable);
+
+        // --创建弹框-----------------------------------------------------------------------------
+        uiManager = new UIManager(hudManager, stage, new Skin( Gdx.files.internal( "ui/default.json" ) ));
+        // -----------------------------------------------------------------------------------------
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor( ship );
@@ -201,6 +203,7 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
 
         // 在这里更新游戏逻辑，检查关卡完成条件是否满足
         if (monsterFactoryController.isLevelComplete()) {
+            Controllers.getInstance().pause = true;
             uiManager.showComplexDialog();
             levelComplete = false; // 确保只显示一次
             monsterFactoryController.setLevelComplete(false);

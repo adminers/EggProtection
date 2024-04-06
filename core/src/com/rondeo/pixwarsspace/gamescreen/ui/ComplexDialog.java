@@ -8,11 +8,20 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
+import com.rondeo.pixwarsspace.gamescreen.components.HudManager;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
+import com.rondeo.pixwarsspace.monster.DistributionMap;
+import com.rondeo.pixwarsspace.utils.Constants;
+
+import java.util.List;
 
 public class ComplexDialog extends Dialog {
-    public ComplexDialog(String title, Skin skin) {
+
+    private HudManager hudManager;
+
+    public ComplexDialog(HudManager hudManager, String title, Skin skin) {
         super(title, skin);
+        this.hudManager = hudManager;
 
         // 创建一个Table来管理布局
         Table table = new Table();
@@ -32,9 +41,16 @@ public class ComplexDialog extends Dialog {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Controllers.getInstance().pause = false;
                 Controllers.getInstance().junction = false;
+                Controllers.getInstance().getMonsterFactoryController().setAttacked(false);
                 hide();
                 LevelManager.goToNextShowLevel();
+
+                // 重新设置血条
+                hudManager.getHealthBarActor().rest(
+                        new HealthBar(Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel()).size())
+                );
             }
         });
         table.add(button);

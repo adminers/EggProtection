@@ -13,6 +13,13 @@ public class HealthBarActor extends Actor {
         this.setHeight(20); // 设置血条高度
     }
 
+    /**
+     * 层级变化更改血条健康度
+     */
+    public void rest(HealthBar healthBar) {
+        this.healthBar = healthBar;
+    }
+
     public void setCurrentHealth(float health) {
         this.healthBar.setCurrentHealth(health);
     }

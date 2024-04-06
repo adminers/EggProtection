@@ -16,6 +16,7 @@ import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
 import com.rondeo.pixwarsspace.gamescreen.components.*;
+import com.rondeo.pixwarsspace.gamescreen.components.play.BubblesShip;
 import com.rondeo.pixwarsspace.gamescreen.components.play.PlayShip;
 import com.rondeo.pixwarsspace.utils.Constants;
 
@@ -138,7 +139,7 @@ public class PlayController extends Actor implements Entity, Disposable {
 
     PlayShip playShip;
 
-    public void deploy(int c) {
+    public PlayShip deploy(int c) {
 
         Stage stage = getStage();
         ButtonImage buttonImage = Constants.PLATES.get(LevelManager.getCurrentIndexLevel()).get(c);
@@ -151,9 +152,14 @@ public class PlayController extends Actor implements Entity, Disposable {
         AtlasRegion shipRegion = enemyRegion[choosenRegionIndex];
         playShip.init(shipRegion, patterns_1[ choosenPatternIndex ] , level.getX(), level.getY());
 
+        BubblesShip bubblesShip = new BubblesShip(world);
+        bubblesShip.init(level.getX(), level.getY());
+        stage.addActor(bubblesShip);
+
         playShip.setName("玩家(" + c + ")");
         System.out.println("创建玩家: " + c + "|" + level.getX() + "|" + level.getY());
         Constants.ACTIVE_PLAYERS.add(playShip);
+        return playShip;
     }
     
 //    public Action deployAction = new Action() {

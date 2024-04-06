@@ -5,18 +5,22 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.rondeo.pixwarsspace.gamescreen.GameScreen;
+import com.rondeo.pixwarsspace.gamescreen.components.HudManager;
 
 public class UIManager {
     private Stage stage;
     private Skin skin;
+    private HudManager hudManager;
 
-    public UIManager(Stage stage, Skin skin) {
+    public UIManager(HudManager hudManager, Stage stage, Skin skin) {
         this.stage = stage;
         this.skin = skin;
+        this.hudManager = hudManager;
     }
 
     public void showComplexDialog() {
-        ComplexDialog complexDialog = new ComplexDialog("FUCK", skin);
+        ComplexDialog complexDialog = new ComplexDialog(hudManager, "FUCK", skin);
         complexDialog.setModal(true);
 //        complexDialog.show(stage);
 

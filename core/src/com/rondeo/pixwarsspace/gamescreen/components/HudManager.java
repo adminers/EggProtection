@@ -208,7 +208,7 @@ public class HudManager implements Disposable {
 
         //----------------------------------------------------------------
         // -----血条---------------------------------------------------------------------------------
-        healthBarActor = new HealthBarActor(new HealthBar(100));
+        healthBarActor = new HealthBarActor(new HealthBar(Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel()).size()));
         // -----------------------------------------------------------------------------------------
 
 
@@ -409,7 +409,7 @@ public class HudManager implements Disposable {
         return val;
     }
     Random random = new Random();
-    int ccc = 0;
+    int ccc = 100;
 
     public void update( int life ) {
         hud.getViewport().apply();
@@ -418,12 +418,19 @@ public class HudManager implements Disposable {
 
         lifeLabel.setText( "SHIP INT: " + lifeToBars( life ) );
         toolLabel.setText("LEVEL " + LevelManager.getCurrentLevel());
-        if (ccc >= 100) {
-            ccc = 0;
+        if (ccc <= 0) {
+            ccc = 100;
         }
 
-          // 更新血条
-        healthBarActor.setCurrentHealth( ccc++); // 假设playerHealth是玩家当前的血量
+        // 更新血条
+        healthBarActor.setCurrentHealth(Controllers.getInstance().getMonsterFactoryController().getAttackEnemyNum());
+        if (Controllers.getInstance().getMonsterFactoryController().isAttacked()) {
+        }/* else {
+            if (!Controllers.getInstance().junction) {
+                int size = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel()).size();
+                healthBarActor.setCurrentHealth(size);
+            }
+        }*/
 
 //        updateTablePosition();
 
@@ -485,6 +492,15 @@ public class HudManager implements Disposable {
     public void dispose() {
         hud.dispose();
         skin.dispose();
+    }
+
+    public HudManager setHealthBarActor(HealthBarActor healthBarActor) {
+        this.healthBarActor = healthBarActor;
+        return this;
+    }
+
+    public HealthBarActor getHealthBarActor() {
+        return healthBarActor;
     }
 
     private class WarningManager {
