@@ -49,7 +49,6 @@ public class CardImageButton extends ImageButton {
     public CardImageButton(Drawable imageUp, float x, float y, String name) {
         super(imageUp);
         this.setName(name);
-        setZIndex(99999999);
         setBounds(x, y, 25, 40);
         this.addListener(new ClickListener() {
             @Override
@@ -116,4 +115,6 @@ public class CardImageButton extends ImageButton {
         PlateBlockButton plateBlockButton = plate.get(result.get(0));
         plateBlockButton.setHide(false);
     }
+
+
 }
