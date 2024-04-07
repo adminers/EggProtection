@@ -77,6 +77,8 @@ public class PlayShip extends Player {
 
     private ShapeRenderer shapeRenderer;
 
+    private boolean isAttack;
+
     public void init( AtlasRegion shipRegion, final float[] pattern, float positionX, float positionY ) {
         this.shipRegion = shipRegion;
         life = 4;
@@ -97,6 +99,7 @@ public class PlayShip extends Player {
 //        world.update( item, 0, 100, width, height );
         resolve();
         isDead = false;
+        isAttack = true;
 
 
         /*申注释clearActions();
@@ -138,6 +141,14 @@ public class PlayShip extends Player {
         /*申注释addAction( Actions.forever( sequenceAction ) );*/
     }
 
+    public void init(AtlasRegion shipRegion, float positionX, float positionY , Array<AtlasRegion> explosionRegions) {
+
+        init(shipRegion, null, positionX, positionY);
+        explosionAnimation = new Animation<>( 10.31f, explosionRegions );
+        explosionAnimation.setPlayMode( PlayMode.LOOP );
+        isAttack = false;
+    }
+
     float deltaTime;
     Random random = new Random();
 
@@ -162,7 +173,7 @@ public class PlayShip extends Player {
         world.move( item, getX(), getY(), collisionFilter );
         resolve();
 //        ++faShe;
-        if( System.currentTimeMillis() > time + 1100 && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
+        if( isAttack && System.currentTimeMillis() > time + 1100 && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
             time = System.currentTimeMillis();
             Enemy enemyShip  = LevelManager.findClosestEnemy(getX(), getY());
             if (null != enemyShip) {
@@ -291,4 +302,13 @@ public class PlayShip extends Player {
         setBounds( rect.x, rect.y, rect.w, rect.h );
     }
 
+    public PlayShip setWidth(int width) {
+        this.width = width;
+        return this;
+    }
+
+    public PlayShip setHeight(int height) {
+        this.height = height;
+        return this;
+    }
 }

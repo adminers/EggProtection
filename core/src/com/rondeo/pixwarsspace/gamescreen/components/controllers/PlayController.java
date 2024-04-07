@@ -18,6 +18,7 @@ import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
 import com.rondeo.pixwarsspace.gamescreen.components.*;
 import com.rondeo.pixwarsspace.gamescreen.components.play.BubblesShip;
 import com.rondeo.pixwarsspace.gamescreen.components.play.PlayShip;
+import com.rondeo.pixwarsspace.gamescreen.enums.PlateBlockEnum;
 import com.rondeo.pixwarsspace.utils.Constants;
 
 import java.util.Random;
@@ -139,7 +140,7 @@ public class PlayController extends Actor implements Entity, Disposable {
 
     PlayShip playShip;
 
-    public PlayShip deploy(int c) {
+    public PlayShip deploy(int c, PlateBlockEnum plateBlockEnum) {
 
         Stage stage = getStage();
         ButtonImage buttonImage = Constants.PLATES.get(LevelManager.getCurrentIndexLevel()).get(c);
@@ -150,12 +151,18 @@ public class PlayController extends Actor implements Entity, Disposable {
         playShip = playShipPool.obtain();
         stage.addActor(playShip);
         AtlasRegion shipRegion = enemyRegion[choosenRegionIndex];
-        playShip.init(shipRegion, patterns_1[ choosenPatternIndex ] , level.getX(), level.getY());
-
-        BubblesShip bubblesShip = new BubblesShip(world);
-        bubblesShip.init(level.getX(), level.getY());
-        stage.addActor(bubblesShip);
-
+        if (PlateBlockEnum.protect.equals(plateBlockEnum)) {
+            BubblesShip bubblesShip = new BubblesShip(world);
+            bubblesShip.init(level.getX(), level.getY());
+            stage.addActor(bubblesShip);
+            TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("lib/t_map/play/whale.atlas"));
+            Array<AtlasRegion> whale = textureAtlas.findRegions("whale");
+            playShip.setHeight(15);
+            playShip.setWidth(17);
+            playShip.init(shipRegion , level.getX(), level.getY(), whale);
+        } else {
+            playShip.init(shipRegion, patterns_1[ choosenPatternIndex ] , level.getX(), level.getY());
+        }
         playShip.setName("玩家(" + c + ")");
         System.out.println("创建玩家: " + c + "|" + level.getX() + "|" + level.getY());
         Constants.ACTIVE_PLAYERS.add(playShip);
@@ -180,7 +187,7 @@ public class PlayController extends Actor implements Entity, Disposable {
 
             @Override
             public boolean act(float delta) {
-                deploy(0);
+                deploy(0, null);
                 return true;
             }
         });

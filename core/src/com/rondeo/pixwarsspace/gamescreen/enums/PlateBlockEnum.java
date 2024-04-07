@@ -14,5 +14,10 @@ public enum PlateBlockEnum {
     /**
      * 攻击
      */
-    attack;
+    attack,
+
+    /**
+     * 防护
+     */
+    protect;
 }

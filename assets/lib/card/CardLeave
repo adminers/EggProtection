@@ -13,7 +13,7 @@
         {
             "axis" : {"x": 105,"y": 10},
             "image" : "lib/card/card_vampire_back.png",
-            "name" : "attack"
+            "name" : "protect"
         },
         {
             "axis" : {"x": 140,"y": 10},

@@ -69,8 +69,10 @@ public class CardImageButton extends ImageButton {
                         show();
                         break;
                     case "attack" :
-                        createAttack();
-                        System.out.println(2);
+                        createAttack(PlateBlockEnum.attack);
+                        break;
+                    case "protect" :
+                        createAttack(PlateBlockEnum.protect);
                         break;
                     default:
                         break;
@@ -88,13 +90,13 @@ public class CardImageButton extends ImageButton {
         });
     }
 
-    private void createAttack() {
+    private void createAttack(PlateBlockEnum plateBlockEnum) {
 
         Map<Integer, PlayShip> showPlate = LevelManager.getShowPlate();
         Set<Integer> showPlateKey = LevelManager.getShowPlateKey();
         for (Integer key : showPlate.keySet()) {
             if (!showPlateKey.contains(key)) {
-                PlayShip playShip = Controllers.getInstance().getPlayController().deploy(key);
+                PlayShip playShip = Controllers.getInstance().getPlayController().deploy(key, plateBlockEnum);
                 showPlate.put(key, playShip);
                 showPlateKey.add(key);
                 break;
