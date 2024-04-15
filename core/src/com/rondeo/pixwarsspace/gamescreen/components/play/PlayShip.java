@@ -12,6 +12,7 @@ import com.dongbat.jbump.*;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.*;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.ArtilleryShip;
+import com.rondeo.pixwarsspace.gamescreen.enums.PlateBlockEnum;
 import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
 import com.rondeo.pixwarsspace.utils.Constants;
 import com.rondeo.pixwarsspace.utils.CoordinateUtil;
@@ -58,6 +59,8 @@ public class PlayShip extends Player {
     public boolean invulnerable = true;
     long isHit;
 
+    public PlateBlockEnum plateBlockEnum;
+
     public PlayShip(World<Entity> world, Array<AtlasRegion> explosionRegions ) {
         this.world = world;
         item = new Item<Entity>( this );
@@ -79,8 +82,9 @@ public class PlayShip extends Player {
 
     private boolean isAttack;
 
-    public void init( AtlasRegion shipRegion, final float[] pattern, float positionX, float positionY ) {
+    public void init( AtlasRegion shipRegion, final float[] pattern, float positionX, float positionY, PlateBlockEnum plateBlockEnum ) {
         this.shipRegion = shipRegion;
+        this.plateBlockEnum = plateBlockEnum;
         life = 4;
         invulnerable = true;
         screenWidth = getStage().getWidth();
@@ -141,9 +145,9 @@ public class PlayShip extends Player {
         /*申注释addAction( Actions.forever( sequenceAction ) );*/
     }
 
-    public void init(AtlasRegion shipRegion, float positionX, float positionY , Array<AtlasRegion> explosionRegions) {
+    public void init(AtlasRegion shipRegion, float positionX, float positionY , Array<AtlasRegion> explosionRegions, PlateBlockEnum plateBlockEnum) {
 
-        init(shipRegion, null, positionX, positionY);
+        init(shipRegion, null, positionX, positionY, plateBlockEnum);
         explosionAnimation = new Animation<>( 10.31f, explosionRegions );
         explosionAnimation.setPlayMode( PlayMode.LOOP );
         isAttack = false;
@@ -221,8 +225,14 @@ public class PlayShip extends Player {
                 // 可以的第一版
 //                Controllers.getInstance().bulletController().fire(getStage(), getX(), getY(), xMoveCM, yMoveCM, true, rotate);
 
-                // 二次贝尔曲线版本
-                Controllers.getInstance().bulletController().fire(getStage(), getX(), getY(), new Axis(enemyX, enemyY), true, rotate);
+
+                if (PlateBlockEnum.electricShock.equals(plateBlockEnum)) {
+
+                } else {
+
+                    // 二次贝尔曲线版本
+                    Controllers.getInstance().bulletController().fire(getStage(), getX(), getY(), new Axis(enemyX, enemyY), true, rotate);
+                }
 //                Controllers.getInstance().bulletController().fire( getStage(), (getX() + getWidth()/2f) - Bullet.width/2, getTop() - 5f, 0, 0, true ,1);
             } else {
                 System.out.println("敌人为空");

@@ -12,6 +12,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.entity.Ship;
 
 public class Controllers implements Disposable {
     private BulletController bulletController;
+    private LightningController lightningController;
     private EnemyController enemyController;
 
     private SnakeEnemyController snakeEnemyController;
@@ -41,6 +42,7 @@ public class Controllers implements Disposable {
 
         TextureAtlas assetsx = new TextureAtlas( Gdx.files.internal( "lib/t_map/play/bullet.atlas" ) );
         bulletController = new BulletController( world, /*assets.findRegion( "bullet_blue" ), */assetsx.findRegion( "idle" ) );
+        lightningController = new LightningController( world, /*assets.findRegion( "bullet_blue" ), */assetsx.findRegion( "idle" ) );
         enemyController = new EnemyController( world, assets.findRegions( "explosion" ), 3, assets.findRegion( "enemy_orb" ), assets.findRegion( "enemy_spider" ), assets.findRegion( "enemy_moth" ) );
 
 
@@ -78,6 +80,7 @@ public class Controllers implements Disposable {
         brickController.dispose();
         monsterFactoryController.dispose();
         bulletController.dispose();
+        lightningController.dispose();
         bossController.dispose();
     }
 
@@ -161,5 +164,9 @@ public class Controllers implements Disposable {
 
     public MonsterFactoryController getMonsterFactoryController() {
         return this.monsterFactoryController;
+    }
+
+    public LightningController getLightningController() {
+        return lightningController;
     }
 }

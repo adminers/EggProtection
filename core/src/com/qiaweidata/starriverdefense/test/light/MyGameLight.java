@@ -76,7 +76,7 @@ public class MyGameLight extends ApplicationAdapter {
             time = System.currentTimeMillis();
             float endX = MathUtils.random(100, 200);
             float endY = MathUtils.random(100, 200);
-            lineRenderer.init(createPoints(0, 0, endX, endY, 50));
+            lineRenderer.init(createPoints(0, 0, endX, endY, 4));
         }
         lineRenderer.render(batch);
 

@@ -19,5 +19,10 @@ public enum PlateBlockEnum {
     /**
      * 防护
      */
-    protect;
+    protect,
+
+    /**
+     * 电击
+     */
+    electricShock;
 }

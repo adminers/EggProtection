@@ -62,6 +62,8 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
 
     private int attackEnemyNum = 0;
 
+    private Map<String, TextureAtlas> textureAtlasMap = new HashMap<>();
+
     public MonsterFactoryController(World<Entity> world) {
         this.world = world;
     }
@@ -78,8 +80,13 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         monsterShip.setTargetName(distributionMap.getTargetName());
         monsterShip.init(monsterAttr);
         stage.addActor(monsterShip);
-
-        TextureAtlas monsterTextureAtlas = new TextureAtlas(Gdx.files.internal(monsterAttr.getTextureRegion()));
+        TextureAtlas monsterTextureAtlas;
+        if (textureAtlasMap.containsKey(monsterAttr.getTextureRegion())) {
+            monsterTextureAtlas = textureAtlasMap.get(monsterAttr.getTextureRegion());
+        } else {
+            monsterTextureAtlas = new TextureAtlas(Gdx.files.internal(monsterAttr.getTextureRegion()));
+            textureAtlasMap.put(monsterAttr.getTextureRegion(), monsterTextureAtlas);
+        }
         Array<AtlasRegion> commonRegion = monsterTextureAtlas.findRegions(monsterAttr.getFall());
         monsterShip.setRegions(commonRegion);
 
@@ -96,7 +103,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         List<DistributionMap> distributionMaps = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel());
         for (int i = 0; i < distributionMaps.size(); i++) {
             DistributionMap distributionMap = distributionMaps.get(i);
-            deploySequence.addAction(Actions.delay(1.0f));
+            deploySequence.addAction(Actions.delay(0.0f));
             int finalI = i;
             deploySequence.addAction(new Action() {
 

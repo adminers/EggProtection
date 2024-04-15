@@ -159,9 +159,18 @@ public class PlayController extends Actor implements Entity, Disposable {
             Array<AtlasRegion> whale = textureAtlas.findRegions("whale");
             playShip.setHeight(15);
             playShip.setWidth(17);
-            playShip.init(shipRegion , level.getX(), level.getY(), whale);
-        } else {
-            playShip.init(shipRegion, patterns_1[ choosenPatternIndex ] , level.getX(), level.getY());
+            playShip.init(shipRegion , level.getX(), level.getY(), whale, PlateBlockEnum.protect);
+        } else if (PlateBlockEnum.electricShock.equals(plateBlockEnum)) {
+            BubblesShip bubblesShip = new BubblesShip(world);
+            bubblesShip.init(level.getX(), level.getY());
+            stage.addActor(bubblesShip);
+            TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("lib/t_map/play/whale.atlas"));
+            Array<AtlasRegion> whale = textureAtlas.findRegions("whale");
+            playShip.setHeight(15);
+            playShip.setWidth(17);
+            playShip.init(shipRegion , level.getX(), level.getY(), whale, PlateBlockEnum.protect);
+        }  else {
+            playShip.init(shipRegion, patterns_1[ choosenPatternIndex ] , level.getX(), level.getY(), PlateBlockEnum.attack);
         }
         playShip.setName("玩家(" + c + ")");
         System.out.println("创建玩家: " + c + "|" + level.getX() + "|" + level.getY());
