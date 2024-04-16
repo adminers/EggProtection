@@ -74,6 +74,8 @@ public class CardImageButton extends ImageButton {
                     case "protect" :
                         createAttack(PlateBlockEnum.protect);
                         break;
+                    case "electricShock" :
+                        createAttack(PlateBlockEnum.electricShock);
                     default:
                         break;
                 }
