@@ -165,7 +165,7 @@ public class PlayController extends Actor implements Entity, Disposable {
             Array<AtlasRegion> whale = textureAtlas.findRegions("BrowserPreview_tmp");
             playShip.setHeight(15);
             playShip.setWidth(15);
-            playShip.init(shipRegion , level.getX(), level.getY(), whale, PlateBlockEnum.electricShock);
+            playShip.initLightning(shipRegion , level.getX(), level.getY(), whale, PlateBlockEnum.electricShock);
         }  else {
             playShip.init(shipRegion, patterns_1[ choosenPatternIndex ] , level.getX(), level.getY(), PlateBlockEnum.attack);
         }

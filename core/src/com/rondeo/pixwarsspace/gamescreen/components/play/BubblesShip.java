@@ -10,6 +10,16 @@ import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.Scenery;
 
+/**
+ * 防护罩
+ *
+ * @Title:
+ * @Description:
+ * @Company:www.qiaweidata.com
+ * @author:shenshilong
+ * @date:
+ * @version:V1.0
+ */
 public class BubblesShip extends Scenery {
 
     World<Entity> world;

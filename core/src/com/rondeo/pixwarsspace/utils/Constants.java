@@ -124,10 +124,10 @@ public class Constants {
         MONSTER_ATTR = new Gson().fromJson(gdxFileString("lib/t_map/monster/MonsterFactory.json"), new TypeToken<Map<String, MonsterAttr>>() {}.getType());
 
         // 随机增加怪物测速
-        List<DistributionMap> distributionMaps = DISTRIBUTION_MAP.get(0);
-        for (int i = 0; i < 50; i++) {
-            distributionMaps.add(distributionMaps.get(0));
-        }
+//        List<DistributionMap> distributionMaps = DISTRIBUTION_MAP.get(0);
+//        for (int i = 0; i < 50; i++) {
+//            distributionMaps.add(distributionMaps.get(0));
+//        }
     }
 
     private Constants() {

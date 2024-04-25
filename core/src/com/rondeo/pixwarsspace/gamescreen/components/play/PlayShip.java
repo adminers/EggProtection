@@ -153,6 +153,14 @@ public class PlayShip extends Player {
         isAttack = false;
     }
 
+    public void initLightning(AtlasRegion shipRegion, float positionX, float positionY , Array<AtlasRegion> explosionRegions, PlateBlockEnum plateBlockEnum) {
+
+        init(shipRegion, null, positionX, positionY, plateBlockEnum);
+        explosionAnimation = new Animation<>( 10.31f, explosionRegions );
+        explosionAnimation.setPlayMode( PlayMode.LOOP );
+        isAttack = true;
+    }
+
     float deltaTime;
     Random random = new Random();
 
@@ -167,6 +175,8 @@ public class PlayShip extends Player {
     float tempEnd = runEndXLeft;
 //    float rotate = 0f;
 
+    long tempNum = 0;
+
     @Override
     public void act(float delta) {
 
@@ -175,9 +185,13 @@ public class PlayShip extends Player {
 //            return;
 //        }
         world.move( item, getX(), getY(), collisionFilter );
+
+        if (PlateBlockEnum.electricShock.equals(this.plateBlockEnum)) {
+            tempNum = 0;
+        }
         resolve();
 //        ++faShe;
-        if( isAttack && System.currentTimeMillis() > time + 1100 && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
+        if( isAttack && System.currentTimeMillis() > time + 1100 + tempNum && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
             time = System.currentTimeMillis();
             Enemy enemyShip  = LevelManager.findClosestEnemy(getX(), getY());
             if (null != enemyShip) {
@@ -190,7 +204,7 @@ public class PlayShip extends Player {
                 Axis axis = sulgPoint.getAxis();
                 sulgPoint.getSlugShip().init(axis.getX(), axis.getY());*/
 
-                System.out.println("////////////////////" + enemyShip.getX() + "-" + enemyShip.getY());
+//                System.out.println("////////////////////" + enemyShip.getX() + "-" + enemyShip.getY());
 
                 // 获取敌人的位置
                 float enemyX = enemyShip.getX();
@@ -226,7 +240,10 @@ public class PlayShip extends Player {
 //                Controllers.getInstance().bulletController().fire(getStage(), getX(), getY(), xMoveCM, yMoveCM, true, rotate);
 
 
-                if (PlateBlockEnum.electricShock.equals(plateBlockEnum)) {
+                if (PlateBlockEnum.electricShock.equals(this.plateBlockEnum)) {
+
+                    // 闪电炮
+                    Controllers.getInstance().getLightningController().fire(getStage(), getX(), getY(), new Axis(enemyX, enemyY), true, rotate);
 
                 } else {
 

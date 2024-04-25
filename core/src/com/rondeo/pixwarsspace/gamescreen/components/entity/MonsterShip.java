@@ -288,7 +288,8 @@ public class MonsterShip extends Enemy {
             if (System.currentTimeMillis() > time + 3000) {
                 time = System.currentTimeMillis();
                 if ("endFall".equals(state)) {
-                    System.out.println("可以跳了");
+
+                    // 可以跳了
                     cJump();
                 }
             }
@@ -356,7 +357,8 @@ public class MonsterShip extends Enemy {
 
             // 跳跃之后,执行下落缓动
             this.state = "fall";
-            System.out.println("跳跃完之后《position.x=" + position.x + ";getX()=" + getX());
+
+            // "跳跃完之后《position.x=" + position.x + ";getX()=" + getX()
             execFall();
         }
     }
