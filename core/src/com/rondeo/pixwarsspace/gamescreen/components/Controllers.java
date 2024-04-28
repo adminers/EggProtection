@@ -63,7 +63,6 @@ public class Controllers implements Disposable {
             assets.findRegion( "laser_head" ), 
             assets.findRegion( "warning" )
         );
-
         preferences = Gdx.app.getPreferences( "pixwars-space-impact" );
         return this;
     }
@@ -169,4 +168,5 @@ public class Controllers implements Disposable {
     public LightningController getLightningController() {
         return lightningController;
     }
+
 }

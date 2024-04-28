@@ -11,17 +11,29 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Array;
-import com.dongbat.jbump.*;
-import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
-import com.rondeo.pixwarsspace.gamescreen.components.*;
+import com.dongbat.jbump.CollisionFilter;
+import com.dongbat.jbump.Item;
+import com.dongbat.jbump.Rect;
+import com.dongbat.jbump.Response;
+import com.dongbat.jbump.World;
+import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
+import com.rondeo.pixwarsspace.gamescreen.components.Entity;
+import com.rondeo.pixwarsspace.gamescreen.components.Player;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.ArtilleryShip;
-import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
-import com.rondeo.pixwarsspace.utils.Constants;
-import com.rondeo.pixwarsspace.utils.CoordinateUtil;
 
 import java.util.Random;
 
-public class YunShip extends Player {
+/**
+ * 踩到脚下的云彩
+ *
+ * @Title:
+ * @Description:
+ * @Company:www.qiaweidata.com
+ * @author:shenshilong
+ * @date: 2024-4-28
+ * @version:V1.0
+ */
+public class CloudShip extends Player {
     World<Entity> world;
     Item<Entity> item;
     Rect rect;
@@ -53,28 +65,23 @@ public class YunShip extends Player {
     AtlasRegion shipRegion;
     //Array<Vector2> pattern;
     Animation<TextureRegion> explosionAnimation;
-
-    int width = 100, height = 35;
-    float screenWidth, screenHeight;
+    int width = 300, height = 95;
     long time;
     boolean isDead = true;
     public boolean invulnerable = true;
     long isHit;
 
-    public YunShip(World<Entity> world, Array<AtlasRegion> baseRegion, Array<TextureRegion> explosionRegions ) {
+    public CloudShip(World<Entity> world, Array<AtlasRegion> baseRegion, Array<TextureRegion> explosionRegions ) {
         this.world = world;
-        item = new Item<Entity>( this );
+        item = new Item<>( this );
         world.add( item, 0, 0, 0, 0 );
         explosionAnimation = new Animation<>( 5f, baseRegion );
         explosionAnimation.setPlayMode( PlayMode.LOOP );
-        shapeRenderer = new ShapeRenderer();
     }
 
     float positionX, positionY;
 
     float runEndXLeft, runEndXRight;
-
-    private ShapeRenderer shapeRenderer;
 
     public void init( AtlasRegion shipRegion, float positionX, float positionY ) {
         this.shipRegion = shipRegion;
@@ -88,23 +95,9 @@ public class YunShip extends Player {
         setOrigin(getWidth() / 2f, getHeight() / 2f);
         resolve();
         isDead = false;
-
-
-
     }
 
     float deltaTime;
-    Random random = new Random();
-
-    private float duration = 130f; // 下落动画持续时间
-    private float elapsedTime = 0f;
-
-     private Interpolation interpolation = Interpolation.swingOut; // 选择一个插值函数
-
-    float tempX = 0.01f;
-
-    private boolean isHd = false;
-    float tempEnd = runEndXLeft;
 
     @Override
     public void act(float delta) {
@@ -124,7 +117,6 @@ public class YunShip extends Player {
 
     }
     Color color = new Color();
-    int isMove = 0;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

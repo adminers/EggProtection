@@ -16,11 +16,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.dongbat.jbump.*;
+import com.dongbat.jbump.Collision;
+import com.dongbat.jbump.CollisionFilter;
+import com.dongbat.jbump.Item;
+import com.dongbat.jbump.Rect;
+import com.dongbat.jbump.Response;
 import com.dongbat.jbump.Response.Result;
-import com.qiaweidata.starriverdefense.test.light.LineRenderer;
+import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
+import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.Outbound;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.apper.LightningLineRenderer;
@@ -86,7 +91,7 @@ public class LightningBullet extends Actor implements Entity, Disposable, Poolab
 
     public float dirX = 0, dirY = 0;
 
-    public static int width = 200, height = 28;
+    public static float width = 200, height = 28;
 
     boolean isAngled = false;
     float angle;
@@ -100,6 +105,16 @@ public class LightningBullet extends Actor implements Entity, Disposable, Poolab
     private SpriteBatch spriteBatch;
 
     Animation<AtlasRegion> explosionAnimation;
+
+    /**
+     * 被攻击的敌人
+     */
+    private Enemy enemy;
+
+    /**
+     * 是否已经攻击
+     */
+    private boolean isAttacked;
 
     public LightningBullet(World<Entity> world, float x, float y, TextureRegion... bulletRegion) {
         this.world = world;
@@ -117,22 +132,29 @@ public class LightningBullet extends Actor implements Entity, Disposable, Poolab
         spriteBatch = new SpriteBatch();
         TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("lib/t_map/monster/ligning/LightningTest.atlas"));
         Array<AtlasRegion> explosionRegions = textureAtlas.findRegions( "L1" );
-        explosionAnimation = new Animation<>( .31f, explosionRegions );
+        explosionAnimation = new Animation<>(1.6f, explosionRegions);
         explosionAnimation.setPlayMode( PlayMode.LOOP );
     }
 
-    public void init(float x, float y, Axis axis, boolean top, float angle) {
+    public void init(float x, float y, Axis axis, boolean top, float angle, Enemy enemyShip) {
         float endX = MathUtils.random(100, 200);
         float endY = MathUtils.random(100, 200);
         lightningLineRenderer.init(createPoints(0, 0, endX, endY, 4));
 
         // 根据肉眼观察,细微调整
         x += 20;
+
+        Vector2 pointA = new Vector2(x, y);
+        Vector2 pointB = new Vector2(axis.getX(), axis.getY());
+
+        float distance = pointA.dst(pointB);
+        width = distance;
         world.update( item, x, y, width, height );
         setRotation(angle + 90);
-        System.out.println("闪电角度：" + angle);
+        this.enemy = enemyShip;
         resolve();
         this.time = System.currentTimeMillis();
+        this.isAttacked = false;
     }
 
     /**
@@ -156,9 +178,21 @@ public class LightningBullet extends Actor implements Entity, Disposable, Poolab
         if (isDead) {
             return;
         }
+        if (this.isAttacked) {
+            return;
+        }
 
         if (isDriftAway()) {
             forceFree();
+            return;
+        }
+
+        if (this.enemy instanceof MonsterShip) {
+            ((MonsterShip) this.enemy).isHit = System.currentTimeMillis() + 100;
+            ((MonsterShip) this.enemy).life--;
+//            forceFree();
+            System.out.println("敌人");
+            this.isAttacked = true;
             return;
         }
     }

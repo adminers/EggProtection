@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
+import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.LightningBullet;
 
@@ -32,9 +33,9 @@ public class LightningController implements Disposable {
 
     LightningBullet bullet;
 
-    public void fire(Stage stage, float x, float y, Axis axis, boolean top, float angle) {
+    public void fire(Stage stage, float x, float y, Axis axis, boolean top, float angle, Enemy enemyShip) {
         bullet = bulletPool.obtain();
-        bullet.init(x, y, axis, top, angle);
+        bullet.init(x, y, axis, top, angle, enemyShip);
         stage.addActor(bullet);
     }
 

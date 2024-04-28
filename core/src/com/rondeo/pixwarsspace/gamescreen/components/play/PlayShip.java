@@ -243,7 +243,7 @@ public class PlayShip extends Player {
                 if (PlateBlockEnum.electricShock.equals(this.plateBlockEnum)) {
 
                     // 闪电炮
-                    Controllers.getInstance().getLightningController().fire(getStage(), getX(), getY(), new Axis(enemyX, enemyY), true, rotate);
+                    Controllers.getInstance().getLightningController().fire(getStage(), getX(), getY(), new Axis(enemyX, enemyY), true, rotate, enemyShip);
 
                 } else {
 

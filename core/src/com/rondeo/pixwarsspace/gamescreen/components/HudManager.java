@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -29,6 +28,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.Main;
 import com.rondeo.pixwarsspace.gamescreen.GameScreen;
@@ -41,12 +41,14 @@ import com.rondeo.pixwarsspace.utils.Constants;
 import com.rondeo.pixwarsspace.utils.Rumble;
 import com.rondeo.pixwarsspace.utils.SoundController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class HudManager implements Disposable {
     public Stage hud;
     Skin skin;
-    Table table, credits;
+    Table credits;
     TextureAtlas assets;
     TutorialManager tutorialManager;
     WarningManager warningManager;
@@ -72,7 +74,7 @@ public class HudManager implements Disposable {
         this.main = main;
         this.cellTable = cellTable;
 
-        hud = new Stage( new ExtendViewport( main.width*1.5f , main.height*1.5f ) );
+        hud = new Stage( new FitViewport( main.width*1.5f , main.height*1.5f ) );
         skin = new Skin( Gdx.files.internal( "ui/default.json" ) );
 
         gameOverLabel = new Label("Game\nOver", skin, "big");
@@ -215,16 +217,8 @@ public class HudManager implements Disposable {
         // 创建一个按钮
         createButton();
 
-        table = new Table();
-        table.setFillParent(true);
-        //table.setVisible( false );
 
 
-
-
-
-        table.setDebug(true);
-        
         //table.add( dialogWindow ).growX();
        /*
        table.setPosition(x, Gdx.graphics.getHeight()); // 设置 Table 的起始位置
@@ -252,45 +246,15 @@ public class HudManager implements Disposable {
         table.add().expandY();
         table.add( lifeWindow );
         table.row();*/
-
-
-//        table.add( lifeWindow );
-        // 创建一个占位符
-        Actor placeholder = new Image(); // 您也可以使用其他空的 Actor
-
-        // 设置占位符的高度
-        float placeholderHeight = 20f;
-//        placeholder.setHeight(placeholderHeight);
-
-        // 调整占位符的上下边距
-        table.add(placeholder).height(placeholderHeight)/*.padTop(20f).padBottom(20f)*/;
-        table.row();
-        table.add( toolWindow );
-        table.row();
-
-        // 将血条添加到 Table 中
-        table.add(healthBarActor).width(100).height(10);
-
-        table.row();
-        table.add().expandY();
-
-        table.row();
-        table.add( gameOverLabel );
-
-        table.row().padTop( 100 );
-        table.add( restartButton );
-
-        table.row();
-        table.add().expandY();
-
-
-        hud.addActor( table );
+        Table rootTable = rootTable();
+        topTool(rootTable);
+        hud.addActor(rootTable);
 
         tutorialManager = new TutorialManager();
         warningManager = new WarningManager();
 
 
-        credits = new Table();
+        /*credits = new Table();
         credits.setFillParent(true);
         credits.setVisible( false );
 
@@ -317,7 +281,119 @@ public class HudManager implements Disposable {
                 skin );
         label.setAlignment( Align.center );
         credits.add(label);
-        hud.addActor(credits);
+        hud.addActor(credits);*/
+    }
+
+    private void topTool(Table rootTable) {
+
+        //        table.add( lifeWindow );
+        Table leftTable = new Table();
+        leftTable.setDebug(true);
+        addLife(leftTable);
+//        leftTable.add(new Label("UUU", skin));
+        Table rightTable = new Table();
+        rightTable.setDebug(true);
+
+        // 创建一个占位符
+        Actor placeholder = new Image(); // 您也可以使用其他空的 Actor
+
+        // 设置占位符的高度
+        float placeholderHeight = 20f;
+//        placeholder.setHeight(placeholderHeight);
+
+        // 调整占位符的上下边距
+        rightTable.add(placeholder).height(placeholderHeight)/*.padTop(20f).padBottom(20f)*/;
+        rightTable.row();
+
+        // 测试我方血条,打算用饼图方式
+//        rightTable.add(new Label("Label 1", skin));
+//        rightTable.add(new Label("Label 2", skin)).prefWidth(200);
+//        rightTable.add(new Label("Label 3", skin));
+//
+//        rightTable.row();
+        rightTable.add( toolWindow );
+        rightTable.row();
+
+        // 将血条添加到 Table 中
+        rightTable.add(healthBarActor).width(100).height(10);
+
+        /*rightTable.row();
+        rightTable.add().expandY();
+
+        rightTable.row();
+        rightTable.add( gameOverLabel );
+
+        rightTable.row().padTop( 100 );
+        rightTable.add( restartButton );
+
+        rightTable.row();
+        rightTable.add().expandY();*/
+
+//        rootTable.add(leftTable).space( 20f ).fillX().width( 150 );
+        rootTable.add(leftTable).padLeft(10f);
+        rootTable.add( rightTable ).space( 60f ).fillX();
+        rootTable.top().left();
+    }
+
+    private Table rootTable() {
+
+        Table rootTable = new Table();
+        rootTable.setFillParent(true);
+        //table.setVisible( false );
+        rootTable.setDebug(true);
+        if (true) {
+            return rootTable;
+        }
+
+        // 创建一个占位符
+        Actor placeholder = new Image(); // 您也可以使用其他空的 Actor
+
+        // 设置占位符的高度
+        float placeholderHeight = 20f;
+
+         // 调整占位符的上下边距
+        rootTable.add(placeholder).height(placeholderHeight)/*.padTop(20f).padBottom(20f)*/;
+        rootTable.row();
+
+        rootTable.add( toolWindow );
+        rootTable.row();
+
+        // 将血条添加到 Table 中
+        rootTable.add(healthBarActor).width(100).height(10);
+
+        rootTable.row();
+        rootTable.add().expandY();
+
+        rootTable.row();
+        rootTable.add( gameOverLabel );
+
+        rootTable.row().padTop( 100 );
+        rootTable.add( restartButton );
+
+        rootTable.row();
+        rootTable.add().expandY();
+
+        return rootTable;
+    }
+
+    private void addLife(Table lifeTable) {
+
+        lifeTable.setHeight(20f);
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("lib/life/Pie.atlas"));
+        Image image1 = new Image(atlas.findRegion("X1"));
+        Image image2 = new Image(atlas.findRegion("X2"));
+        Image image3 = new Image(atlas.findRegion("X3"));
+        Image image4 = new Image(atlas.findRegion("X4"));
+//        lifeTable.defaults().pad(10);
+        lifeTable.add(image1).height(15).width(15);
+        lifeTable.add(image2).height(15).width(15);
+        lifeTable.row();
+        lifeTable.add(image3).height(15).width(15);
+        lifeTable.add(image4).height(15).width(15);
+        lifeImages.add(image1);
+        lifeImages.add(image2);
+        lifeImages.add(image3);
+        lifeImages.add(image4);
     }
 
     private void createButton() {
@@ -422,6 +498,8 @@ public class HudManager implements Disposable {
             ccc = 100;
         }
 
+
+
         // 更新血条
         healthBarActor.setCurrentHealth(Controllers.getInstance().getMonsterFactoryController().getAttackEnemyNum());
         if (Controllers.getInstance().getMonsterFactoryController().isAttacked()) {
@@ -441,24 +519,24 @@ public class HudManager implements Disposable {
         }
     }
 
-    private void updateTablePosition() {
-        float x = (Gdx.graphics.getWidth() - table.getWidth()) / 2;
-        float y = (Gdx.graphics.getHeight() - table.getHeight()) / 2;
+    /*private void updateTablePosition() {
+        float x = (Gdx.graphics.getWidth() - rootTable.getWidth()) / 2;
+        float y = (Gdx.graphics.getHeight() - rootTable.getHeight()) / 2;
 
         // 确保 Table 在游戏屏幕内
-        x = Math.max(0, Math.min(x, Gdx.graphics.getWidth() - table.getWidth()));
-        y = Math.max(0, Math.min(y, Gdx.graphics.getHeight() - table.getHeight()));
+        x = Math.max(0, Math.min(x, Gdx.graphics.getWidth() - rootTable.getWidth()));
+        y = Math.max(0, Math.min(y, Gdx.graphics.getHeight() - rootTable.getHeight()));
 
-        table.setPosition(100, 100);
-    }
+        rootTable.setPosition(100, 100);
+    }*/
 
-    public void showCredits() {
+    /*public void showCredits() {
         lifeWindow.setVisible( false );
         toolWindow.setVisible( false );
         credits.addAction( Actions.sequence(
-            Actions.moveTo( credits.getX(), - table.getHeight() ),
+            Actions.moveTo( credits.getX(), - rootTable.getHeight() ),
             Actions.visible( true ),
-            Actions.moveTo( credits.getX(), table.getHeight(), 30f ),
+            Actions.moveTo( credits.getX(), rootTable.getHeight(), 30f ),
             new Action() {
                 @Override
                 public boolean act( float delta ) {
@@ -467,7 +545,7 @@ public class HudManager implements Disposable {
                 }
             }
         ) );
-    }
+    }*/
 
     public void gameOver() {
         //table.setVisible( true );
@@ -631,4 +709,26 @@ public class HudManager implements Disposable {
             window.setPosition( 0, height/2f - window.getHeight()/2f );
         }
     }
+
+    List<Image> lifeImages = new ArrayList<>(10);
+
+    public void hideLife() {
+
+        if (lifeImages.isEmpty()) {
+            return;
+        }
+        int index = lifeImages.size() - 1;
+        Image image = lifeImages.get(index);
+        image.addAction(Actions.sequence(
+            Actions.parallel(
+                Actions.scaleBy(0.2f, 0.2f, 0.1f) // 快速放大1.2倍，持续0.5秒
+//                Actions.sizeBy(30, 30, 0.5f) // 放大30x30大小，持续0.5秒
+            ),
+            Actions.run(() -> {
+                image.addAction(Actions.hide());
+            })
+        ));
+        lifeImages.remove(index);
+    }
+
 }

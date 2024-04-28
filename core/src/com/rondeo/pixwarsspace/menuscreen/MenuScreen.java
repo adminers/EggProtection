@@ -33,6 +33,7 @@ public class MenuScreen extends ScreenAdapter {
         Table table = new Table();
         table.setFillParent(true);
 
+        table.setDebug(true);
         ImageTextButton textButton = new ImageTextButton( "Start", skin );
         textButton.addListener( new InputListener() {
             public boolean touchDown( InputEvent event, float x, float y, int pointer, int button ) {

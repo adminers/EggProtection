@@ -28,6 +28,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.controllers.MonsterFactoryC
 import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.Ship;
+import com.rondeo.pixwarsspace.gamescreen.components.play.CloudShip;
 import com.rondeo.pixwarsspace.gamescreen.plate.PlateBlockButton;
 import com.rondeo.pixwarsspace.gamescreen.ui.HealthBar;
 import com.rondeo.pixwarsspace.gamescreen.ui.UIManager;
@@ -131,6 +132,11 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
 //        stage.addActor( cellTable.getTable() );
         stage.addActor(cardRectangleActor);
         cards.forEach(button -> stage.addActor( button ));
+
+        CloudShip cloudShip = createCloudShip();
+        stage.addActor( cloudShip);
+
+        // 草坪
         plates.forEach(button -> stage.addActor( button ));
         stage.addActor( Controllers.getInstance().enemyController() );
 //        stage.addActor( Controllers.getInstance().snakeEnemyController() );
@@ -164,6 +170,15 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
 //        stage.getViewport().setScreenY(Gdx.graphics.getHeight() - stage.getViewport().getScreenHeight());
     }
 
+    private CloudShip createCloudShip() {
+
+        TextureAtlas cloudTextureAtlas = new TextureAtlas(Gdx.files.internal("lib/Cloud/Cloud.atlas"));
+        CloudShip cloudShip = new CloudShip(world, cloudTextureAtlas.findRegions("C2010"), null);
+        cloudShip.init(null, -50, 40);
+        cloudShip.setName("踩云");
+        return cloudShip;
+    }
+
     @Override
     public void render( float delta ) {
         super.render( delta );
@@ -176,7 +191,7 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
             Controllers.getInstance().pause = true;
         }
         if( Controllers.getInstance().credits == 1 ) {
-            hudManager.showCredits();
+//            hudManager.showCredits();
             Controllers.getInstance().credits = 2;
         }
         if( !Controllers.getInstance().pause ) {
@@ -199,6 +214,10 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
 
         if( Gdx.input.isKeyPressed( Keys.L ) ) {
             System.out.println( world.countItems() + "<>" + world.countCells() + " = " + Gdx.graphics.getFramesPerSecond() );
+        }
+
+        if( Gdx.input.isKeyJustPressed( Keys.T )) {
+            hudManager.hideLife();
         }
 
         // 在这里更新游戏逻辑，检查关卡完成条件是否满足

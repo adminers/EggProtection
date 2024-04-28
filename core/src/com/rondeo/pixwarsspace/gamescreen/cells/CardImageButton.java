@@ -109,7 +109,7 @@ public class CardImageButton extends ImageButton {
     private void show() {
 
         Map<Integer, PlayShip> showPlate = LevelManager.getShowPlate();
-        List<Integer> result = Stream.generate(() -> random.nextInt(10))
+        List<Integer> result = Stream.generate(() -> random.nextInt(13))
                 .filter(n -> !showPlate.containsKey(n))
                 .limit(20)
                 .collect(Collectors.toList());
