@@ -55,7 +55,7 @@ public class PlayShip extends Player {
     int width = 15, height = 25;
     float screenWidth, screenHeight;
     long time;
-    boolean isDead = true;
+    public boolean isDead = true;
     public boolean invulnerable = true;
     long isHit;
 
@@ -191,7 +191,7 @@ public class PlayShip extends Player {
         }
         resolve();
 //        ++faShe;
-        if( isAttack && System.currentTimeMillis() > time + 1100 + tempNum && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
+        if( isAttack && System.currentTimeMillis() > time + 500 + tempNum && ( !Controllers.getInstance().gameOver && !Controllers.getInstance().pause && !Controllers.getInstance().bossController().dead ) ) {
             time = System.currentTimeMillis();
             Enemy enemyShip  = LevelManager.findClosestEnemy(getX(), getY());
             if (null != enemyShip) {
@@ -292,7 +292,7 @@ public class PlayShip extends Player {
         if( isHit > System.currentTimeMillis() || isDead ) {
             color.set( batch.getColor() );
             batch.setColor( 1, 0, 0, .5f );
-            batch.draw( shipRegion, getX(), getY(), getWidth(), getHeight() );
+            batch.draw( explosionAnimation.getKeyFrame( deltaTime ), getX(), getY(), getWidth(), getHeight() );
             batch.setColor( color );
         }
 

@@ -715,6 +715,7 @@ public class HudManager implements Disposable {
     public void hideLife() {
 
         if (lifeImages.isEmpty()) {
+            Controllers.getInstance().gameOver = true;
             return;
         }
         int index = lifeImages.size() - 1;

@@ -15,10 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.Main;
 import com.rondeo.pixwarsspace.gamescreen.card.CardRectangleActor;
+import com.rondeo.pixwarsspace.gamescreen.cells.BreathingEffect;
 import com.rondeo.pixwarsspace.gamescreen.cells.CardImageButton;
 import com.rondeo.pixwarsspace.gamescreen.cells.CellTable;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
@@ -142,13 +144,16 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
 //        stage.addActor( Controllers.getInstance().snakeEnemyController() );
         stage.addActor( Controllers.getInstance().getPlayController() );
         stage.addActor( Controllers.getInstance().getBrickController() );
+
+        hudManager = new HudManager( main, assets, world, cellTable);
+
         monsterFactoryController = Controllers.getInstance().getMonsterFactoryController();
+        monsterFactoryController.setHudManager(hudManager);
         stage.addActor(monsterFactoryController);
         stage.addActor( Controllers.getInstance().bossController());
 
         Controllers.getInstance().bossController().setup();
-        
-        hudManager = new HudManager( main, assets, world, cellTable);
+
 
         // --创建弹框-----------------------------------------------------------------------------
         uiManager = new UIManager(hudManager, stage, new Skin( Gdx.files.internal( "ui/default.json" ) ));
@@ -222,9 +227,16 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
 
         // 在这里更新游戏逻辑，检查关卡完成条件是否满足
         if (monsterFactoryController.isLevelComplete()) {
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    uiManager.showComplexDialog();
+                }
+            }, 1.0f);
             Controllers.getInstance().pause = true;
-            uiManager.showComplexDialog();
-            levelComplete = false; // 确保只显示一次
+
+            // 确保只显示一次
+            levelComplete = false;
             monsterFactoryController.setLevelComplete(false);
         }
     }

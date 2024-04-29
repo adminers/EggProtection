@@ -49,7 +49,7 @@ public class ComplexDialog extends Dialog {
 
                 // 重新设置血条
                 hudManager.getHealthBarActor().rest(
-                        new HealthBar(Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel()).size())
+                    new HealthBar(Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel()).size())
                 );
             }
         });

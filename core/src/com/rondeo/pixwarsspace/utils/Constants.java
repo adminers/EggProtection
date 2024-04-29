@@ -16,6 +16,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.Player;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
+import com.rondeo.pixwarsspace.gamescreen.components.play.BubblesShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
@@ -100,6 +101,11 @@ public class Constants {
     public static final Set<CenterPoint> ALL_CENTER_POINT = new HashSet<>();
 
     public static Map<String, List<CenterPoint>> ROW_CENTERPOINT = new HashMap<>();
+
+    /**
+     * 记录所有防护罩,检测和敌人碰撞
+     */
+    public static final List<BubblesShip> bubblesShips = new ArrayList<>();
 
     static {
 

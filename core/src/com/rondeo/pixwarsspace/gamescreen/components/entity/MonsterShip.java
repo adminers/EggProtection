@@ -15,6 +15,8 @@ import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
+import com.rondeo.pixwarsspace.gamescreen.components.HudManager;
+import com.rondeo.pixwarsspace.gamescreen.components.play.BubblesShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
@@ -78,6 +80,8 @@ public class MonsterShip extends Enemy {
 
     Random random = new Random();
 
+    private HudManager hudManager;
+
     CollisionFilter collisionFilter = new CollisionFilter() {
         //Bullet bullet;
         @SuppressWarnings( "rawtypes" )
@@ -87,9 +91,10 @@ public class MonsterShip extends Enemy {
         }
     };
 
-    public MonsterShip(World<Entity> world) {
+    public MonsterShip(World<Entity> world, HudManager hudManager) {
 
         this.world = world;
+        this.hudManager = hudManager;
         item = new Item<Entity>(this);
         world.add(item, getX(), getY(), getWidth(), getHeight());
 
@@ -134,6 +139,7 @@ public class MonsterShip extends Enemy {
         jump = false;
         fall();
         t = 0;
+        isAttackPlayer = false;
     }
 
     /**
@@ -200,6 +206,27 @@ public class MonsterShip extends Enemy {
 
     private void execFall() {
 
+        if (isAttackPlayer) {
+            boolean successAttackPlayer = true;
+            for (int i = Constants.bubblesShips.size() - 1; i >= 0; i--) {
+                BubblesShip bubblesShip = Constants.bubblesShips.get(i);
+                boolean enemyInside = bubblesShip.isEnemyInside(new Vector2(getX(), getY()));
+                if (enemyInside) {
+                    bubblesShip.attack();
+                    bubblesShip.dispose();
+                    bubblesShip.remove();
+                    bubblesShip = null;
+                    successAttackPlayer = false;
+                    Constants.bubblesShips.remove(i);
+                    break;
+                }
+            }
+            if (successAttackPlayer) {
+                hudManager.hideLife();
+            }
+            isDead = true;
+            return;
+        }
         if ("fall".equals(this.state)) {
             this.jump = false;
             CenterPoint centerPoint = Constants.CENTER_POINTS.get(targetName);
@@ -279,13 +306,24 @@ public class MonsterShip extends Enemy {
             forceFree();
             return;
         }
+        /*if (isAttackPlayer) {
+            Constants.bubblesShips.forEach(bubblesShip -> {
+                boolean enemyInside = bubblesShip.isEnemyInside(new Vector2(getX(), getY()));
+                if (enemyInside) {
+                    bubblesShip.attack();
+                    bubblesShip.remove();
+                }
+            });
+            System.out.println("敌人：(" + getX() + "," + getY() + ")");
+        }*/
         if (jump) {
             updateJump();
             batch.draw(thrusterAnimation.getKeyFrame(deltaTime), position.x, position.y, getWidth(), getHeight());
             setX(position.x);
             setY(position.y);
 
-            if (System.currentTimeMillis() > time + 3000) {
+            // 延迟跳
+            if (System.currentTimeMillis() > time + 1000) {
                 time = System.currentTimeMillis();
                 if ("endFall".equals(state)) {
 
@@ -310,8 +348,6 @@ public class MonsterShip extends Enemy {
             setX(position.x);
             setY(position.y);
         }
-
-
     }
 
     private void hit(Batch batch) {
@@ -363,6 +399,9 @@ public class MonsterShip extends Enemy {
         }
     }
 
+    /**
+     * 跳跃下一行
+     */
     public void cJump() {
 
         String[] ranges = this.targetName.split(":");
@@ -370,10 +409,11 @@ public class MonsterShip extends Enemy {
         int keyY = Integer.parseInt(ranges[1]);
         String row = String.valueOf(keyX);
 
-        // 左后一行,不能再往下跳了
+        // 最后一行,不能再往下跳了
         if (!Constants.ROW_CENTERPOINT.containsKey(row)) {
-            this.jump = false;
-            t = 1.0f;
+//            this.jump = false;
+//            t = 1.0f;
+            createAttackPoint();
             return;
         }
         Axis leftAxis = searchJumpAxis(row, keyY);
@@ -395,6 +435,35 @@ public class MonsterShip extends Enemy {
         t = 0;
         isToTarget = false;
         elapsedTime = 0;
+    }
+
+    /**
+     * 攻击玩家
+     */
+    private boolean isAttackPlayer;
+
+    /**
+     * 到了最后一行,开始攻击玩家
+     * 现在测试是,落到云彩的附近,就算攻击了玩家,玩家掉血
+     */
+    private void createAttackPoint() {
+
+        Axis leftAxis = new Axis(100, -100);
+        float targetX = leftAxis.getX();
+        float targetY = leftAxis.getY() + COMMON_SHIP_HEIGHT;
+        float startX = getX();
+        float startY = getY();
+        Vector2 startPos = new Vector2(startX, startY);
+        float controlTargetX = startX - 10;
+        float controlTargetY = startY + 10;
+        Vector2 controlPoint = new Vector2(controlTargetX, controlTargetY);
+        Vector2 endPoint = new Vector2(targetX, targetY);
+        position = new Vector2(startPos);
+        bezierCurve = new Bezier<>(startPos, controlPoint, endPoint);
+        t = 0;
+        isToTarget = false;
+        elapsedTime = 0;
+        isAttackPlayer = true;
     }
 
     /**

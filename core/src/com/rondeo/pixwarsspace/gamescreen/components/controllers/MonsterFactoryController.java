@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
+import com.rondeo.pixwarsspace.gamescreen.components.HudManager;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.MonsterShip;
 import com.rondeo.pixwarsspace.monster.DistributionMap;
@@ -32,7 +33,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
     private final Pool<MonsterShip> monsterShipPool = new Pool<MonsterShip>() {
         @Override
         protected MonsterShip newObject() {
-            return new MonsterShip(world);
+            return new MonsterShip(world, hudManager);
 
         }
     };
@@ -62,10 +63,17 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
 
     private int attackEnemyNum = 0;
 
+    private HudManager hudManager;
+
     private Map<String, TextureAtlas> textureAtlasMap = new HashMap<>();
 
     public MonsterFactoryController(World<Entity> world) {
         this.world = world;
+    }
+
+    public MonsterFactoryController setHudManager(HudManager hudManager) {
+        this.hudManager = hudManager;
+        return this;
     }
 
     public void deploy(Stage stage, int index, DistributionMap distributionMap) {

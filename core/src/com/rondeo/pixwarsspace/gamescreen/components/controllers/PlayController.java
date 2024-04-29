@@ -152,9 +152,10 @@ public class PlayController extends Actor implements Entity, Disposable {
         stage.addActor(playShip);
         AtlasRegion shipRegion = enemyRegion[choosenRegionIndex];
         if (PlateBlockEnum.protect.equals(plateBlockEnum)) {
-            BubblesShip bubblesShip = new BubblesShip(world);
+            BubblesShip bubblesShip = new BubblesShip(world, playShip);
             bubblesShip.init(level.getX(), level.getY());
             stage.addActor(bubblesShip);
+            Constants.bubblesShips.add(bubblesShip);
             TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("lib/t_map/play/whale.atlas"));
             Array<AtlasRegion> whale = textureAtlas.findRegions("whale");
             playShip.setHeight(15);
