@@ -54,7 +54,7 @@ public class YunShip extends Player {
     //Array<Vector2> pattern;
     Animation<TextureRegion> explosionAnimation;
 
-    int width = 100, height = 35;
+    int width = 200, height = 35;
     float screenWidth, screenHeight;
     long time;
     boolean isDead = true;
@@ -65,7 +65,7 @@ public class YunShip extends Player {
         this.world = world;
         item = new Item<Entity>( this );
         world.add( item, 0, 0, 0, 0 );
-        explosionAnimation = new Animation<>( 5f, baseRegion );
+        explosionAnimation = new Animation<>( 1f, baseRegion );
         explosionAnimation.setPlayMode( PlayMode.LOOP );
         shapeRenderer = new ShapeRenderer();
     }
@@ -88,9 +88,6 @@ public class YunShip extends Player {
         setOrigin(getWidth() / 2f, getHeight() / 2f);
         resolve();
         isDead = false;
-
-
-
     }
 
     float deltaTime;
@@ -125,6 +122,25 @@ public class YunShip extends Player {
     }
     Color color = new Color();
     int isMove = 0;
+    public static boolean isCreatePlayer = false;
+
+    int animationCount = 0; // 计数器用来跟踪动画播放的次数
+    float animationTimer = 0; // 动画计时器
+
+    private boolean isPlayingAnimation = false;
+
+    public void update( float delta) {
+
+        // 更新动画状态
+        if (isPlayingAnimation) {
+            animationTimer += delta;
+            if (explosionAnimation.isAnimationFinished(animationTimer)) {
+                isPlayingAnimation = false;
+                animationCount++;
+            }
+        }
+    }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -132,7 +148,18 @@ public class YunShip extends Player {
         super.act( parentAlpha );
         deltaTime += parentAlpha;
         super.draw(batch, parentAlpha);
-        batch.draw( explosionAnimation.getKeyFrame( deltaTime ), getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation() );
+        update(parentAlpha);
+        if (!isPlayingAnimation && isCreatePlayer) {
+            isPlayingAnimation = true;
+            time = System.currentTimeMillis();
+            animationTimer = 0;
+        }
+
+        if (isPlayingAnimation) {
+            batch.draw(explosionAnimation.getKeyFrame(animationTimer), getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+        }
+        isCreatePlayer = false;
+
         if( isHit > System.currentTimeMillis() || isDead ) {
             color.set( batch.getColor() );
             batch.setColor( 1, 0, 0, .5f );

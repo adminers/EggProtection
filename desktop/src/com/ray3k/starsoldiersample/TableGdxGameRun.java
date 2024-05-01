@@ -8,7 +8,7 @@ import com.rondeo.pixwarsspace.Main;
 /**
  * @Title: TableGdxGameRun
  * @Description: TableGdxGameRun
- * @Company: www.wrenchdata.com
+ * @Company: www.qiaweidata.com
  * @author: shenshilong
  * @date: 2024-04-27
  * @version: V1.0

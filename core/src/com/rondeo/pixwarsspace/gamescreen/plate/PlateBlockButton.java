@@ -44,6 +44,7 @@ public class PlateBlockButton extends ImageButton {
         this.isHide = isHide;
         setBounds(x, y, 22, 19.13f);
         System.out.println("我方地图：(" + x + ", " + y + ")");
+
         this.addListener(new ClickListener() {
 
             @Override

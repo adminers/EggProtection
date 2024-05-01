@@ -1,0 +1,188 @@
+
+trish.png
+size: 1983,1967
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flame9-animation_00
+  rotate: false
+  xy: 2, 6
+  size: 87, 32
+  orig: 1177, 465
+  offset: 508, 178
+  index: -1
+flame9-animation_01
+  rotate: false
+  xy: 91, 6
+  size: 87, 32
+  orig: 1177, 465
+  offset: 508, 178
+  index: -1
+flame9-animation_02
+  rotate: false
+  xy: 180, 6
+  size: 87, 32
+  orig: 1177, 465
+  offset: 508, 178
+  index: -1
+flame9-animation_03
+  rotate: false
+  xy: 325, 38
+  size: 238, 80
+  orig: 1177, 465
+  offset: 430, 155
+  index: -1
+flame9-animation_04
+  rotate: false
+  xy: 565, 38
+  size: 238, 80
+  orig: 1177, 465
+  offset: 430, 155
+  index: -1
+flame9-animation_05
+  rotate: false
+  xy: 1430, 1812
+  size: 510, 153
+  orig: 1177, 465
+  offset: 302, 112
+  index: -1
+flame9-animation_06
+  rotate: false
+  xy: 869, 970
+  size: 510, 153
+  orig: 1177, 465
+  offset: 302, 112
+  index: -1
+flame9-animation_07
+  rotate: false
+  xy: 1388, 1576
+  size: 593, 234
+  orig: 1177, 465
+  offset: 255, 83
+  index: -1
+flame9-animation_08
+  rotate: false
+  xy: 1388, 1340
+  size: 593, 234
+  orig: 1177, 465
+  offset: 255, 83
+  index: -1
+flame9-animation_09
+  rotate: false
+  xy: 1388, 1104
+  size: 593, 234
+  orig: 1177, 465
+  offset: 255, 83
+  index: -1
+flame9-animation_10
+  rotate: true
+  xy: 600, 280
+  size: 703, 267
+  orig: 1177, 465
+  offset: 200, 79
+  index: -1
+flame9-animation_11
+  rotate: true
+  xy: 1430, 131
+  size: 703, 267
+  orig: 1177, 465
+  offset: 200, 79
+  index: -1
+flame9-animation_12
+  rotate: true
+  xy: 1125, 345
+  size: 623, 236
+  orig: 1177, 465
+  offset: 234, 85
+  index: -1
+flame9-animation_13
+  rotate: true
+  xy: 869, 298
+  size: 670, 254
+  orig: 1177, 465
+  offset: 230, 75
+  index: -1
+flame9-animation_14
+  rotate: true
+  xy: 325, 120
+  size: 813, 273
+  orig: 1177, 465
+  offset: 166, 74
+  index: -1
+flame9-animation_15
+  rotate: true
+  xy: 2, 40
+  size: 893, 321
+  orig: 1177, 465
+  offset: 134, 60
+  index: -1
+flame9-animation_16
+  rotate: true
+  xy: 391, 985
+  size: 980, 370
+  orig: 1177, 465
+  offset: 94, 47
+  index: -1
+flame9-animation_17
+  rotate: true
+  xy: 2, 935
+  size: 1030, 387
+  orig: 1177, 465
+  offset: 67, 42
+  index: -1
+flame9-animation_18
+  rotate: false
+  xy: 1381, 836
+  size: 562, 266
+  orig: 1177, 465
+  offset: 299, 107
+  index: -1
+flame9-animation_19
+  rotate: false
+  xy: 763, 1125
+  size: 623, 268
+  orig: 1177, 465
+  offset: 275, 87
+  index: -1
+flame9-animation_20
+  rotate: false
+  xy: 805, 2
+  size: 623, 276
+  orig: 1177, 465
+  offset: 275, 87
+  index: -1
+flame9-animation_21
+  rotate: false
+  xy: 763, 1681
+  size: 623, 284
+  orig: 1177, 465
+  offset: 275, 87
+  index: -1
+flame9-animation_22
+  rotate: false
+  xy: 763, 1395
+  size: 623, 284
+  orig: 1177, 465
+  offset: 275, 87
+  index: -1
+flame9-animation_23
+  rotate: true
+  xy: 1699, 474
+  size: 360, 207
+  orig: 1177, 465
+  offset: 353, 163
+  index: -1
+flame9-animation_24
+  rotate: true
+  xy: 1699, 120
+  size: 352, 194
+  orig: 1177, 465
+  offset: 357, 171
+  index: -1
+flame9-animation_25
+  rotate: true
+  xy: 600, 131
+  size: 147, 63
+  orig: 1177, 465
+  offset: 490, 174
+  index: -1

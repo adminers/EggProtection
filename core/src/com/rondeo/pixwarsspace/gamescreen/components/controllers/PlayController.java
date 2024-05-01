@@ -143,7 +143,9 @@ public class PlayController extends Actor implements Entity, Disposable {
     public PlayShip deploy(int c, PlateBlockEnum plateBlockEnum) {
 
         Stage stage = getStage();
-        ButtonImage buttonImage = Constants.PLATES.get(LevelManager.getCurrentIndexLevel()).get(c);
+
+        // 暂时只留下一个
+        ButtonImage buttonImage = Constants.PLATES.get(0).get(c);
         Axis level = buttonImage.getAxis();
         activeEnemiesLength++;
 

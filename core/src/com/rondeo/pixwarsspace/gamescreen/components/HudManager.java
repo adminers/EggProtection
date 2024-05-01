@@ -210,7 +210,8 @@ public class HudManager implements Disposable {
 
         //----------------------------------------------------------------
         // -----血条---------------------------------------------------------------------------------
-        healthBarActor = new HealthBarActor(new HealthBar(Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel()).size()));
+        healthBarActor = new HealthBarActor(new HealthBar(Constants.LEVEL_MONSTER_MAX.get(LevelManager.getCurrentIndexLevel())));
+        Controllers.getInstance().getMonsterFactoryController().setAttackEnemyNum(Constants.LEVEL_MONSTER_MAX.get(LevelManager.getCurrentIndexLevel()));
         // -----------------------------------------------------------------------------------------
 
 
@@ -497,8 +498,6 @@ public class HudManager implements Disposable {
         if (ccc <= 0) {
             ccc = 100;
         }
-
-
 
         // 更新血条
         healthBarActor.setCurrentHealth(Controllers.getInstance().getMonsterFactoryController().getAttackEnemyNum());

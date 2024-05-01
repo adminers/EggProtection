@@ -112,7 +112,8 @@ public class BrickController extends Actor implements Entity, Disposable {
             slugShip.setName(name);
             Constants.SLUGSHIP.put(name, new SulgPoint(centerPointAxis, slugShip));
 
-            TextureAtlas yunTextureAtlas = new TextureAtlas(Gdx.files.internal("lib/t_map/yun/yun.atlas"));
+//            TextureAtlas yunTextureAtlas = new TextureAtlas(Gdx.files.internal("lib/t_map/yun/yun.atlas"));
+            TextureAtlas yunTextureAtlas = new TextureAtlas("lib/Yun/flame9.atlas");
 
 
             /*Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -137,8 +138,8 @@ public class BrickController extends Actor implements Entity, Disposable {
             frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0019.png"))));
             frames.add(new TextureRegion(new Texture(Gdx.files.internal("lib/t_map/yun/0020.png"))));*/
 //            YunShip yunShip = new YunShip(world, frames);
-            YunShip yunShip = new YunShip(world, yunTextureAtlas.findRegions("fudong"), null);
-            yunShip.init(null, 50, 330);
+            YunShip yunShip = new YunShip(world, yunTextureAtlas.findRegions("trish"), null);
+            yunShip.init(null, 0, 330);
             yunShip.setName("云(" + c + ")");
             getStage().addActor(yunShip);
         }
@@ -217,10 +218,11 @@ public class BrickController extends Actor implements Entity, Disposable {
 
         } else {
             if( System.currentTimeMillis() > time + 3000 ) {
-                createMap = true;
-                addAction( deployShips() );
-                time = System.currentTimeMillis();
+
             }
+            createMap = true;
+            addAction( deployShips() );
+            time = System.currentTimeMillis();
         }
         if ( Constants.ACTIVE_ENEMIES.isEmpty() && !Controllers.getInstance().bossController().dead ) {
 

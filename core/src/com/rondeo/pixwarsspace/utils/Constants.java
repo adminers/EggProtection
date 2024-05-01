@@ -91,6 +91,16 @@ public class Constants {
     public static Map<String, MonsterAttr> MONSTER_ATTR;
 
     /**
+     * 每层关卡已经出现过怪物的数量
+     */
+    public final static List<Integer> LEVEL_MONSTER_COUNT = new ArrayList<>(100);
+
+    /**
+     * 每层最大敌人数量
+     */
+    public final static List<Integer> LEVEL_MONSTER_MAX = new ArrayList<>(100);
+
+    /**
      * 文件中的地图,普遍要加上这个值,才在屏幕显示居中
      */
     public static float COMMON_SHIP_HEIGHT = 200;
@@ -106,6 +116,11 @@ public class Constants {
      * 记录所有防护罩,检测和敌人碰撞
      */
     public static final List<BubblesShip> bubblesShips = new ArrayList<>();
+
+    /**
+     * 最大关卡
+     */
+    public static int MAX_LEVEL = 100;
 
     static {
 
@@ -123,7 +138,8 @@ public class Constants {
         MAP_1 = new Gson().fromJson(gdxFileString("lib/t_map/level1"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
 
         CARDS = new Gson().fromJson(gdxFileString("lib/card/CardLeave"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
-        PLATES = new Gson().fromJson(gdxFileString("lib/t_map/Plate"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
+//        PLATES = new Gson().fromJson(gdxFileString("lib/t_map/Plate"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
+        PLATES = JsonString.createPlate();
 
         DISTRIBUTION_MAP = new Gson().fromJson(gdxFileString("lib/t_map/monster/DistributionMap.json"), new TypeToken<List<List<DistributionMap>>>() {}.getType());
 
@@ -134,6 +150,19 @@ public class Constants {
 //        for (int i = 0; i < 50; i++) {
 //            distributionMaps.add(distributionMaps.get(0));
 //        }
+
+        // 先初始个100
+        for (int i = 0; i < 100; i++) {
+            LEVEL_MONSTER_COUNT.add(0);
+        }
+        LEVEL_MONSTER_MAX.add(5);
+        LEVEL_MONSTER_MAX.add(10);
+        LEVEL_MONSTER_MAX.add(20);
+        LEVEL_MONSTER_MAX.add(20);
+        LEVEL_MONSTER_MAX.add(20);
+        LEVEL_MONSTER_MAX.add(20);
+        LEVEL_MONSTER_MAX.add(20);
+        LEVEL_MONSTER_MAX.add(20);
     }
 
     private Constants() {

@@ -2,11 +2,6 @@ package com.rondeo.pixwarsspace;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.qiaweidata.starriverdefense.test.HexagonGame;
-import com.qiaweidata.starriverdefense.test.MyGame;
-import com.qiaweidata.starriverdefense.test.MyGdxGame;
-import com.qiaweidata.starriverdefense.test.SpineAnimationScreen;
-import com.qiaweidata.starriverdefense.test.SpineAnimationScreenMyGame;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopTestLauncher {

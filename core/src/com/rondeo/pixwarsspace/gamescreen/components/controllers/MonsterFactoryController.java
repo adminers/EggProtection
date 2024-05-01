@@ -18,6 +18,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.HudManager;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.MonsterShip;
+import com.rondeo.pixwarsspace.gamescreen.components.play.YunShip;
 import com.rondeo.pixwarsspace.monster.DistributionMap;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
 import com.rondeo.pixwarsspace.utils.Constants;
@@ -103,32 +104,33 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
 //        monsterShip.setZIndex(3);
         this.visibleMonster.put(name, monsterShip);
         Constants.ACTIVE_ENEMIES.add( monsterShip );
+        Integer monsterCount = Constants.LEVEL_MONSTER_COUNT.get(LevelManager.getCurrentIndexLevel());
+        Constants.LEVEL_MONSTER_COUNT.set(LevelManager.getCurrentIndexLevel(), monsterCount + 1);
     }
 
     public SequenceAction deployShips() {
 
         deploySequence = new SequenceAction();
-        List<DistributionMap> distributionMaps = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel());
-        for (int i = 0; i < distributionMaps.size(); i++) {
-            DistributionMap distributionMap = distributionMaps.get(i);
-            deploySequence.addAction(Actions.delay(0.0f));
-            int finalI = i;
-            deploySequence.addAction(new Action() {
+//        deploySequence.addAction(Actions.delay(0.0f));
+        deploySequence.addAction(new Action() {
 
-                @Override
-                public boolean act(float delta) {
-                    deploy(getStage(), finalI, distributionMap);
-                    return true;
-                }
-            });
-        }
+            @Override
+            public boolean act(float delta) {
+                List<DistributionMap> distributions = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel());
+                Integer totalCount = Constants.LEVEL_MONSTER_COUNT.get(LevelManager.getCurrentIndexLevel());
+                int index = totalCount % distributions.size();
+                DistributionMap distributionMap = distributions.get(index);
+                deploy(getStage(), index, distributionMap);
+                return true;
+            }
+        });
 
         // 添加一个 RunnableAction 作为最后一个动作，用于执行其他代码
         RunnableAction finishAction = Actions.run(() -> {
             // 在这里执行其他代码，表示前面的所有延迟动作都已完成
             System.out.println("工厂创建");
         });
-        deploySequence.addAction(finishAction);
+//        deploySequence.addAction(finishAction);
         return deploySequence;
     }
 
@@ -140,12 +142,24 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
             return;
         }
         boolean endLevel = LevelManager.isEndLevel();
-        if (visibleMonster.isEmpty()) {
-            attackEnemyNum = Constants.DISTRIBUTION_MAP.get(LevelManager.getCurrentIndexLevel()).size();
-            if (System.currentTimeMillis() > time + 3000) {
+        Integer monsterCount = Constants.LEVEL_MONSTER_COUNT.get(LevelManager.getCurrentIndexLevel());
+
+        // 画面中敌人少于2个,则部署
+        if (Constants.ACTIVE_ENEMIES.size < 2) {
+
+            // 如果到了结束,则停止
+            if (monsterCount >= Constants.LEVEL_MONSTER_MAX.get(LevelManager.getCurrentIndexLevel())) {
+                return;
+            }
+            if (System.currentTimeMillis() > time + 1000) {
+                YunShip.isCreatePlayer = true;
                 addAction(deployShips());
                 time = System.currentTimeMillis();
             }
+        }
+        if (visibleMonster.isEmpty()) {
+//            attackEnemyNum = Constants.LEVEL_MONSTER_MAX.get(LevelManager.getCurrentIndexLevel());
+
         } else {
 //            System.out.println(1);
         }
@@ -159,7 +173,11 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         item.dispose();
         Constants.ACTIVE_ENEMIES.removeValue( item, false);
         attackEnemyNum--;
-        if (Constants.ACTIVE_ENEMIES.isEmpty()) {
+
+        Integer monsterCount = Constants.LEVEL_MONSTER_COUNT.get(LevelManager.getCurrentIndexLevel());
+
+        // 没有敌人,并且是最大关头时,再弹出来
+        if (Constants.ACTIVE_ENEMIES.isEmpty() && monsterCount == Constants.LEVEL_MONSTER_MAX.get(LevelManager.getCurrentIndexLevel())) {
             isLevelComplete = true;
             Controllers.getInstance().junction = true;
             LevelManager.goToNextLevel();
