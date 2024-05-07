@@ -12,7 +12,7 @@ public class DesktopLauncher {
         config.setWindowSizeLimits( 400 , 800 , 9999, 9999  );
         new Lwjgl3Application(new Main(), config);
 //        new Lwjgl3Application(new TimingTest(), config);
-//        new Lwjgl3Application(new MyGame(), config);
+        new Lwjgl3Application(new MyGame(), config);
 //        new Lwjgl3Application(new SpineAnimationExample(), config);
     }
 }

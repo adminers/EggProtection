@@ -17,6 +17,14 @@ public class DistributionMap {
      */
     private String targetName;
 
+    public DistributionMap() {
+    }
+
+    public DistributionMap(String name, String targetName) {
+        this.name = name;
+        this.targetName = targetName;
+    }
+
     public String getName() {
         return this.name;
     }

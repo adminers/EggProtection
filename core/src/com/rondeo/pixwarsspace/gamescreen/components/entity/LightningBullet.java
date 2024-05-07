@@ -214,7 +214,6 @@ public class LightningBullet extends Actor implements Entity, Disposable, Poolab
 
     @Override
     public void dispose() {
-        spriteBatch.dispose();
     }
 
     public void forceFree() {

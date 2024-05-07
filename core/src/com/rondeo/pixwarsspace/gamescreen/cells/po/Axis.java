@@ -18,6 +18,9 @@ public class Axis implements Serializable {
 
     private float y;
 
+    public Axis() {
+    }
+
     public Axis(float x, float y) {
         this.x = x;
         this.y = y;

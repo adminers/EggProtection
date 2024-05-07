@@ -16,6 +16,22 @@ public class ButtonImage implements Serializable {
 
     private String col;
 
+    public ButtonImage() {
+    }
+
+    public ButtonImage(Axis axis, String image) {
+        this.axis = axis;
+        this.image = image;
+    }
+
+    public ButtonImage(Axis axis, String image, String name, String row, String col) {
+        this.axis = axis;
+        this.image = image;
+        this.name = name;
+        this.row = row;
+        this.col = col;
+    }
+
     public String getImage() {
         return image;
     }

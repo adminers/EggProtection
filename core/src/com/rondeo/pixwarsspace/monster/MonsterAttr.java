@@ -29,6 +29,20 @@ public class MonsterAttr {
      */
     private int restTime;
 
+    public MonsterAttr() {
+    }
+
+    public MonsterAttr(int width, int height, String textureRegion, String fall, Axis generatePoint, int life, String name, int restTime) {
+        this.width = width;
+        this.height = height;
+        this.textureRegion = textureRegion;
+        this.fall = fall;
+        this.generatePoint = generatePoint;
+        this.life = life;
+        this.name = name;
+        this.restTime = restTime;
+    }
+
     public String getTextureRegion() {
         return this.textureRegion;
     }

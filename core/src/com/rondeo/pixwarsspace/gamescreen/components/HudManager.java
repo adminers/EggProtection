@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -27,16 +27,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.Main;
 import com.rondeo.pixwarsspace.gamescreen.GameScreen;
 import com.rondeo.pixwarsspace.gamescreen.cells.BreathingEffect;
 import com.rondeo.pixwarsspace.gamescreen.cells.CellTable;
+import com.rondeo.pixwarsspace.gamescreen.ui.CoinTiming;
 import com.rondeo.pixwarsspace.gamescreen.ui.HealthBar;
 import com.rondeo.pixwarsspace.gamescreen.ui.HealthBarActor;
-import com.rondeo.pixwarsspace.menuscreen.MenuScreen;
 import com.rondeo.pixwarsspace.utils.Constants;
 import com.rondeo.pixwarsspace.utils.Rumble;
 import com.rondeo.pixwarsspace.utils.SoundController;
@@ -120,7 +119,7 @@ public class HudManager implements Disposable {
 
         // 创建一个透明的窗口
         TextureRegionDrawable background = new TextureRegionDrawable(new Texture(pixmap));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(big32.font, Color.WHITE, null);
+        WindowStyle windowStyle = new WindowStyle(big32.font, Color.WHITE, null);
 //        windowStyle.background = null; // 设置窗口背景为空，即透明
         skin22.add("default", windowStyle);
         toolWindow = new Window( "", skin22/*skin.get( "window_red", WindowStyle.class ) */);
@@ -292,8 +291,8 @@ public class HudManager implements Disposable {
         leftTable.setDebug(true);
         addLife(leftTable);
 //        leftTable.add(new Label("UUU", skin));
-        Table rightTable = new Table();
-        rightTable.setDebug(true);
+        Table centerTable = new Table();
+        centerTable.setDebug(true);
 
         // 创建一个占位符
         Actor placeholder = new Image(); // 您也可以使用其他空的 Actor
@@ -303,36 +302,41 @@ public class HudManager implements Disposable {
 //        placeholder.setHeight(placeholderHeight);
 
         // 调整占位符的上下边距
-        rightTable.add(placeholder).height(placeholderHeight)/*.padTop(20f).padBottom(20f)*/;
-        rightTable.row();
+        centerTable.add(placeholder).height(placeholderHeight)/*.padTop(20f).padBottom(20f)*/;
+        centerTable.row();
 
         // 测试我方血条,打算用饼图方式
-//        rightTable.add(new Label("Label 1", skin));
-//        rightTable.add(new Label("Label 2", skin)).prefWidth(200);
-//        rightTable.add(new Label("Label 3", skin));
+//        centerTable.add(new Label("Label 1", skin));
+//        centerTable.add(new Label("Label 2", skin)).prefWidth(200);
+//        centerTable.add(new Label("Label 3", skin));
 //
-//        rightTable.row();
-        rightTable.add( toolWindow );
-        rightTable.row();
+//        centerTable.row();
+        centerTable.add( toolWindow );
+        centerTable.row();
 
         // 将血条添加到 Table 中
-        rightTable.add(healthBarActor).width(100).height(10);
+        centerTable.add(healthBarActor).width(100).height(10);
 
-        /*rightTable.row();
-        rightTable.add().expandY();
+        /*centerTable.row();
+        centerTable.add().expandY();
 
-        rightTable.row();
-        rightTable.add( gameOverLabel );
+        centerTable.row();
+        centerTable.add( gameOverLabel );
 
-        rightTable.row().padTop( 100 );
-        rightTable.add( restartButton );
+        centerTable.row().padTop( 100 );
+        centerTable.add( restartButton );
 
-        rightTable.row();
-        rightTable.add().expandY();*/
+        centerTable.row();
+        centerTable.add().expandY();*/
 
 //        rootTable.add(leftTable).space( 20f ).fillX().width( 150 );
+
+        Table rigthTable = new Table();
+        rigthTable.setDebug(true);
+        addTime(rigthTable);
         rootTable.add(leftTable).padLeft(10f);
-        rootTable.add( rightTable ).space( 60f ).fillX();
+        rootTable.add( centerTable ).space( 10f ).fillX();
+        rootTable.add(rigthTable).padRight(10f);
         rootTable.top().left();
     }
 
@@ -395,6 +399,30 @@ public class HudManager implements Disposable {
         lifeImages.add(image2);
         lifeImages.add(image3);
         lifeImages.add(image4);
+    }
+
+    private void addTime(Table lifeTable) {
+
+        lifeTable.setHeight(20f);
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("lib/ui/Coin/Coin.atlas"));
+        Image image1 = new Image(atlas.findRegion("coin"));
+//        lifeTable.defaults().pad(10);
+//        lifeTable.add(image1).height(15).width(15);
+
+        // 总金币
+        Label totalLabel = new Label("12", new LabelStyle(new BitmapFont(), Color.WHITE));
+
+        // 斜杠
+        Label labelSlash = new Label("/", new LabelStyle(new BitmapFont(), Color.WHITE));
+
+        // 计数器
+        Label labelCounter = new Label("/", new LabelStyle(new BitmapFont(), Color.WHITE));
+        CoinTiming coinTiming = new CoinTiming(hud, totalLabel, labelCounter);
+        lifeTable.add(coinTiming);
+        lifeTable.add(totalLabel);
+        lifeTable.add(labelSlash);
+        lifeTable.add(labelCounter);
+        lifeTable.row();
     }
 
     private void createButton() {

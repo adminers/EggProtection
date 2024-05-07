@@ -1,21 +1,12 @@
 package com.rondeo.pixwarsspace.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.StreamUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
-import com.rondeo.pixwarsspace.gamescreen.cells.po.VirtualRange;
 import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Player;
-import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
-import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
-import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
 import com.rondeo.pixwarsspace.gamescreen.components.play.BubblesShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
@@ -24,9 +15,6 @@ import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
 import com.rondeo.pixwarsspace.monster.DistributionMap;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -124,26 +112,24 @@ public class Constants {
 
     static {
 
-        Type listType = new TypeToken<List<List<Axis>>>() {}.getType();
+//        LEVEL1_ENEMYS = new Gson().fromJson(gdxFileString("lib/barn/level1"), listType);
 
-        LEVEL1_ENEMYS = new Gson().fromJson(gdxFileString("lib/barn/level1"), listType);
-
-//        LEVEL1_ENEMYS = new ArrayList<>();
+        LEVEL1_ENEMYS = new ArrayList<>();
 //        LEVEL1_ENEMYS.add(new Axis(52.06f, 50.0f));
 //        LEVEL1_ENEMYS.add(new Axis(22.06f, 50));
 //        LEVEL1_ENEMYS.add(new Axis(32.06f, 110));
 //        LEVEL1_ENEMYS.add(new Axis(42.06f, 50));
 //        LEVEL1_ENEMYS.add(new Axis(152.06f, 0));
 
-        MAP_1 = new Gson().fromJson(gdxFileString("lib/t_map/level1"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
+        MAP_1 = JsonString.mapLevel();
 
-        CARDS = new Gson().fromJson(gdxFileString("lib/card/CardLeave"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
-//        PLATES = new Gson().fromJson(gdxFileString("lib/t_map/Plate"), new TypeToken<List<List<ButtonImage>>>() {}.getType());
+        CARDS = JsonString.createCards();
+
         PLATES = JsonString.createPlate();
 
-        DISTRIBUTION_MAP = new Gson().fromJson(gdxFileString("lib/t_map/monster/DistributionMap.json"), new TypeToken<List<List<DistributionMap>>>() {}.getType());
+        DISTRIBUTION_MAP = JsonString.createDistribution();
 
-        MONSTER_ATTR = new Gson().fromJson(gdxFileString("lib/t_map/monster/MonsterFactory.json"), new TypeToken<Map<String, MonsterAttr>>() {}.getType());
+        MONSTER_ATTR = JsonString.createMonsterAttr();
 
         // 随机增加怪物测速
 //        List<DistributionMap> distributionMaps = DISTRIBUTION_MAP.get(0);
@@ -155,10 +141,10 @@ public class Constants {
         for (int i = 0; i < 100; i++) {
             LEVEL_MONSTER_COUNT.add(0);
         }
-        LEVEL_MONSTER_MAX.add(5);
+        LEVEL_MONSTER_MAX.add(3);
+        LEVEL_MONSTER_MAX.add(4);
         LEVEL_MONSTER_MAX.add(10);
-        LEVEL_MONSTER_MAX.add(20);
-        LEVEL_MONSTER_MAX.add(20);
+        LEVEL_MONSTER_MAX.add(1);
         LEVEL_MONSTER_MAX.add(20);
         LEVEL_MONSTER_MAX.add(20);
         LEVEL_MONSTER_MAX.add(20);
@@ -168,28 +154,6 @@ public class Constants {
     private Constants() {
     }
 
-    public static String gdxFileString(String fileName) {
-        FileHandle fileHandle = Gdx.files.internal(fileName);
-        return fileString(fileHandle);
-    }
-
-    public static String fileString(FileHandle fileHandle) {
-
-        StringBuffer sb = new StringBuffer();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(fileHandle.read()), 1024);
-        try {
-            String line = reader.readLine();
-            while (line != null) {
-                sb.append(line);
-                line = reader.readLine();
-            }
-        } catch (Exception ex) {
-            throw new GdxRuntimeException("Error reading texture atlas file: ", ex);
-        } finally {
-            StreamUtils.closeQuietly(reader);
-        }
-        return sb.toString();
-    }
 
     /*public static void centerPoint() {
 

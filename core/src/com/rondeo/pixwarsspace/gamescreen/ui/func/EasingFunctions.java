@@ -1,4 +1,4 @@
-package com.qiaweidata.starriverdefense.test.func;
+package com.rondeo.pixwarsspace.gamescreen.ui.func;
 
 import com.badlogic.gdx.math.MathUtils;
 

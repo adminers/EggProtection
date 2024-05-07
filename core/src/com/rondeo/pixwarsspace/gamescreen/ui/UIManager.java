@@ -1,17 +1,17 @@
 package com.rondeo.pixwarsspace.gamescreen.ui;
 
-import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.rondeo.pixwarsspace.gamescreen.GameScreen;
 import com.rondeo.pixwarsspace.gamescreen.components.HudManager;
 
 public class UIManager {
     private Stage stage;
     private Skin skin;
     private HudManager hudManager;
+
+    private ComplexDialog complexDialog;
 
     public UIManager(HudManager hudManager, Stage stage, Skin skin) {
         this.stage = stage;
@@ -20,8 +20,11 @@ public class UIManager {
     }
 
     public void showComplexDialog() {
-        ComplexDialog complexDialog = new ComplexDialog(hudManager, "FUCK", skin);
+
+        complexDialog = new ComplexDialog(hudManager, "", new Skin(Gdx.files.internal("uiskin.json")));
         complexDialog.setModal(true);
+//        complexDialog.setSize(200 , 300 );
+        complexDialog.setSize(170 / 2, 60);
 //        complexDialog.show(stage);
 
         // 设置弹出窗口的位置
@@ -42,4 +45,9 @@ public class UIManager {
         stage.addActor(complexDialog);
 //        complexDialog.show(stage);
     }
+
+    public Image getNextImage() {
+        return complexDialog.getNextImage();
+    }
+
 }

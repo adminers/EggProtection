@@ -9,7 +9,12 @@ import com.rondeo.pixwarsspace.gamescreen.components.play.PlayShip;
 import com.rondeo.pixwarsspace.gamescreen.plate.PlateBlockButton;
 import com.rondeo.pixwarsspace.utils.Constants;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @Title: LevelManager
@@ -38,12 +43,6 @@ public class LevelManager {
      * 已经生成玩家的坐标,showPlate 这个变量的key
      */
     private static Set<Integer> showPlateKey = new HashSet<>(20);
-
-    private boolean isLevelComplete() {
-
-        // 检查第一关是否完成的逻辑，比如玩家达到一定分数
-        return Constants.LEVEL1_ENEMYS.get(currentIndexLevel).isEmpty();
-    }
 
     public static void goToNextLevel() {
         currentIndexLevel++;
