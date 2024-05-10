@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -57,13 +56,19 @@ public class CoinTiming extends Actor {
         // 将Label添加到舞台中
         stage.addActor(labelCounter);
         incrementalSeconds();
+
+        // 修复,看完广告后,没有变化
+        chanage = true;
+        big = true;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
+        totalLabel.setText(Constants.TOTAL_COIN);
         if (Constants.TOTAL_COIN >= 100) {
+
             labelCounter.setText("0" + unit);
             labelCounter.clearActions();
             batch.draw(atlasRegion, getX(), getY(), getWidth(), getHeight());

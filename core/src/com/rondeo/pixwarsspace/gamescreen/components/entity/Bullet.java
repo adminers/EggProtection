@@ -13,8 +13,8 @@ import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response;
-import com.dongbat.jbump.World;
 import com.dongbat.jbump.Response.Result;
+import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
@@ -23,7 +23,6 @@ import com.rondeo.pixwarsspace.utils.DistanceCalculator;
 import com.rondeo.pixwarsspace.utils.SoundController;
 
 import static com.badlogic.gdx.math.MathUtils.PI;
-import static com.badlogic.gdx.math.MathUtils.atan2;
 
 public class Bullet extends Actor implements Entity, Disposable, Poolable {
     World<Entity> world;
@@ -406,7 +405,7 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
 
         float relativeX = xB - xA;
         float relativeY = yB - yA;
-        float angleDeg = com.badlogic.gdx.math.MathUtils.atan2(relativeY, relativeX) * MathUtils.radiansToDegrees;
+        float angleDeg = MathUtils.atan2(relativeY, relativeX) * MathUtils.radiansToDegrees;
         if (angleDeg < 0) {
             angleDeg += 360;
         }

@@ -1,20 +1,16 @@
 package com.rondeo.pixwarsspace.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.StreamUtils;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
-import com.rondeo.pixwarsspace.gamescreen.cells.po.VirtualRange;
 import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.Player;
-import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
-import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
-import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
 import com.rondeo.pixwarsspace.gamescreen.components.play.BubblesShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
@@ -23,9 +19,6 @@ import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
 import com.rondeo.pixwarsspace.monster.DistributionMap;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -125,6 +118,8 @@ public class Constants {
      * 叠加的总金币(全局可见)
      */
     public static int TOTAL_COIN = 50;
+
+    public static Label HOME_LABEL = new Label(String.valueOf(TOTAL_COIN), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
     static {
 
@@ -238,7 +233,6 @@ public class Constants {
         Constants.POINT_BRICK_SHIPS.clear();
         Constants.ROW_CENTERPOINT.clear();
         initLevelMonsterCount();
-        TOTAL_COIN = 50;
         LevelManager.restart();
     }
 }

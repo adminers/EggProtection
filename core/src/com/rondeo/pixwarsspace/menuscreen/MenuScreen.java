@@ -13,10 +13,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.rondeo.pixwarsspace.Main;
 import com.rondeo.pixwarsspace.gamescreen.GameScreen;
-import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
-import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
-import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
+import com.rondeo.pixwarsspace.gamescreen.pojo.AdProxy;
+import com.rondeo.pixwarsspace.gamescreen.ui.HomeCoin;
 import com.rondeo.pixwarsspace.utils.Background;
+import com.rondeo.pixwarsspace.utils.Constants;
 import com.rondeo.pixwarsspace.utils.SoundController;
 
 public class MenuScreen extends ScreenAdapter {
@@ -33,10 +33,20 @@ public class MenuScreen extends ScreenAdapter {
         skin = new Skin( Gdx.files.internal( "ui/default.json" ) );
         Gdx.input.setInputProcessor(stage);
 
-        Table table = new Table();
-        table.setFillParent(true);
+        Table rootTable = new Table();
+        rootTable.setFillParent(true);
+        rootTable.setDebug(true);
 
-        table.setDebug(true);
+        Table upTable = new Table();
+        upTable.add(new HomeCoin());
+        Constants.HOME_LABEL.setFontScale(2f);
+        upTable.add( Constants.HOME_LABEL );
+        upTable.row();
+//        upTable.padBottom(100);
+
+        Table downTable = new Table();
+        downTable.padTop(100);
+        downTable.padBottom(100);
         ImageTextButton textButton = new ImageTextButton( "Start", skin );
         textButton.addListener( new InputListener() {
             public boolean touchDown( InputEvent event, float x, float y, int pointer, int button ) {
@@ -47,9 +57,9 @@ public class MenuScreen extends ScreenAdapter {
                 main.setScreen( new GameScreen( main ) );
             };
         } );
-        table.add( textButton ).space( 20f ).fillX().width( 150 );
+        downTable.add( textButton ).space( 20f ).fillX().width( 150 );
 
-        table.row();
+        downTable.row();
         // 扩容
         ImageTextButton expansionButton = new ImageTextButton( "Expansion", skin );
         expansionButton.addListener( new InputListener() {
@@ -58,27 +68,30 @@ public class MenuScreen extends ScreenAdapter {
                 return true;
             };
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                ButtonImage buttonImage = new ButtonImage();
-                buttonImage.setName("shenshilong");
-                System.out.println("shenshilong");
+                AdProxy adProxy = new AdProxy();
+                adProxy.setName("shenshilong");
+                int value = Constants.TOTAL_COIN + 10;
+                Constants.TOTAL_COIN = value;
+                Constants.HOME_LABEL.setText(value);
             };
         } );
-        table.add( expansionButton ).space( 20f ).fillX().width( 150 );
+        downTable.add( expansionButton ).space( 20f ).fillX().width( 150 );
 
-        //table.row();
-        textButton = new ImageTextButton( "Settings", skin );
+        //downTable.row();
+       /* textButton = new ImageTextButton( "Settings", skin );
         textButton.addListener( new InputListener() {
             public boolean touchDown( InputEvent event, float x, float y, int pointer, int button ) {
                 SoundController.getInstance().playClick();
                 return true;
             };
             public void touchUp( InputEvent event, float x, float y, int pointer, int button ) {
-                
+
+
             };
         } );
-        //table.add( textButton ).space( 20f ).fillX();
+        downTable.add( textButton ).space( 20f ).fillX();*/
 
-        table.row();
+        downTable.row();
         textButton = new ImageTextButton( "Quit", skin );
         textButton.addListener( new InputListener() {
             public boolean touchDown( InputEvent event, float x, float y, int pointer, int button ) {
@@ -89,8 +102,11 @@ public class MenuScreen extends ScreenAdapter {
                 Gdx.app.exit();
             };
         } );
-        table.add( textButton ).space( 20f ).fillX();
-        stage.addActor( table );
+        downTable.add( textButton ).space( 20f ).fillX();
+        rootTable.add(upTable);
+        rootTable.row();
+        rootTable.add(downTable);
+        stage.addActor( rootTable );
 
     }
 

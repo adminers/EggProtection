@@ -1,9 +1,9 @@
 package com.rondeo.pixwarsspace.utils;
 
+import com.badlogic.gdx.math.Vector3;
+
 import java.util.Arrays;
 import java.util.Random;
-
-import com.badlogic.gdx.math.Vector3;
 
 public class Rumble {
     

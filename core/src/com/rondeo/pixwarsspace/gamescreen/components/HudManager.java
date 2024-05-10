@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -28,7 +27,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.Main;
@@ -39,7 +37,6 @@ import com.rondeo.pixwarsspace.gamescreen.ui.CoinTiming;
 import com.rondeo.pixwarsspace.gamescreen.ui.HealthBar;
 import com.rondeo.pixwarsspace.gamescreen.ui.HealthBarActor;
 import com.rondeo.pixwarsspace.gamescreen.ui.RestartUI;
-import com.rondeo.pixwarsspace.menuscreen.MenuScreen;
 import com.rondeo.pixwarsspace.utils.Constants;
 import com.rondeo.pixwarsspace.utils.Rumble;
 import com.rondeo.pixwarsspace.utils.SoundController;
@@ -130,7 +127,7 @@ public class HudManager implements Disposable {
 
         // 创建一个透明的窗口
         TextureRegionDrawable background = new TextureRegionDrawable(new Texture(pixmap));
-        Window.WindowStyle windowStyle = new Window.WindowStyle(big32.font, Color.WHITE, null);
+        WindowStyle windowStyle = new WindowStyle(big32.font, Color.WHITE, null);
 //        windowStyle.background = null; // 设置窗口背景为空，即透明
         skin22.add("default", windowStyle);
         toolWindow = new Window( "", skin22/*skin.get( "window_red", WindowStyle.class ) */);
@@ -422,13 +419,13 @@ public class HudManager implements Disposable {
 //        lifeTable.add(image1).height(15).width(15);
 
         // 总金币
-        Label totalLabel = new Label(String.valueOf(Constants.TOTAL_COIN), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label totalLabel = new Label(String.valueOf(Constants.TOTAL_COIN), new LabelStyle(new BitmapFont(), Color.WHITE));
 
         // 斜杠
-        Label labelSlash = new Label("/", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label labelSlash = new Label("/", new LabelStyle(new BitmapFont(), Color.WHITE));
 
         // 计数器
-        Label labelCounter = new Label("0", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label labelCounter = new Label("0", new LabelStyle(new BitmapFont(), Color.WHITE));
         CoinTiming coinTiming = new CoinTiming(hud, totalLabel, labelCounter);
         lifeTable.add(coinTiming);
         lifeTable.add(totalLabel);

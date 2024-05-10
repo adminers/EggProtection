@@ -2,30 +2,19 @@ package com.rondeo.pixwarsspace.gamescreen.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.Hinting;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Scaling;
 import com.rondeo.pixwarsspace.Main;
 import com.rondeo.pixwarsspace.gamescreen.GameScreen;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
@@ -49,8 +38,9 @@ public class RestartUI extends Actor implements Disposable {
         this.stage = stage;
         this.main = main;
         focusIndex = -1;
+        skin = new Skin( Gdx.files.internal( "ui/default.json" ) );
         
-        skin = new Skin(Gdx.files.internal("lib/ui/NextLevel/shadow-walker-ui.json")) {
+        /*skin = new Skin(Gdx.files.internal("lib/ui/NextLevel/shadow-walker-ui.json")) {
             //Override json loader to process FreeType fonts from skin JSON
             @Override
             protected Json getJsonLoader(final FileHandle skinFile) {
@@ -94,7 +84,7 @@ public class RestartUI extends Actor implements Disposable {
 
                 return json;
             }
-        };
+        };*/
 
 //        stage = new Stage(new ScreenViewport());
 //        Gdx.input.setInputProcessor(stage);
@@ -110,16 +100,18 @@ public class RestartUI extends Actor implements Disposable {
         Stack stack = new Stack();
         root.add(stack);
         
-        Image image = new Image(skin, "bg");
+//        Image image = new Image(skin, "bg");
+        /*Image image = new Image(skin, "big");
 //        image.setScaling(Scaling.none);
         image.setScaling(Scaling.fit);
         image.setTouchable(Touchable.disabled);
-        stack.add(image);
+        stack.add(image);*/
         
         Table table = new Table();
         stack.add(table);
         
-        Label label = new Label("UI", skin, "bg");
+//        Label label = new Label("UI", skin, "bg");
+        Label label = new Label("UI", skin, "big");
         label.setTouchable(Touchable.disabled);
         label.setAlignment(Align.center);
         table.add(label).growX();
@@ -192,6 +184,9 @@ public class RestartUI extends Actor implements Disposable {
                 Controllers.getInstance().restart();
                 Constants.restart();
                 Controllers.getInstance().gameOver = false;
+
+                // 首页的金币数值更新
+                Constants.HOME_LABEL.setText(Constants.TOTAL_COIN);
                 main.setScreen( new MenuScreen( main ) );
             };
         } );
@@ -206,7 +201,8 @@ public class RestartUI extends Actor implements Disposable {
         subTable.add(label);
         
         subTable.row();
-        label = new Label("-Ralph Waldo Emerson", skin, "small");
+//        label = new Label("-Ralph Waldo Emerson", skin, "small");
+        label = new Label("-Ralph Waldo Emerson", skin, "big");
         label.setTouchable(Touchable.disabled);
         subTable.add(label).right();
 
