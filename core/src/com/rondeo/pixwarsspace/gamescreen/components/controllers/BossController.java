@@ -1,10 +1,12 @@
 package com.rondeo.pixwarsspace.gamescreen.components.controllers;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -16,8 +18,6 @@ import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.BossParts;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.Bullet;
-
-import java.util.Random;
 
 public class BossController extends Actor implements Disposable {
     Animation<AtlasRegion> tentacleAnimation;

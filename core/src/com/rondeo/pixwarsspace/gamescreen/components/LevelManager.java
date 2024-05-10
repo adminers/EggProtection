@@ -9,12 +9,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.play.PlayShip;
 import com.rondeo.pixwarsspace.gamescreen.plate.PlateBlockButton;
 import com.rondeo.pixwarsspace.utils.Constants;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Title: LevelManager
@@ -30,7 +25,7 @@ public class LevelManager {
 
     private static int currentIndexLevel = 0;
 
-    private static final int maxLevel = 2;
+    private static int maxLevel = 2;
 
     /**
      * 哪些草坪显示(index坐标),有无玩家
@@ -73,7 +68,8 @@ public class LevelManager {
                 new TextureRegionDrawable(new Texture(Gdx.files.internal(card.getImage()))),
                 card.getAxis().getX(),
                 card.getAxis().getY(),
-                card.getName()
+                card.getName(),
+                card
             )
         )));
         return cardImageButtons;
@@ -118,6 +114,21 @@ public class LevelManager {
 //            System.out.println("最近的:" + closestEnemy.getName());
         }
         return closestEnemy;
+    }
+
+    public static void restart() {
+
+        currentLevel = 1;
+
+        currentIndexLevel = 0;
+
+        maxLevel = 2;
+
+        // 隐藏落脚点
+        plateBlockButtons.forEach(but -> but.setHide(true));
+
+        // 清除,不然玩家落脚在空中(上一把随机创建的)
+        showPlate.clear();
     }
 
     public static Map<Integer, PlayShip> getShowPlate() {

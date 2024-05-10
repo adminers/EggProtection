@@ -13,6 +13,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.rondeo.pixwarsspace.Main;
 import com.rondeo.pixwarsspace.gamescreen.GameScreen;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
+import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
+import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
 import com.rondeo.pixwarsspace.utils.Background;
 import com.rondeo.pixwarsspace.utils.SoundController;
 
@@ -45,6 +48,22 @@ public class MenuScreen extends ScreenAdapter {
             };
         } );
         table.add( textButton ).space( 20f ).fillX().width( 150 );
+
+        table.row();
+        // 扩容
+        ImageTextButton expansionButton = new ImageTextButton( "Expansion", skin );
+        expansionButton.addListener( new InputListener() {
+            public boolean touchDown( InputEvent event, float x, float y, int pointer, int button ) {
+                SoundController.getInstance().playClick();
+                return true;
+            };
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                ButtonImage buttonImage = new ButtonImage();
+                buttonImage.setName("shenshilong");
+                System.out.println("shenshilong");
+            };
+        } );
+        table.add( expansionButton ).space( 20f ).fillX().width( 150 );
 
         //table.row();
         textButton = new ImageTextButton( "Settings", skin );

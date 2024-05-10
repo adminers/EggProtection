@@ -1,12 +1,20 @@
 package com.rondeo.pixwarsspace.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.StreamUtils;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.VirtualRange;
 import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
+import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.Player;
+import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
+import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
+import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
 import com.rondeo.pixwarsspace.gamescreen.components.play.BubblesShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.EnemyJumpCoordinate;
@@ -15,6 +23,9 @@ import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
 import com.rondeo.pixwarsspace.monster.DistributionMap;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -110,6 +121,11 @@ public class Constants {
      */
     public static int MAX_LEVEL = 100;
 
+    /**
+     * 叠加的总金币(全局可见)
+     */
+    public static int TOTAL_COIN = 50;
+
     static {
 
 //        LEVEL1_ENEMYS = new Gson().fromJson(gdxFileString("lib/barn/level1"), listType);
@@ -137,10 +153,7 @@ public class Constants {
 //            distributionMaps.add(distributionMaps.get(0));
 //        }
 
-        // 先初始个100
-        for (int i = 0; i < 100; i++) {
-            LEVEL_MONSTER_COUNT.add(0);
-        }
+        initLevelMonsterCount();
         LEVEL_MONSTER_MAX.add(3);
         LEVEL_MONSTER_MAX.add(4);
         LEVEL_MONSTER_MAX.add(10);
@@ -149,6 +162,16 @@ public class Constants {
         LEVEL_MONSTER_MAX.add(20);
         LEVEL_MONSTER_MAX.add(20);
         LEVEL_MONSTER_MAX.add(20);
+    }
+
+    private static void initLevelMonsterCount() {
+
+        LEVEL_MONSTER_COUNT.clear();
+
+        // 先初始个100
+        for (int i = 0; i < 100; i++) {
+            LEVEL_MONSTER_COUNT.add(0);
+        }
     }
 
     private Constants() {
@@ -204,5 +227,18 @@ public class Constants {
         attr.setRightTop(new Axis(x + E, y + D));
         attr.setRightBottom(new Axis(x + E, y - D));
         return new CenterPoint(axis, new Axis(x, y), attr);
+    }
+
+    public static void restart() {
+
+        Constants.ACTIVE_ENEMIES.clear();
+        Constants.ACTIVE_PLAYERS.clear();
+        Constants.CENTER_POINTS.clear();
+        Constants.bubblesShips.clear();
+        Constants.POINT_BRICK_SHIPS.clear();
+        Constants.ROW_CENTERPOINT.clear();
+        initLevelMonsterCount();
+        TOTAL_COIN = 50;
+        LevelManager.restart();
     }
 }

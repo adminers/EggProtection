@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.rondeo.pixwarsspace.utils.Constants;
 
 /**
  * @Title: CoinTiming
@@ -30,8 +32,6 @@ public class CoinTiming extends Actor {
     TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("lib/ui/Coin/Coin.atlas"));
 
     AtlasRegion atlasRegion;
-
-    private int total;
 
     /**
      * 是否可以变化数字
@@ -63,6 +63,12 @@ public class CoinTiming extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
+        if (Constants.TOTAL_COIN >= 100) {
+            labelCounter.setText("0" + unit);
+            labelCounter.clearActions();
+            batch.draw(atlasRegion, getX(), getY(), getWidth(), getHeight());
+            return;
+        }
         if (big) {
             if (System.currentTimeMillis() < time) {
 
@@ -71,7 +77,6 @@ public class CoinTiming extends Actor {
             } else {
                 big = false;
             }
-
         }
         if (chanage) {
             incrementalSeconds();
@@ -97,7 +102,7 @@ public class CoinTiming extends Actor {
                     if (!chanage && seconds >= 10) {
                         chanage = true;
                         big = true;
-                        totalLabel.setText(++total);
+                        totalLabel.setText(++Constants.TOTAL_COIN);
                         time = System.currentTimeMillis() + 200;
                     }
                 }),

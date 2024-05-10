@@ -21,6 +21,7 @@ import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.SlugShip;
+import com.rondeo.pixwarsspace.gamescreen.components.play.CloudShip;
 import com.rondeo.pixwarsspace.gamescreen.components.play.YunShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;

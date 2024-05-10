@@ -1,39 +1,51 @@
 package com.rondeo.pixwarsspace.gamescreen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.Main;
 import com.rondeo.pixwarsspace.gamescreen.card.CardRectangleActor;
+import com.rondeo.pixwarsspace.gamescreen.cells.BreathingEffect;
 import com.rondeo.pixwarsspace.gamescreen.cells.CardImageButton;
 import com.rondeo.pixwarsspace.gamescreen.cells.CellTable;
-import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
-import com.rondeo.pixwarsspace.gamescreen.components.Entity;
-import com.rondeo.pixwarsspace.gamescreen.components.HudManager;
-import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
-import com.rondeo.pixwarsspace.gamescreen.components.Outbound;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
+import com.rondeo.pixwarsspace.gamescreen.components.*;
 import com.rondeo.pixwarsspace.gamescreen.components.controllers.MonsterFactoryController;
+import com.rondeo.pixwarsspace.gamescreen.components.entity.BrickShip;
+import com.rondeo.pixwarsspace.gamescreen.components.entity.PointShip;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.Ship;
 import com.rondeo.pixwarsspace.gamescreen.components.play.CloudShip;
 import com.rondeo.pixwarsspace.gamescreen.plate.PlateBlockButton;
+import com.rondeo.pixwarsspace.gamescreen.ui.HealthBar;
+import com.rondeo.pixwarsspace.gamescreen.ui.PowerShow;
 import com.rondeo.pixwarsspace.gamescreen.ui.UIManager;
 import com.rondeo.pixwarsspace.t1.GridBoard;
 import com.rondeo.pixwarsspace.t1.Tank;
 import com.rondeo.pixwarsspace.utils.Background;
+import com.rondeo.pixwarsspace.utils.Constants;
 import com.rondeo.pixwarsspace.utils.SoundController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
@@ -114,6 +126,7 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
 
 
 
+
         CellTable cellTable = null;
 //        cellTable = new CellTable(world, assets);
 
@@ -144,6 +157,13 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
         monsterFactoryController.setHudManager(hudManager);
         stage.addActor(monsterFactoryController);
         stage.addActor( Controllers.getInstance().bossController());
+
+
+        // 创建卡牌下面的数字
+        for (CardImageButton card : cards) {
+            ButtonImage buttonImage = card.getButtonImage();
+            new PowerShow(stage, buttonImage);
+        }
 
         Controllers.getInstance().bossController().setup();
 
@@ -214,10 +234,14 @@ public class GameScreen extends ScreenAdapter /*implements InputProcessor */{
             System.out.println( world.countItems() + "<>" + world.countCells() + " = " + Gdx.graphics.getFramesPerSecond() );
         }
 
-        if( Gdx.input.isKeyJustPressed( Keys.T )) {
-            hudManager.hideLife();
-        }
+        levelComplete();
+    }
 
+    private void levelComplete() {
+
+        if (Controllers.getInstance().gameOver) {
+            return;
+        }
         // 在这里更新游戏逻辑，检查关卡完成条件是否满足
         if (monsterFactoryController.isLevelComplete()) {
             Timer.schedule(new Timer.Task() {

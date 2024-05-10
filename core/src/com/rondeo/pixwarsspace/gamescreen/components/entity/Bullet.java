@@ -13,15 +13,17 @@ import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response;
-import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.World;
+import com.dongbat.jbump.Response.Result;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.Outbound;
+import com.rondeo.pixwarsspace.utils.DistanceCalculator;
 import com.rondeo.pixwarsspace.utils.SoundController;
 
 import static com.badlogic.gdx.math.MathUtils.PI;
+import static com.badlogic.gdx.math.MathUtils.atan2;
 
 public class Bullet extends Actor implements Entity, Disposable, Poolable {
     World<Entity> world;
@@ -158,6 +160,7 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
         velocity = direction.scl(5);
         bezierCurve = new Bezier<>(startPos, controlPoint, endPoint);
         t = 0;
+        setDebug(true);
     }
 
     /**
@@ -181,7 +184,7 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
         Vector2 point = bezierCurve.valueAt(new Vector2(), t);
         position.set(point);
 
-        t += 0.05f;
+        t += 0.005f;
         if (t > 1) {
             t = 1;
         }
@@ -253,10 +256,14 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
             }
 
             if( collision.other.userData instanceof MonsterShip ) {
-                ((MonsterShip)collision.other.userData).isHit = System.currentTimeMillis() + 100;
-                ((MonsterShip)collision.other.userData).life --;
-                forceFree();
-                System.out.println("敌人");
+                MonsterShip temp = (MonsterShip) collision.other.userData;
+                float abDist = DistanceCalculator.abDist(getX(), getY(), temp.getX(), temp.getY());
+                if (abDist < 20) {
+                    System.out.println("子弹位置：(" + getX() + "," + getY() + ");" + "敌人位置(" + temp.getX() + "," + temp.getY() + ")");
+                    ((MonsterShip)collision.other.userData).isHit = System.currentTimeMillis() + 100;
+                    ((MonsterShip)collision.other.userData).life --;
+                    forceFree();
+                }
                 return;
             }
         }
@@ -399,7 +406,7 @@ public class Bullet extends Actor implements Entity, Disposable, Poolable {
 
         float relativeX = xB - xA;
         float relativeY = yB - yA;
-        float angleDeg = MathUtils.atan2(relativeY, relativeX) * MathUtils.radiansToDegrees;
+        float angleDeg = com.badlogic.gdx.math.MathUtils.atan2(relativeY, relativeX) * MathUtils.radiansToDegrees;
         if (angleDeg < 0) {
             angleDeg += 360;
         }

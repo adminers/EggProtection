@@ -2,8 +2,11 @@ package com.rondeo.pixwarsspace.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.StreamUtils;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
@@ -93,27 +96,31 @@ public class JsonString {
         buttonImage1.setImage("lib/card/card_fantasy_back.png");
         buttonImage1.setAxis(new Axis(35, 10));
         buttonImage1.setName("extend");
+        buttonImage1.setPower(30);
 
         ButtonImage buttonImage2 = new ButtonImage();
         buttonImage2.setImage("lib/card/card_scifi_back.png");
         buttonImage2.setAxis(new Axis(70, 10));
         buttonImage2.setName("attack");
+        buttonImage2.setPower(20);
 
         ButtonImage buttonImage3 = new ButtonImage();
         buttonImage3.setImage("lib/card/card_vampire_back.png");
         buttonImage3.setAxis(new Axis(105, 10));
         buttonImage3.setName("protect");
+        buttonImage3.setPower(40);
 
         ButtonImage buttonImage4 = new ButtonImage();
         buttonImage4.setImage("lib/card/carta_gioco_med_mostro.png");
         buttonImage4.setAxis(new Axis(140, 10));
         buttonImage4.setName("electricShock");
+        buttonImage4.setPower(90);
+
         List<ButtonImage> buttonImages = new ArrayList<>();
         buttonImages.add(buttonImage1);
         buttonImages.add(buttonImage2);
         buttonImages.add(buttonImage3);
         buttonImages.add(buttonImage4);
-
         plates.add(buttonImages);
         return plates;
     }

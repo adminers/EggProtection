@@ -9,11 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.dongbat.jbump.CollisionFilter;
-import com.dongbat.jbump.Item;
-import com.dongbat.jbump.Rect;
-import com.dongbat.jbump.Response;
-import com.dongbat.jbump.World;
+import com.dongbat.jbump.*;
+import com.rondeo.pixwarsspace.gamescreen.ui.func.EasingFunctions;
 import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
@@ -22,7 +19,6 @@ import com.rondeo.pixwarsspace.gamescreen.components.HudManager;
 import com.rondeo.pixwarsspace.gamescreen.components.play.BubblesShip;
 import com.rondeo.pixwarsspace.gamescreen.pojo.CenterPoint;
 import com.rondeo.pixwarsspace.gamescreen.pojo.MapPointBlock;
-import com.rondeo.pixwarsspace.gamescreen.ui.func.EasingFunctions;
 import com.rondeo.pixwarsspace.monster.MonsterAttr;
 import com.rondeo.pixwarsspace.utils.Constants;
 import com.rondeo.pixwarsspace.utils.Rumble;
@@ -166,6 +162,8 @@ public class MonsterShip extends Enemy {
         position = new Vector2(startPos);
         bezierCurve = new Bezier<>(startPos, controlPoint, endPoint);
         t = 0;
+
+//        life = 100;
     }
 
     @Override
@@ -256,9 +254,9 @@ public class MonsterShip extends Enemy {
 
     private float initY;
 
-    private float fallDuration = 1.0f;
+    private float fallDuration = 0.1f;
 
-    private float returnDuration = 1.0f;
+    private float returnDuration = 0.1f;
 
     private float targetY;
 
@@ -305,9 +303,16 @@ public class MonsterShip extends Enemy {
         if (notRender) {
             return;
         }
+        if (Controllers.getInstance().gameOver) {
+//            forceFree();
+            return;
+        }
         if( isDead ) {
             batch.draw( thrusterAnimation.getKeyFrame(deltaTime), getX() - getWidth()/2f, getY() - getHeight()/2f, getWidth()*2f, getHeight()*2f );
             forceFree();
+            return;
+        }
+        if (Controllers.getInstance().pause) {
             return;
         }
         /*if (isAttackPlayer) {
@@ -327,7 +332,7 @@ public class MonsterShip extends Enemy {
             setY(position.y);
 
             // 延迟跳
-            if (System.currentTimeMillis() > time + 1000) {
+            if (System.currentTimeMillis() > time + 500) {
                 time = System.currentTimeMillis();
                 if ("endFall".equals(state)) {
 

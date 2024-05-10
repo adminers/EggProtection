@@ -12,10 +12,10 @@ import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.Response;
 import com.dongbat.jbump.World;
+import com.rondeo.pixwarsspace.gamescreen.ui.func.EasingFunctions;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.controllers.BossController.Laser;
-import com.rondeo.pixwarsspace.gamescreen.ui.func.EasingFunctions;
 
 public class BrickShip extends Entity.Wrapper implements Entity, Disposable {
 

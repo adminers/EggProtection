@@ -7,16 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 import com.dongbat.jbump.World;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.BossController;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.BrickController;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.BulletController;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.CameraController;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.EnemyController;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.LightningController;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.MonsterFactoryController;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.PlayController;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.PowerUpController;
-import com.rondeo.pixwarsspace.gamescreen.components.controllers.SnakeEnemyController;
+import com.rondeo.pixwarsspace.gamescreen.components.controllers.*;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.Ship;
 
 public class Controllers implements Disposable {
@@ -101,6 +92,14 @@ public class Controllers implements Disposable {
 
     public Ship getShip() {
         return ship;
+    }
+
+    public void restart() {
+        gameOver = false;
+        pause = false;
+
+        // 结算
+        junction = false;
     }
 
     public void powerUp( int type ) {

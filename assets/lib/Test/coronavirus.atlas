@@ -1,0 +1,202 @@
+
+coronavirus.png
+size: 1966,594
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+blue-rim-light/body
+  rotate: false
+  xy: 2, 103
+  size: 489, 489
+  orig: 491, 491
+  offset: 1, 1
+  index: -1
+blue-rim-light/head-a1
+  rotate: true
+  xy: 398, 2
+  size: 99, 53
+  orig: 102, 56
+  offset: 2, 1
+  index: -1
+blue-rim-light/head-b1
+  rotate: true
+  xy: 618, 4
+  size: 97, 86
+  orig: 100, 88
+  offset: 1, 1
+  index: -1
+blue-rim-light/head-c1
+  rotate: true
+  xy: 2, 2
+  size: 99, 97
+  orig: 101, 99
+  offset: 1, 1
+  index: -1
+blue-rim-light/spike-a1
+  rotate: true
+  xy: 1498, 46
+  size: 55, 114
+  orig: 57, 116
+  offset: 1, 1
+  index: -1
+blue-rim-light/spike-b1
+  rotate: false
+  xy: 970, 9
+  size: 63, 92
+  orig: 66, 95
+  offset: 1, 1
+  index: -1
+blue-rim-light/spike-c1
+  rotate: false
+  xy: 1230, 29
+  size: 65, 72
+  orig: 68, 74
+  offset: 2, 1
+  index: -1
+classic/body
+  rotate: false
+  xy: 493, 103
+  size: 489, 489
+  orig: 491, 491
+  offset: 1, 1
+  index: -1
+classic/head-a1
+  rotate: true
+  xy: 453, 2
+  size: 99, 53
+  orig: 102, 56
+  offset: 2, 1
+  index: -1
+classic/head-b1
+  rotate: true
+  xy: 706, 4
+  size: 97, 86
+  orig: 100, 88
+  offset: 1, 1
+  index: -1
+classic/head-c1
+  rotate: true
+  xy: 101, 2
+  size: 99, 97
+  orig: 101, 99
+  offset: 1, 1
+  index: -1
+classic/spike-a1
+  rotate: true
+  xy: 1614, 46
+  size: 55, 114
+  orig: 57, 116
+  offset: 1, 1
+  index: -1
+classic/spike-b1
+  rotate: false
+  xy: 1035, 9
+  size: 63, 92
+  orig: 66, 95
+  offset: 1, 1
+  index: -1
+classic/spike-c1
+  rotate: false
+  xy: 1297, 29
+  size: 65, 72
+  orig: 68, 74
+  offset: 2, 1
+  index: -1
+green/body
+  rotate: false
+  xy: 984, 103
+  size: 489, 489
+  orig: 491, 491
+  offset: 1, 1
+  index: -1
+green/head-a1
+  rotate: true
+  xy: 508, 2
+  size: 99, 53
+  orig: 102, 56
+  offset: 2, 1
+  index: -1
+green/head-b1
+  rotate: true
+  xy: 794, 4
+  size: 97, 86
+  orig: 100, 88
+  offset: 1, 1
+  index: -1
+green/head-c1
+  rotate: true
+  xy: 200, 2
+  size: 99, 97
+  orig: 101, 99
+  offset: 1, 1
+  index: -1
+green/spike-a1
+  rotate: true
+  xy: 1730, 46
+  size: 55, 114
+  orig: 57, 116
+  offset: 1, 1
+  index: -1
+green/spike-b1
+  rotate: false
+  xy: 1100, 9
+  size: 63, 92
+  orig: 66, 95
+  offset: 1, 1
+  index: -1
+green/spike-c1
+  rotate: false
+  xy: 1364, 29
+  size: 65, 72
+  orig: 68, 74
+  offset: 2, 1
+  index: -1
+red-rim-light/body
+  rotate: false
+  xy: 1475, 103
+  size: 489, 489
+  orig: 491, 491
+  offset: 1, 1
+  index: -1
+red-rim-light/head-a1
+  rotate: true
+  xy: 563, 2
+  size: 99, 53
+  orig: 102, 56
+  offset: 2, 1
+  index: -1
+red-rim-light/head-b1
+  rotate: true
+  xy: 882, 4
+  size: 97, 86
+  orig: 100, 88
+  offset: 1, 1
+  index: -1
+red-rim-light/head-c1
+  rotate: true
+  xy: 299, 2
+  size: 99, 97
+  orig: 101, 99
+  offset: 1, 1
+  index: -1
+red-rim-light/spike-a1
+  rotate: true
+  xy: 1846, 46
+  size: 55, 114
+  orig: 57, 116
+  offset: 1, 1
+  index: -1
+red-rim-light/spike-b1
+  rotate: false
+  xy: 1165, 9
+  size: 63, 92
+  orig: 66, 95
+  offset: 1, 1
+  index: -1
+red-rim-light/spike-c1
+  rotate: false
+  xy: 1431, 29
+  size: 65, 72
+  orig: 68, 74
+  offset: 2, 1
+  index: -1

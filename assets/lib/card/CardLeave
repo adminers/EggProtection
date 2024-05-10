@@ -3,22 +3,26 @@
         {
             "axis" : {"x": 35,"y": 10},
             "image" : "lib/card/card_fantasy_back.png",
-            "name" : "extend"
+            "name" : "extend",
+            "power": 30
         },
         {
             "axis" : {"x": 70,"y": 10},
             "image" : "lib/card/card_scifi_back.png",
-            "name" : "attack"
+            "name" : "attack",
+            "power": 20
         },
         {
             "axis" : {"x": 105,"y": 10},
             "image" : "lib/card/card_vampire_back.png",
-            "name" : "protect"
+            "name" : "protect",
+            "power": 40
         },
         {
             "axis" : {"x": 140,"y": 10},
             "image" : "lib/card/carta_gioco_med_mostro.png",
-            "name" : "electricShock"
+            "name" : "electricShock",
+            "power": 90
         }
     ]
 ]

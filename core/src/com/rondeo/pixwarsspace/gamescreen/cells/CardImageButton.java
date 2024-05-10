@@ -5,17 +5,15 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.ButtonImage;
 import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.LevelManager;
 import com.rondeo.pixwarsspace.gamescreen.components.play.PlayShip;
 import com.rondeo.pixwarsspace.gamescreen.enums.PlateBlockEnum;
 import com.rondeo.pixwarsspace.gamescreen.plate.PlateBlockButton;
+import com.rondeo.pixwarsspace.utils.Constants;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,15 +46,21 @@ public class CardImageButton extends ImageButton {
 
     private PlateBlockEnum plateBlockEnum;
 
+    private ButtonImage buttonImage;
+
     private final Random random = new Random();
 
-    public CardImageButton(Drawable imageUp, float x, float y, String name) {
+    public CardImageButton(Drawable imageUp, float x, float y, String name, ButtonImage buttonImage) {
         super(imageUp);
         this.setName(name);
+        this.buttonImage = buttonImage;
         setBounds(x, y, 25, 40);
         this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (Constants.TOTAL_COIN < buttonImage.getPower()) {
+                    return;
+                }
                 super.clicked(event, x, y);
                 setTransform(true);
                 addAction(Actions.scaleTo(1.1f, 1.1f, 0.1f)); // 在0.2秒内将按钮放大到2.1倍大小
@@ -66,10 +70,10 @@ public class CardImageButton extends ImageButton {
                 ));
                 Random random = new Random();
                 int randomNumber = random.nextInt(3) + 1;
-
-
+                Constants.TOTAL_COIN -= buttonImage.getPower();
                 switch (getName()) {
                     case "extend" :
+
                         show();
                         break;
                     case "attack" :
@@ -124,5 +128,12 @@ public class CardImageButton extends ImageButton {
         plateBlockButton.setHide(false);
     }
 
+    public ButtonImage getButtonImage() {
+        return this.buttonImage;
+    }
 
+    public CardImageButton setButtonImage(ButtonImage buttonImage) {
+        this.buttonImage = buttonImage;
+        return this;
+    }
 }

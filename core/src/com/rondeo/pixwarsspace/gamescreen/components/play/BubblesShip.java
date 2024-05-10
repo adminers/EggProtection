@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Rect;
 import com.dongbat.jbump.World;
+import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.Scenery;
 

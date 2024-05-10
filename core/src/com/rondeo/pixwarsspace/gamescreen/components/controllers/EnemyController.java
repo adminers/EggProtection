@@ -1,5 +1,7 @@
 package com.rondeo.pixwarsspace.gamescreen.components.controllers;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,8 +17,6 @@ import com.rondeo.pixwarsspace.gamescreen.components.Enemy;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.EnemyShip;
 import com.rondeo.pixwarsspace.utils.Constants;
-
-import java.util.Random;
 
 public class EnemyController extends Actor implements Entity, Disposable {
     World<Entity> world;

@@ -1,5 +1,7 @@
 package com.rondeo.pixwarsspace.gamescreen.components.controllers;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -8,8 +10,6 @@ import com.badlogic.gdx.utils.Pool;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.PowerUp;
-
-import java.util.Random;
 
 public class PowerUpController implements Disposable {
     World<Entity> world;

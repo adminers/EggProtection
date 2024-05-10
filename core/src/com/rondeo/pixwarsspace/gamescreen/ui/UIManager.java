@@ -1,9 +1,13 @@
 package com.rondeo.pixwarsspace.gamescreen.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.rondeo.pixwarsspace.gamescreen.GameScreen;
 import com.rondeo.pixwarsspace.gamescreen.components.HudManager;
 
 public class UIManager {

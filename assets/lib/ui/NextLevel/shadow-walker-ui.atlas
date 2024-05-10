@@ -7,8 +7,8 @@ repeat: none
 bg
   rotate: false
   xy: 1, 322
-  size: 388, 553
-  orig: 388, 553
+  size: 272, 374
+  orig: 272, 374
   offset: 0, 0
   index: -1
 button-focussed
@@ -50,7 +50,7 @@ button-pressed
 label-bg
   rotate: false
   xy: 1, 281
-  size: 376, 39
+  size: 277, 32
   split: 46, 46, 0, 0
   pad: 46, 46, 10, 11
   orig: 376, 39

@@ -1,5 +1,12 @@
 package com.rondeo.pixwarsspace.work;
 
+import java.io.IOException;
+import java.nio.file.FileVisitOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
 public class ReadAllFilesInFolder {
 
     public static String str = "<div class=\"column is-one-quarter-desktop is-half-tablet\"> <div bundle=\"[object Object]\" class=\"bundle-card is-dark\"><div class=\"bundle-card-top\"><div class=\"bundle-card-image\"><img loading=\"lazy\" src=\"{0}\" alt=\"Animal SFX\" decoding=\"async\"></div> </div> <div class=\"bundle-card-bottom\"><div class=\"bundle-card-bottom-body\"><div class=\"bundle-card-title\">" +

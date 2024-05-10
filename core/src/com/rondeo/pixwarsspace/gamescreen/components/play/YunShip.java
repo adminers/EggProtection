@@ -1,6 +1,8 @@
 package com.rondeo.pixwarsspace.gamescreen.components.play;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,15 +11,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Array;
-import com.dongbat.jbump.CollisionFilter;
-import com.dongbat.jbump.Item;
-import com.dongbat.jbump.Rect;
-import com.dongbat.jbump.Response;
-import com.dongbat.jbump.World;
-import com.rondeo.pixwarsspace.gamescreen.components.Controllers;
-import com.rondeo.pixwarsspace.gamescreen.components.Entity;
-import com.rondeo.pixwarsspace.gamescreen.components.Player;
+import com.dongbat.jbump.*;
+import com.rondeo.pixwarsspace.gamescreen.cells.po.Axis;
+import com.rondeo.pixwarsspace.gamescreen.components.*;
 import com.rondeo.pixwarsspace.gamescreen.components.entity.ArtilleryShip;
+import com.rondeo.pixwarsspace.gamescreen.pojo.SulgPoint;
+import com.rondeo.pixwarsspace.utils.Constants;
+import com.rondeo.pixwarsspace.utils.CoordinateUtil;
 
 import java.util.Random;
 

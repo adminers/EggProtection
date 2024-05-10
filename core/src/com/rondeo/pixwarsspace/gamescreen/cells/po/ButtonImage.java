@@ -16,6 +16,11 @@ public class ButtonImage implements Serializable {
 
     private String col;
 
+    /**
+     * 消耗的能量值
+     */
+    private Integer power;
+
     public ButtonImage() {
     }
 
@@ -77,6 +82,15 @@ public class ButtonImage implements Serializable {
         return this;
     }
 
+    public Integer getPower() {
+        return this.power;
+    }
+
+    public ButtonImage setPower(Integer power) {
+        this.power = power;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "ButtonImage{" +
@@ -85,6 +99,7 @@ public class ButtonImage implements Serializable {
                 ", name='" + name + '\'' +
                 ", row='" + row + '\'' +
                 ", col='" + col + '\'' +
+                ", power=" + power +
                 '}';
     }
 }

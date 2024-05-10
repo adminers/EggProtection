@@ -3,13 +3,18 @@ package com.rondeo.pixwarsspace.gamescreen.cells;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.dongbat.jbump.World;
 import com.rondeo.pixwarsspace.gamescreen.components.Entity;
+import com.rondeo.pixwarsspace.gamescreen.components.entity.ArtilleryShip;
+import com.rondeo.pixwarsspace.gamescreen.components.entity.SquareShip;
 import com.rondeo.pixwarsspace.utils.Constants;
 
 import java.util.ArrayList;

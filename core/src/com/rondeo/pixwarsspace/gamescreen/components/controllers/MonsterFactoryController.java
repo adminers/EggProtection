@@ -88,6 +88,7 @@ public class MonsterFactoryController extends Actor implements Entity, Disposabl
         // 设置目标点
         monsterShip.setTargetName(distributionMap.getTargetName());
         monsterShip.init(monsterAttr);
+        monsterShip.setDebug(true);
         stage.addActor(monsterShip);
         TextureAtlas monsterTextureAtlas;
         if (textureAtlasMap.containsKey(monsterAttr.getTextureRegion())) {
